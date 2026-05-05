@@ -19,8 +19,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-DATA_PATH = "/Users/ceoofmacs/Downloads/UFC dataset 2/Large set/large_dataset.csv"
-FIGHTER_PATH = "/Users/ceoofmacs/Downloads/UFC dataset 2/Fighter stats/fighter_stats.csv"
+DATA_PATH = "data/large_dataset.csv"
+FIGHTER_PATH = "data/fighter_stats.csv"
 
 FEATURE_COLS = [
     "sig_str_acc_total_diff", "td_acc_total_diff", "str_def_total_diff",

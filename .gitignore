@@ -3,8 +3,7 @@ __pycache__/
 *.pyo
 .DS_Store
 *.pkl
-*.csv
-data/
+*.log
 .streamlit/
 *.log
 venv/
