@@ -4,6 +4,9 @@ An interactive machine learning dashboard that predicts UFC fight outcomes with 
 
 Built on research from a comprehensive analysis of 4,500+ UFC fights (1996–2024) using XGBoost and ensemble methods. The dashboard scrapes live fight cards directly from ufcstats.com and runs AI predictions on every matchup in real time.
 
+
+ also available for use at - https://ufcfightpredictor.streamlit.app/
+ 
 ---
 
 ## Features
