@@ -20,7 +20,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-DATA_PATH = "data/large_dataset.csv"
+DATA_PATH  = "data/large_dataset.csv"
+CLEAN_PATH = "data/clean_dataset.csv"
 FIGHTER_PATH = "data/fighter_stats.csv"
 
 FEATURE_COLS = [
@@ -33,28 +34,27 @@ FEATURE_COLS = [
 
 FEATURE_LABELS = {
     "sig_str_acc_total_diff": "Striking Accuracy",
-    "td_acc_total_diff": "Takedown Accuracy",
-    "str_def_total_diff": "Striking Defense",
-    "td_def_total_diff": "Takedown Defense",
-    "sub_avg_diff": "Submission Avg",
-    "td_avg_diff": "Takedown Avg",
-    "SLpM_total_diff": "Strikes Landed/Min",
-    "SApM_total_diff": "Strikes Absorbed/Min",
-    "reach_diff": "Reach (cm)",
-    "height_diff": "Height (cm)",
-    "age_diff": "Age (yrs)",
-    "weight_diff": "Weight (kg)",
-    "wins_total_diff": "Total Wins",
-    "losses_total_diff": "Total Losses",
+    "td_acc_total_diff":      "Takedown Accuracy",
+    "str_def_total_diff":     "Striking Defense",
+    "td_def_total_diff":      "Takedown Defense",
+    "sub_avg_diff":           "Submission Avg",
+    "td_avg_diff":            "Takedown Avg",
+    "SLpM_total_diff":        "Strikes Landed/Min",
+    "SApM_total_diff":        "Strikes Absorbed/Min",
+    "reach_diff":             "Reach (cm)",
+    "height_diff":            "Height (cm)",
+    "age_diff":               "Age (yrs)",
+    "weight_diff":            "Weight (kg)",
+    "wins_total_diff":        "Total Wins",
+    "losses_total_diff":      "Total Losses",
 }
 
+# ── Styles ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    /* ── Base ── */
     .main { background-color: #0e1117; }
     section[data-testid="stSidebar"] { background-color: #12141c; }
 
-    /* ── Cards ── */
     .metric-card {
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         border: 1px solid #e63946;
@@ -66,40 +66,60 @@ st.markdown("""
     .metric-value { font-size: 2.2rem; font-weight: 700; color: #e63946; }
     .metric-label { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
 
-    .red-card {
-        background: linear-gradient(135deg, #2a0a0a 0%, #1a0505 100%);
+    .corner-card-red {
+        background: linear-gradient(160deg, #1f0507 0%, #2a0a0a 100%);
         border: 2px solid #e63946;
-        border-radius: 14px;
-        padding: 22px 18px;
+        border-radius: 16px;
+        padding: 24px 20px;
         text-align: center;
+        box-shadow: 0 0 24px rgba(230,57,70,0.15);
+        transition: box-shadow 0.3s;
     }
-    .blue-card {
-        background: linear-gradient(135deg, #0a0a2a 0%, #05051a 100%);
+    .corner-card-red:hover { box-shadow: 0 0 36px rgba(230,57,70,0.3); }
+
+    .corner-card-blue {
+        background: linear-gradient(160deg, #05051f 0%, #0a0a2a 100%);
         border: 2px solid #4361ee;
-        border-radius: 14px;
-        padding: 22px 18px;
+        border-radius: 16px;
+        padding: 24px 20px;
         text-align: center;
+        box-shadow: 0 0 24px rgba(67,97,238,0.15);
+        transition: box-shadow 0.3s;
     }
+    .corner-card-blue:hover { box-shadow: 0 0 36px rgba(67,97,238,0.3); }
+
+    .vs-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: #444;
+        letter-spacing: 2px;
+    }
+
     .win-banner {
         font-size: 1.5rem;
         font-weight: 800;
-        padding: 18px;
-        border-radius: 12px;
+        padding: 20px;
+        border-radius: 14px;
         text-align: center;
         margin: 16px 0;
         letter-spacing: 0.5px;
+        animation: fadeIn 0.4s ease-in;
     }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── Fight cards ── */
     .fight-card {
         background: linear-gradient(135deg, #14161f 0%, #1a1c2e 100%);
         border: 1px solid #2a2d3e;
         border-radius: 14px;
         padding: 18px 20px;
         margin-bottom: 14px;
-        transition: border-color 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .fight-card:hover { border-color: #e63946; }
+    .fight-card:hover { border-color: #e63946; box-shadow: 0 2px 16px rgba(230,57,70,0.1); }
 
     .hot-pick-badge {
         display: inline-block;
@@ -114,137 +134,119 @@ st.markdown("""
         vertical-align: middle;
     }
 
-    /* ── Prob bar ── */
     .prob-bar-wrap {
         display: flex;
-        align-items: center;
-        gap: 0;
-        border-radius: 8px;
+        border-radius: 10px;
         overflow: hidden;
-        height: 44px;
+        height: 48px;
         margin: 10px 0;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
     }
     .prob-bar-red {
         background: linear-gradient(90deg, #c1121f, #e63946);
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 0 12px;
-        font-weight: 700;
-        font-size: 1rem;
-        color: white;
-        transition: width 0.5s ease;
+        display: flex; align-items: center; justify-content: flex-end;
+        padding: 0 14px; font-weight: 800; font-size: 1rem; color: white;
     }
     .prob-bar-blue {
         background: linear-gradient(90deg, #4361ee, #3a0ca3);
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 0 12px;
-        font-weight: 700;
-        font-size: 1rem;
-        color: white;
-        transition: width 0.5s ease;
+        display: flex; align-items: center; justify-content: flex-start;
+        padding: 0 14px; font-weight: 800; font-size: 1rem; color: white;
     }
 
-    /* ── Stat comparison bar ── */
-    .stat-row {
-        display: flex;
-        align-items: center;
-        margin: 6px 0;
-        gap: 8px;
-    }
-    .stat-label { color: #aaa; font-size: 0.8rem; min-width: 120px; text-align: center; }
-    .stat-bar-red {
-        height: 18px;
-        border-radius: 4px 0 0 4px;
-        background: #e63946;
-        min-width: 4px;
-    }
-    .stat-bar-blue {
-        height: 18px;
-        border-radius: 0 4px 4px 0;
-        background: #4361ee;
-        min-width: 4px;
-    }
-    .stat-val { font-size: 0.8rem; color: #ddd; min-width: 38px; }
-    .stat-val-r { text-align: right; min-width: 38px; }
+    .stat-row { display: flex; align-items: center; margin: 7px 0; gap: 8px; }
+    .stat-label { color: #aaa; font-size: 0.8rem; min-width: 110px; text-align: center; flex-shrink: 0; }
+    .stat-bar-red  { height: 20px; border-radius: 4px 0 0 4px; background: #e63946; min-width: 4px; }
+    .stat-bar-blue { height: 20px; border-radius: 0 4px 4px 0; background: #4361ee; min-width: 4px; }
+    .stat-val      { font-size: 0.82rem; color: #ddd; min-width: 42px; }
+    .stat-val-r    { text-align: right; }
 
-    /* ── Confidence badge ── */
+    .form-dot-w { display:inline-block; width:22px; height:22px; border-radius:50%;
+        background:#2dc653; color:white; font-size:0.7rem; font-weight:700;
+        text-align:center; line-height:22px; margin:1px; }
+    .form-dot-l { display:inline-block; width:22px; height:22px; border-radius:50%;
+        background:#e63946; color:white; font-size:0.7rem; font-weight:700;
+        text-align:center; line-height:22px; margin:1px; }
+
     .conf-high { color: #2dc653; font-weight: 700; }
     .conf-med  { color: #f4a261; font-weight: 700; }
     .conf-low  { color: #aaa;    font-weight: 700; }
 
-    /* ── Headings ── */
     h1 { color: #e63946 !important; }
     h2, h3 { color: #fff !important; }
-    .stSelectbox label { color: #ccc !important; }
+    .stSelectbox label, .stTextInput label { color: #ccc !important; }
 
-    /* ── Mobile ── */
     @media (max-width: 768px) {
         .metric-value { font-size: 1.5rem; }
-        .win-banner { font-size: 1.1rem; padding: 12px; }
+        .win-banner   { font-size: 1.1rem; padding: 14px; }
         .prob-bar-red, .prob-bar-blue { font-size: 0.85rem; padding: 0 8px; }
-        .stat-label { min-width: 80px; font-size: 0.72rem; }
+        .stat-label   { min-width: 80px; font-size: 0.72rem; }
     }
 </style>
 """, unsafe_allow_html=True)
 
 
-# ── Helper ───────────────────────────────────────────────────────────────────
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
 def prob_bar_html(prob_red, name_red, name_blue):
-    pr = f"{prob_red:.0%}"
-    pb = f"{1 - prob_red:.0%}"
-    wr = int(prob_red * 100)
-    wb = 100 - wr
+    wr, wb = int(prob_red * 100), int((1 - prob_red) * 100)
     return f"""
     <div style="margin:4px 0 2px 0;">
-      <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#aaa;margin-bottom:4px;">
-        <span style="color:#e63946;font-weight:600">🔴 {name_red}</span>
-        <span style="color:#4361ee;font-weight:600">{name_blue} 🔵</span>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:5px;">
+        <span style="color:#e63946;font-weight:700">🔴 {name_red}</span>
+        <span style="color:#4361ee;font-weight:700">{name_blue} 🔵</span>
       </div>
       <div class="prob-bar-wrap">
-        <div class="prob-bar-red" style="width:{wr}%">{pr}</div>
-        <div class="prob-bar-blue" style="width:{wb}%">{pb}</div>
+        <div class="prob-bar-red"  style="flex:{wr}">{wr}%</div>
+        <div class="prob-bar-blue" style="flex:{wb}">{wb}%</div>
       </div>
     </div>"""
 
 
 def stat_comparison_html(stats_list):
-    """stats_list: list of (label, r_val, b_val, fmt, higher_is_better)"""
     rows = []
     for label, rv, bv, fmt, hib in stats_list:
         if rv is None or bv is None:
             continue
         total = abs(rv) + abs(bv)
-        if total == 0:
-            rw = bw = 50
-        else:
-            rw = int(abs(rv) / total * 100)
-            bw = 100 - rw
-        rv_str = fmt.format(rv)
-        bv_str = fmt.format(bv)
-        r_winner = (rv > bv) == hib
-        r_bold = "font-weight:700;color:#e63946;" if r_winner else "color:#ccc;"
-        b_bold = "font-weight:700;color:#4361ee;" if not r_winner else "color:#ccc;"
+        rw = int(abs(rv) / total * 100) if total else 50
+        bw = 100 - rw
+        r_win = (rv > bv) == hib
+        rs = "font-weight:700;color:#e63946;" if r_win  else "color:#ccc;"
+        bs = "font-weight:700;color:#4361ee;" if not r_win else "color:#ccc;"
         rows.append(f"""
         <div class="stat-row">
-          <div class="stat-val stat-val-r" style="{r_bold}">{rv_str}</div>
-          <div class="stat-bar-red" style="width:{rw}%;flex:{rw}"></div>
+          <div class="stat-val stat-val-r" style="{rs}">{fmt.format(rv)}</div>
+          <div class="stat-bar-red"  style="flex:{rw}"></div>
           <div class="stat-label">{label}</div>
-          <div class="stat-bar-blue" style="width:{bw}%;flex:{bw}"></div>
-          <div class="stat-val" style="{b_bold}">{bv_str}</div>
+          <div class="stat-bar-blue" style="flex:{bw}"></div>
+          <div class="stat-val" style="{bs}">{fmt.format(bv)}</div>
         </div>""")
     return "<div>" + "".join(rows) + "</div>"
 
 
-def conf_badge(confidence):
-    if confidence > 0.72:
-        return f'<span class="conf-high">HIGH CONFIDENCE ({confidence:.0%})</span>'
-    elif confidence > 0.62:
-        return f'<span class="conf-med">MODERATE ({confidence:.0%})</span>'
-    return f'<span class="conf-low">CLOSE FIGHT ({confidence:.0%})</span>'
+def conf_badge(c):
+    if c > 0.72: return f'<span class="conf-high">HIGH ({c:.0%})</span>'
+    if c > 0.62: return f'<span class="conf-med">MODERATE ({c:.0%})</span>'
+    return f'<span class="conf-low">CLOSE ({c:.0%})</span>'
+
+
+def method_category(method):
+    m = str(method).lower()
+    if "ko" in m or "tko" in m or "doctor" in m:
+        return "KO/TKO"
+    if "sub" in m:
+        return "Submission"
+    if "decision" in m:
+        return "Decision"
+    return "Other"
+
+
+def g(row, col):
+    try:
+        v = row.get(col, 0) if hasattr(row, "get") else getattr(row, col, 0)
+        return float(v) if v is not None and str(v) not in ("nan", "") else 0.0
+    except Exception:
+        return 0.0
 
 
 # ── Data / Model ─────────────────────────────────────────────────────────────
@@ -254,27 +256,18 @@ def load_and_train():
     df = pd.read_csv(DATA_PATH)
     df = df.dropna(subset=FEATURE_COLS + ["winner"])
     df["target"] = (df["winner"] == "Red").astype(int)
-
-    # Data is reverse-chronological; reverse for proper time-based split
     df = df.iloc[::-1].reset_index(drop=True)
 
     X = df[FEATURE_COLS]
     y = df["target"]
-
-    # Chronological 80/20 split — no future leakage into test
     split_idx = int(len(df) * 0.8)
     X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
     y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
 
-    # Optuna-tuned params (80-trial TimeSeriesSplit search)
     model = HistGradientBoostingClassifier(
-        max_iter=556,
-        max_depth=3,
-        learning_rate=0.0161,
-        l2_regularization=1.744,
-        min_samples_leaf=20,
-        max_leaf_nodes=45,
-        random_state=42,
+        max_iter=556, max_depth=3, learning_rate=0.0161,
+        l2_regularization=1.744, min_samples_leaf=20,
+        max_leaf_nodes=45, random_state=42,
     )
     model.fit(X_train, y_train)
 
@@ -284,15 +277,13 @@ def load_and_train():
     auc = roc_auc_score(y_test, y_proba)
     cm  = confusion_matrix(y_test, y_pred)
 
-    # Permutation-based feature importance
     baseline = roc_auc_score(y_test, y_proba)
-    perm_imps = []
     rng = np.random.default_rng(0)
+    perm_imps = []
     for feat in FEATURE_COLS:
-        X_perm = X_test.copy()
-        X_perm[feat] = rng.permutation(X_perm[feat].values)
-        score_perm = roc_auc_score(y_test, model.predict_proba(X_perm)[:, 1])
-        perm_imps.append(max(0, baseline - score_perm))
+        Xp = X_test.copy()
+        Xp[feat] = rng.permutation(Xp[feat].values)
+        perm_imps.append(max(0, baseline - roc_auc_score(y_test, model.predict_proba(Xp)[:, 1])))
     total = sum(perm_imps) or 1
     importances = pd.DataFrame({
         "feature":    [FEATURE_LABELS[f] for f in FEATURE_COLS],
@@ -307,25 +298,34 @@ def load_fighters():
     return pd.read_csv(FIGHTER_PATH)
 
 
-@st.cache_data(ttl=3600)
-def fetch_upcoming_events():
-    return scraper.get_upcoming_events()
+@st.cache_data
+def load_fight_history():
+    """Load clean dataset with dates and build per-fighter history."""
+    if not os.path.exists(CLEAN_PATH):
+        return pd.DataFrame(), set()
+    clean = pd.read_csv(CLEAN_PATH, parse_dates=["event_date"])
+    clean = clean.sort_values("event_date").reset_index(drop=True)
+
+    # Active fighters: fought since 2022
+    red_last  = clean.groupby("r_fighter")["event_date"].max()
+    blue_last = clean.groupby("b_fighter")["event_date"].max()
+    last_fight = pd.concat([red_last, blue_last]).groupby(level=0).max()
+    active = set(last_fight[last_fight >= "2022-01-01"].index)
+
+    return clean, active
 
 
 @st.cache_data(ttl=3600)
-def fetch_recent_events():
-    return scraper.get_recent_completed_events(n=3)
-
+def fetch_upcoming_events():   return scraper.get_upcoming_events()
 
 @st.cache_data(ttl=3600)
-def fetch_event_fights(url):
-    return scraper.get_event_fights(url)
-
+def fetch_recent_events():     return scraper.get_recent_completed_events(n=3)
 
 @st.cache_data(ttl=3600)
-def fetch_completed_results(url):
-    return scraper.get_completed_event_results(url)
+def fetch_event_fights(url):   return scraper.get_event_fights(url)
 
+@st.cache_data(ttl=3600)
+def fetch_completed_results(url): return scraper.get_completed_event_results(url)
 
 @st.cache_data(ttl=86400)
 def fetch_live_fighter(name, url):
@@ -343,48 +343,85 @@ def fetch_live_fighter(name, url):
 
 
 def predict_matchup(red_stats, blue_stats):
-    def g(d, key, default=0.0):
-        v = d.get(key, default)
-        try:
-            return float(v) if v is not None else default
-        except Exception:
-            return default
-
     feat = {
-        "sig_str_acc_total_diff": g(red_stats, "sig_str_acc") - g(blue_stats, "sig_str_acc"),
-        "td_acc_total_diff":      g(red_stats, "td_acc")      - g(blue_stats, "td_acc"),
-        "str_def_total_diff":     g(red_stats, "str_def")     - g(blue_stats, "str_def"),
-        "td_def_total_diff":      g(red_stats, "td_def")      - g(blue_stats, "td_def"),
-        "sub_avg_diff":           g(red_stats, "sub_avg")     - g(blue_stats, "sub_avg"),
-        "td_avg_diff":            g(red_stats, "td_avg")      - g(blue_stats, "td_avg"),
-        "SLpM_total_diff":        g(red_stats, "SLpM")        - g(blue_stats, "SLpM"),
-        "SApM_total_diff":        g(red_stats, "SApM")        - g(blue_stats, "SApM"),
-        "reach_diff":             g(red_stats, "reach")       - g(blue_stats, "reach"),
-        "height_diff":            g(red_stats, "height")      - g(blue_stats, "height"),
-        "age_diff":               g(red_stats, "age")         - g(blue_stats, "age"),
-        "weight_diff":            g(red_stats, "weight")      - g(blue_stats, "weight"),
-        "wins_total_diff":        g(red_stats, "wins")        - g(blue_stats, "wins"),
-        "losses_total_diff":      g(red_stats, "losses")      - g(blue_stats, "losses"),
+        "sig_str_acc_total_diff": g(red_stats,"sig_str_acc") - g(blue_stats,"sig_str_acc"),
+        "td_acc_total_diff":      g(red_stats,"td_acc")      - g(blue_stats,"td_acc"),
+        "str_def_total_diff":     g(red_stats,"str_def")     - g(blue_stats,"str_def"),
+        "td_def_total_diff":      g(red_stats,"td_def")      - g(blue_stats,"td_def"),
+        "sub_avg_diff":           g(red_stats,"sub_avg")     - g(blue_stats,"sub_avg"),
+        "td_avg_diff":            g(red_stats,"td_avg")      - g(blue_stats,"td_avg"),
+        "SLpM_total_diff":        g(red_stats,"SLpM")        - g(blue_stats,"SLpM"),
+        "SApM_total_diff":        g(red_stats,"SApM")        - g(blue_stats,"SApM"),
+        "reach_diff":             g(red_stats,"reach")       - g(blue_stats,"reach"),
+        "height_diff":            g(red_stats,"height")      - g(blue_stats,"height"),
+        "age_diff":               g(red_stats,"age")         - g(blue_stats,"age"),
+        "weight_diff":            g(red_stats,"weight")      - g(blue_stats,"weight"),
+        "wins_total_diff":        g(red_stats,"wins")        - g(blue_stats,"wins"),
+        "losses_total_diff":      g(red_stats,"losses")      - g(blue_stats,"losses"),
     }
-    X = pd.DataFrame([feat])[FEATURE_COLS]
-    prob_red = model.predict_proba(X)[0, 1]
+    prob_red = model.predict_proba(pd.DataFrame([feat])[FEATURE_COLS])[0, 1]
     return prob_red, 1 - prob_red
 
 
-model, df, accuracy, roc_auc, cm, importances = load_and_train()
-fighters_df = load_fighters()
-fighter_names = sorted(fighters_df["name"].dropna().unique().tolist())
+def get_fighter_history(name, clean_df, n=None):
+    """Return a fighter's fights from clean_dataset, newest first."""
+    mask = (clean_df["r_fighter"] == name) | (clean_df["b_fighter"] == name)
+    hist = clean_df[mask].copy()
+    hist["won"] = hist.apply(
+        lambda r: r["winner"] == ("Red" if r["r_fighter"] == name else "Blue"), axis=1
+    )
+    hist["opponent"] = hist.apply(
+        lambda r: r["b_fighter"] if r["r_fighter"] == name else r["r_fighter"], axis=1
+    )
+    hist = hist.sort_values("event_date", ascending=False)
+    return hist.head(n) if n else hist
 
+
+def method_donut(fight_hist, name):
+    wins = fight_hist[fight_hist["won"]]
+    if wins.empty:
+        return None
+    wins = wins.copy()
+    wins["category"] = wins["method"].apply(method_category)
+    counts = wins["category"].value_counts().reset_index()
+    counts.columns = ["Method", "Count"]
+    fig = px.pie(
+        counts, values="Count", names="Method", hole=0.5,
+        color="Method",
+        color_discrete_map={
+            "KO/TKO":     "#e63946",
+            "Submission": "#4361ee",
+            "Decision":   "#888",
+            "Other":      "#2a9d8f",
+        },
+    )
+    fig.update_layout(
+        paper_bgcolor="#0e1117", font_color="white",
+        height=260, margin=dict(l=10,r=10,t=30,b=10),
+        legend=dict(bgcolor="#0e1117", font=dict(size=11)),
+        title=dict(text=f"{name} — Win Methods", font=dict(color="white", size=13)),
+    )
+    return fig
+
+
+# ── Bootstrap ─────────────────────────────────────────────────────────────────
+
+model, df, accuracy, roc_auc, cm, importances = load_and_train()
+fighters_df  = load_fighters()
+clean_df, active_fighters = load_fight_history()
+all_fighter_names    = sorted(fighters_df["name"].dropna().unique().tolist())
+active_fighter_names = sorted(f for f in all_fighter_names if f in active_fighters)
 vegas_baseline = 0.685
 vs_vegas = accuracy - vegas_baseline
 
-# ── Sidebar ──────────────────────────────────────────────────────────────────
+
+# ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## 🥊 UFC Predictor")
     st.markdown("---")
     page = st.radio(
         "Navigate",
-        ["Upcoming Events", "Fight Predictor", "Model Dashboard", "Fighter Database"],
+        ["Upcoming Events", "Fight Predictor", "Parlay Builder", "Fighter Lookup", "Model Dashboard", "Fighter Database"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -404,11 +441,9 @@ with st.sidebar:
 # PAGE 0 — UPCOMING EVENTS
 # ═══════════════════════════════════════════════════════════════════════════════
 if page == "Upcoming Events":
-    # Auto-refresh every 30 minutes (1_800_000 ms)
     st_autorefresh(interval=1_800_000, key="live_refresh")
 
     st.title("📅 Upcoming UFC Events")
-
     col_title, col_refresh = st.columns([5, 1])
     with col_title:
         st.markdown("Live fight cards from **ufcstats.com** with AI win predictions.")
@@ -420,7 +455,6 @@ if page == "Upcoming Events":
             fetch_completed_results.clear()
             fetch_live_fighter.clear()
             st.rerun()
-
     st.caption(f"Last updated: {datetime.now().strftime('%b %d, %Y · %I:%M %p')} · auto-refreshes every 30 min")
 
     tab_upcoming, tab_recent = st.tabs(["🔜 Upcoming Cards", "🏁 Recent Results"])
@@ -436,18 +470,14 @@ if page == "Upcoming Events":
         if not events:
             st.info("No upcoming events found.")
         else:
-            event_names = [e["name"] for e in events]
-            selected_event = st.selectbox("Select Event", event_names)
+            selected_event = st.selectbox("Select Event", [e["name"] for e in events])
             ev = next(e for e in events if e["name"] == selected_event)
-
             c1, c2 = st.columns(2)
             c1.markdown(f"**Date:** {ev['date']}")
             c2.markdown(f"**Location:** {ev['location']}")
 
             st.markdown("")
-            run_btn = st.button("⚡ Run AI Predictions", type="primary", use_container_width=True)
-
-            if run_btn:
+            if st.button("⚡ Run AI Predictions", type="primary", use_container_width=True):
                 with st.spinner("Fetching fighter stats and running predictions..."):
                     fights = fetch_event_fights(ev["url"])
 
@@ -457,57 +487,47 @@ if page == "Upcoming Events":
                     results = []
                     prog = st.progress(0)
                     for i, fight in enumerate(fights):
-                        r_stats = fetch_live_fighter(fight["r_fighter"], fight.get("r_url", ""))
-                        b_stats = fetch_live_fighter(fight["b_fighter"], fight.get("b_url", ""))
+                        r_stats = fetch_live_fighter(fight["r_fighter"], fight.get("r_url",""))
+                        b_stats = fetch_live_fighter(fight["b_fighter"], fight.get("b_url",""))
                         prob_r, prob_b = predict_matchup(r_stats, b_stats)
                         confidence = max(prob_r, prob_b)
-                        pick = fight["r_fighter"] if prob_r > 0.5 else fight["b_fighter"]
                         results.append({
-                            "fight": fight,
-                            "prob_r": prob_r,
-                            "prob_b": prob_b,
+                            "fight": fight, "prob_r": prob_r, "prob_b": prob_b,
                             "confidence": confidence,
-                            "pick": pick,
+                            "pick": fight["r_fighter"] if prob_r > 0.5 else fight["b_fighter"],
                         })
                         prog.progress((i + 1) / len(fights))
-
                     prog.empty()
 
-                    # Hot picks summary
                     hot = [r for r in results if r["confidence"] >= 0.70]
                     if hot:
                         st.markdown("### 🔥 Hot Picks (≥70% confidence)")
                         hp_cols = st.columns(min(len(hot), 3))
                         for col, r in zip(hp_cols, hot[:3]):
+                            color = "#e63946" if r["prob_r"] > 0.5 else "#4361ee"
                             with col:
-                                color = "#e63946" if r["prob_r"] > 0.5 else "#4361ee"
                                 st.markdown(
                                     f'<div style="background:{color}22;border:2px solid {color};'
-                                    f'border-radius:10px;padding:12px;text-align:center;">'
-                                    f'<div style="font-size:0.75rem;color:#aaa;">'
-                                    f'{r["fight"]["weight_class"]}</div>'
-                                    f'<div style="font-weight:700;font-size:1rem;color:{color};">'
-                                    f'{r["pick"]}</div>'
-                                    f'<div style="font-size:1.3rem;font-weight:800;color:white;">'
-                                    f'{r["confidence"]:.0%}</div>'
-                                    f'</div>',
-                                    unsafe_allow_html=True,
+                                    f'border-radius:10px;padding:14px;text-align:center;">'
+                                    f'<div style="font-size:0.75rem;color:#aaa;">{r["fight"]["weight_class"]}</div>'
+                                    f'<div style="font-weight:700;font-size:1rem;color:{color};">{r["pick"]}</div>'
+                                    f'<div style="font-size:1.4rem;font-weight:800;color:white;">{r["confidence"]:.0%}</div>'
+                                    f'</div>', unsafe_allow_html=True,
                                 )
 
-                    st.markdown(f"### {selected_event} — All {len(fights)} Fights")
-
+                    st.markdown(f"### {selected_event} — {len(fights)} Fights")
                     for r in results:
                         fight = r["fight"]
-                        is_hot = r["confidence"] >= 0.70
+                        is_hot   = r["confidence"] >= 0.70
                         title_tag = " 🥇" if fight["is_title"] else ""
-                        hot_tag = '<span class="hot-pick-badge">HOT PICK</span>' if is_hot else ""
+                        hot_tag   = '<span class="hot-pick-badge">HOT PICK</span>' if is_hot else ""
                         st.markdown(
                             f'<div class="fight-card">'
                             f'<div style="font-size:0.78rem;color:#888;margin-bottom:6px;">'
                             f'{fight["weight_class"]}{title_tag}{hot_tag}</div>'
                             + prob_bar_html(r["prob_r"], fight["r_fighter"], fight["b_fighter"]) +
                             f'<div style="font-size:0.78rem;color:#aaa;margin-top:6px;">'
-                            f'Predicted winner: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
+                            f'Pick: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
                             f'{r["pick"]}</strong> · {conf_badge(r["confidence"])}'
                             f'</div></div>',
                             unsafe_allow_html=True,
@@ -535,21 +555,14 @@ if page == "Upcoming Events":
                         r_stats = fetch_live_fighter(f["r_fighter"], "")
                         b_stats = fetch_live_fighter(f["b_fighter"], "")
                         prob_r, prob_b = predict_matchup(r_stats, b_stats)
-                        model_pick = f["r_fighter"] if prob_r > 0.5 else f["b_fighter"]
-                        actual_winner = f.get("winner", "")
-                        correct = "✅" if actual_winner and model_pick == actual_winner else (
-                            "❌" if actual_winner else "—")
+                        model_pick   = f["r_fighter"] if prob_r > 0.5 else f["b_fighter"]
+                        actual_winner = f.get("winner","")
+                        correct = "✅" if actual_winner and model_pick == actual_winner else ("❌" if actual_winner else "—")
                         rows.append({
-                            "🔴 Red": f["r_fighter"],
-                            "🔵 Blue": f["b_fighter"],
-                            "Actual Winner": actual_winner or "—",
-                            "Model Pick": model_pick,
-                            "Correct": correct,
-                            "Red %": f"{prob_r:.0%}",
-                            "Blue %": f"{prob_b:.0%}",
-                            "Method": f["method"],
-                            "Round": f["round"],
-                            "Weight Class": f["weight_class"],
+                            "🔴 Red": f["r_fighter"], "🔵 Blue": f["b_fighter"],
+                            "Actual Winner": actual_winner or "—", "Model Pick": model_pick,
+                            "✓": correct, "Red %": f"{prob_r:.0%}", "Blue %": f"{prob_b:.0%}",
+                            "Method": f["method"], "Rd": f["round"], "Class": f["weight_class"],
                         })
                     st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
                 st.markdown("---")
@@ -560,205 +573,401 @@ if page == "Upcoming Events":
 # ═══════════════════════════════════════════════════════════════════════════════
 elif page == "Fight Predictor":
     st.title("🥊 Fight Predictor")
-    st.markdown("Pick two fighters and get an AI-powered win probability based on career stats.")
+    st.markdown("Select two fighters and get an AI-powered win probability.")
 
+    show_all = st.checkbox("Show inactive / retired fighters", value=False)
+    names_to_use = all_fighter_names if show_all else active_fighter_names
+    inactive_note = "" if show_all else f"Showing {len(active_fighter_names)} active fighters (fought since 2022)"
+    if inactive_note:
+        st.caption(inactive_note)
+
+    st.markdown("")
     col_r, col_vs, col_b = st.columns([5, 1, 5])
+
     with col_r:
-        st.markdown("### 🔴 Red Corner")
-        red_name = st.selectbox(
-            "Select Fighter", fighter_names, key="red",
-            index=fighter_names.index("Amanda Ribas") if "Amanda Ribas" in fighter_names else 0,
+        st.markdown(
+            '<div class="corner-card-red"><div style="color:#e63946;font-size:0.9rem;font-weight:700;'
+            'letter-spacing:1px;margin-bottom:12px;">🔴 RED CORNER</div></div>',
+            unsafe_allow_html=True,
         )
+        default_r = names_to_use.index("Islam Makhachev") if "Islam Makhachev" in names_to_use else 0
+        red_name = st.selectbox("Red fighter", names_to_use, index=default_r, key="red",
+                                label_visibility="collapsed")
+
     with col_vs:
-        st.markdown("<br><br><br>", unsafe_allow_html=True)
-        st.markdown("<h2 style='text-align:center;color:#555;'>VS</h2>", unsafe_allow_html=True)
+        st.markdown('<div class="vs-badge">VS</div>', unsafe_allow_html=True)
+
     with col_b:
-        st.markdown("### 🔵 Blue Corner")
-        blue_name = st.selectbox(
-            "Select Fighter", fighter_names, key="blue",
-            index=fighter_names.index("Rose Namajunas") if "Rose Namajunas" in fighter_names else 1,
+        st.markdown(
+            '<div class="corner-card-blue"><div style="color:#4361ee;font-size:0.9rem;font-weight:700;'
+            'letter-spacing:1px;margin-bottom:12px;">🔵 BLUE CORNER</div></div>',
+            unsafe_allow_html=True,
         )
+        default_b = names_to_use.index("Alexander Volkanovski") if "Alexander Volkanovski" in names_to_use else min(1, len(names_to_use)-1)
+        blue_name = st.selectbox("Blue fighter", names_to_use, index=default_b, key="blue",
+                                 label_visibility="collapsed")
 
     st.markdown("")
     predict_btn = st.button("⚡ Predict Fight", use_container_width=True, type="primary")
 
     if predict_btn:
         if red_name == blue_name:
-            st.error("Please select two different fighters.")
+            st.error("Select two different fighters.")
         else:
             red  = fighters_df[fighters_df["name"] == red_name].iloc[0]
             blue = fighters_df[fighters_df["name"] == blue_name].iloc[0]
 
-            def g(row, col):
-                try:
-                    v = row.get(col, 0)
-                    return float(v) if v is not None and str(v) not in ("nan", "") else 0.0
-                except Exception:
-                    return 0.0
-
             feat_vals = {
-                "sig_str_acc_total_diff": g(red, "sig_str_acc") - g(blue, "sig_str_acc"),
-                "td_acc_total_diff":      g(red, "td_acc")      - g(blue, "td_acc"),
-                "str_def_total_diff":     g(red, "str_def")     - g(blue, "str_def"),
-                "td_def_total_diff":      g(red, "td_def")      - g(blue, "td_def"),
-                "sub_avg_diff":           g(red, "sub_avg")     - g(blue, "sub_avg"),
-                "td_avg_diff":            g(red, "td_avg")      - g(blue, "td_avg"),
-                "SLpM_total_diff":        g(red, "SLpM")        - g(blue, "SLpM"),
-                "SApM_total_diff":        g(red, "SApM")        - g(blue, "SApM"),
-                "reach_diff":             g(red, "reach")       - g(blue, "reach"),
-                "height_diff":            g(red, "height")      - g(blue, "height"),
-                "age_diff":              g(red, "age")           - g(blue, "age"),
-                "weight_diff":            g(red, "weight")      - g(blue, "weight"),
-                "wins_total_diff":        g(red, "wins")        - g(blue, "wins"),
-                "losses_total_diff":      g(red, "losses")      - g(blue, "losses"),
+                "sig_str_acc_total_diff": g(red,"sig_str_acc") - g(blue,"sig_str_acc"),
+                "td_acc_total_diff":      g(red,"td_acc")      - g(blue,"td_acc"),
+                "str_def_total_diff":     g(red,"str_def")     - g(blue,"str_def"),
+                "td_def_total_diff":      g(red,"td_def")      - g(blue,"td_def"),
+                "sub_avg_diff":           g(red,"sub_avg")     - g(blue,"sub_avg"),
+                "td_avg_diff":            g(red,"td_avg")      - g(blue,"td_avg"),
+                "SLpM_total_diff":        g(red,"SLpM")        - g(blue,"SLpM"),
+                "SApM_total_diff":        g(red,"SApM")        - g(blue,"SApM"),
+                "reach_diff":             g(red,"reach")       - g(blue,"reach"),
+                "height_diff":            g(red,"height")      - g(blue,"height"),
+                "age_diff":               g(red,"age")         - g(blue,"age"),
+                "weight_diff":            g(red,"weight")      - g(blue,"weight"),
+                "wins_total_diff":        g(red,"wins")        - g(blue,"wins"),
+                "losses_total_diff":      g(red,"losses")      - g(blue,"losses"),
             }
-
-            X_pred   = pd.DataFrame([feat_vals])[FEATURE_COLS]
-            prob_red  = model.predict_proba(X_pred)[0, 1]
+            prob_red  = model.predict_proba(pd.DataFrame([feat_vals])[FEATURE_COLS])[0, 1]
             prob_blue = 1 - prob_red
             winner    = red_name if prob_red > 0.5 else blue_name
             confidence = max(prob_red, prob_blue)
 
             st.markdown("---")
-
-            # Winner banner
             win_color = "#e63946" if prob_red > 0.5 else "#4361ee"
             st.markdown(
                 f'<div class="win-banner" style="background:{win_color}22;border:2px solid {win_color};">'
                 f'🏆 {winner.upper()} WINS &nbsp;·&nbsp; {conf_badge(confidence)}'
-                f'</div>',
-                unsafe_allow_html=True,
+                f'</div>', unsafe_allow_html=True,
             )
 
-            # Probability bar
             st.markdown(prob_bar_html(prob_red, red_name, blue_name), unsafe_allow_html=True)
-
             st.markdown("")
 
-            # Probability cards
             c1, c2 = st.columns(2)
             with c1:
                 st.markdown(
-                    f'<div class="red-card">'
-                    f'<div style="color:#e63946;font-weight:700;font-size:1.05rem;">{red_name}</div>'
-                    f'<div style="font-size:2.8rem;font-weight:800;color:#e63946;margin:8px 0;">{prob_red:.1%}</div>'
+                    f'<div class="corner-card-red">'
+                    f'<div style="color:#e63946;font-weight:700;">{red_name}</div>'
+                    f'<div style="font-size:3rem;font-weight:900;color:#e63946;margin:8px 0;">{prob_red:.1%}</div>'
                     f'<div style="color:#aaa;font-size:0.85rem;">Win Probability</div>'
-                    f'<div style="color:#888;font-size:0.78rem;margin-top:4px;">'
+                    f'<div style="color:#888;font-size:0.8rem;margin-top:6px;">'
                     f'{int(g(red,"wins"))}W – {int(g(red,"losses"))}L</div>'
-                    f'</div>',
-                    unsafe_allow_html=True,
+                    f'</div>', unsafe_allow_html=True,
                 )
             with c2:
                 st.markdown(
-                    f'<div class="blue-card">'
-                    f'<div style="color:#4361ee;font-weight:700;font-size:1.05rem;">{blue_name}</div>'
-                    f'<div style="font-size:2.8rem;font-weight:800;color:#4361ee;margin:8px 0;">{prob_blue:.1%}</div>'
+                    f'<div class="corner-card-blue">'
+                    f'<div style="color:#4361ee;font-weight:700;">{blue_name}</div>'
+                    f'<div style="font-size:3rem;font-weight:900;color:#4361ee;margin:8px 0;">{prob_blue:.1%}</div>'
                     f'<div style="color:#aaa;font-size:0.85rem;">Win Probability</div>'
-                    f'<div style="color:#888;font-size:0.78rem;margin-top:4px;">'
+                    f'<div style="color:#888;font-size:0.8rem;margin-top:6px;">'
                     f'{int(g(blue,"wins"))}W – {int(g(blue,"losses"))}L</div>'
-                    f'</div>',
-                    unsafe_allow_html=True,
+                    f'</div>', unsafe_allow_html=True,
                 )
 
             st.markdown("")
             st.markdown("### Head-to-Head Stats")
-
-            pct = "{:.0%}"
-            num = "{:.2f}"
-            int_ = "{:.0f}"
-
-            stats_list = [
-                ("Striking Acc",   g(red,"sig_str_acc"), g(blue,"sig_str_acc"), pct, True),
-                ("Striking Def",   g(red,"str_def"),     g(blue,"str_def"),     pct, True),
-                ("TD Accuracy",    g(red,"td_acc"),      g(blue,"td_acc"),      pct, True),
-                ("TD Defense",     g(red,"td_def"),      g(blue,"td_def"),      pct, True),
-                ("Str/Min",        g(red,"SLpM"),        g(blue,"SLpM"),        num, True),
-                ("Abs/Min",        g(red,"SApM"),        g(blue,"SApM"),        num, False),
-                ("Sub Avg",        g(red,"sub_avg"),     g(blue,"sub_avg"),     num, True),
-                ("TD Avg",         g(red,"td_avg"),      g(blue,"td_avg"),      num, True),
-                ("Reach (cm)",     g(red,"reach"),       g(blue,"reach"),       int_, True),
-                ("Age",            g(red,"age"),         g(blue,"age"),         int_, False),
-            ]
             st.markdown(
-                f'<div style="font-size:0.78rem;color:#888;display:flex;'
-                f'justify-content:space-between;margin-bottom:4px;">'
-                f'<span style="color:#e63946;">🔴 {red_name}</span>'
-                f'<span style="color:#4361ee;">{blue_name} 🔵</span></div>',
+                f'<div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px;">'
+                f'<span style="color:#e63946;font-weight:700;">🔴 {red_name}</span>'
+                f'<span style="color:#4361ee;font-weight:700;">{blue_name} 🔵</span></div>',
                 unsafe_allow_html=True,
             )
+            stats_list = [
+                ("Striking Acc",  g(red,"sig_str_acc"), g(blue,"sig_str_acc"), "{:.0%}", True),
+                ("Striking Def",  g(red,"str_def"),     g(blue,"str_def"),     "{:.0%}", True),
+                ("TD Accuracy",   g(red,"td_acc"),      g(blue,"td_acc"),      "{:.0%}", True),
+                ("TD Defense",    g(red,"td_def"),      g(blue,"td_def"),      "{:.0%}", True),
+                ("Str/Min",       g(red,"SLpM"),        g(blue,"SLpM"),        "{:.2f}", True),
+                ("Abs/Min",       g(red,"SApM"),        g(blue,"SApM"),        "{:.2f}", False),
+                ("Sub Avg",       g(red,"sub_avg"),     g(blue,"sub_avg"),     "{:.2f}", True),
+                ("TD Avg",        g(red,"td_avg"),      g(blue,"td_avg"),      "{:.2f}", True),
+                ("Reach (cm)",    g(red,"reach"),       g(blue,"reach"),       "{:.0f}", True),
+                ("Age",           g(red,"age"),         g(blue,"age"),         "{:.0f}", False),
+            ]
             st.markdown(stat_comparison_html(stats_list), unsafe_allow_html=True)
-
             st.markdown("")
 
             # Gauge
             fig_gauge = go.Figure(go.Indicator(
-                mode="gauge+number",
-                value=prob_red * 100,
-                title={"text": f"{red_name} Win %", "font": {"color": "white", "size": 14}},
+                mode="gauge+number", value=prob_red * 100,
+                title={"text": f"{red_name} Win %", "font": {"color": "white", "size": 13}},
                 number={"suffix": "%", "font": {"color": "#e63946", "size": 36}},
                 gauge={
-                    "axis": {"range": [0, 100], "tickcolor": "gray"},
-                    "bar": {"color": "#e63946"},
-                    "bgcolor": "#1a1a2e",
-                    "steps": [
-                        {"range": [0, 50],  "color": "#16213e"},
-                        {"range": [50, 100], "color": "#1a0505"},
-                    ],
-                    "threshold": {
-                        "line": {"color": "white", "width": 3},
-                        "thickness": 0.8,
-                        "value": 50,
-                    },
+                    "axis": {"range": [0,100], "tickcolor": "gray"},
+                    "bar": {"color": "#e63946"}, "bgcolor": "#1a1a2e",
+                    "steps": [{"range":[0,50],"color":"#16213e"},{"range":[50,100],"color":"#1a0505"}],
+                    "threshold": {"line":{"color":"white","width":3},"thickness":0.8,"value":50},
                 },
             ))
-            fig_gauge.update_layout(
-                paper_bgcolor="#0e1117", font_color="white",
-                height=260, margin=dict(t=60, b=10, l=30, r=30),
-            )
+            fig_gauge.update_layout(paper_bgcolor="#0e1117", font_color="white",
+                                    height=260, margin=dict(t=60,b=10,l=30,r=30))
             st.plotly_chart(fig_gauge, use_container_width=True)
 
-            # Radar comparison
-            st.markdown("### Fighter Radar Comparison")
+            # Dual radar
+            st.markdown("### Style Comparison")
             radar_cats = ["Str Acc", "Str Def", "TD Acc", "TD Def", "Sub Avg", "SLpM"]
-            max_vals = [1, 1, 1, 1,
-                        max(fighters_df["sub_avg"].max(), 0.01),
-                        max(fighters_df["SLpM"].max(), 0.01)]
-            r_raw = [g(red,"sig_str_acc"), g(red,"str_def"), g(red,"td_acc"),
-                     g(red,"td_def"), g(red,"sub_avg"), g(red,"SLpM")]
-            b_raw = [g(blue,"sig_str_acc"), g(blue,"str_def"), g(blue,"td_acc"),
-                     g(blue,"td_def"), g(blue,"sub_avg"), g(blue,"SLpM")]
-            r_norm = [min(v/m, 1) if m > 0 else 0 for v, m in zip(r_raw, max_vals)]
-            b_norm = [min(v/m, 1) if m > 0 else 0 for v, m in zip(b_raw, max_vals)]
+            max_v = [1, 1, 1, 1, max(fighters_df["sub_avg"].max(), 0.01), max(fighters_df["SLpM"].max(), 0.01)]
+            r_raw = [g(red,"sig_str_acc"),g(red,"str_def"),g(red,"td_acc"),g(red,"td_def"),g(red,"sub_avg"),g(red,"SLpM")]
+            b_raw = [g(blue,"sig_str_acc"),g(blue,"str_def"),g(blue,"td_acc"),g(blue,"td_def"),g(blue,"sub_avg"),g(blue,"SLpM")]
+            r_n = [min(v/m,1) if m>0 else 0 for v,m in zip(r_raw,max_v)]
+            b_n = [min(v/m,1) if m>0 else 0 for v,m in zip(b_raw,max_v)]
             cats_c = radar_cats + [radar_cats[0]]
-
             fig_radar = go.Figure()
-            fig_radar.add_trace(go.Scatterpolar(
-                r=r_norm + [r_norm[0]], theta=cats_c,
-                fill="toself", fillcolor="rgba(230,57,70,0.2)",
-                line=dict(color="#e63946", width=2),
-                name=red_name,
-            ))
-            fig_radar.add_trace(go.Scatterpolar(
-                r=b_norm + [b_norm[0]], theta=cats_c,
-                fill="toself", fillcolor="rgba(67,97,238,0.2)",
-                line=dict(color="#4361ee", width=2),
-                name=blue_name,
-            ))
+            fig_radar.add_trace(go.Scatterpolar(r=r_n+[r_n[0]], theta=cats_c, fill="toself",
+                fillcolor="rgba(230,57,70,0.2)", line=dict(color="#e63946",width=2), name=red_name))
+            fig_radar.add_trace(go.Scatterpolar(r=b_n+[b_n[0]], theta=cats_c, fill="toself",
+                fillcolor="rgba(67,97,238,0.2)", line=dict(color="#4361ee",width=2), name=blue_name))
             fig_radar.update_layout(
-                polar=dict(
-                    bgcolor="#16213e",
-                    radialaxis=dict(visible=True, range=[0,1], showticklabels=False, gridcolor="#333"),
-                    angularaxis=dict(gridcolor="#333"),
-                ),
+                polar=dict(bgcolor="#16213e",
+                    radialaxis=dict(visible=True,range=[0,1],showticklabels=False,gridcolor="#333"),
+                    angularaxis=dict(gridcolor="#333")),
                 paper_bgcolor="#0e1117", font_color="white",
-                height=380, margin=dict(l=40, r=40, t=40, b=40),
-                legend=dict(bgcolor="#0e1117", font=dict(color="white")),
+                height=380, margin=dict(l=40,r=40,t=40,b=40),
+                legend=dict(bgcolor="#0e1117",font=dict(color="white")),
             )
             st.plotly_chart(fig_radar, use_container_width=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PAGE 2 — MODEL DASHBOARD
+# PAGE 2 — PARLAY BUILDER
+# ═══════════════════════════════════════════════════════════════════════════════
+elif page == "Parlay Builder":
+    st.title("🎰 Parlay Builder")
+    st.markdown("Build a 2 or 3-leg parlay. The model calculates each fighter's win probability and your combined parlay odds.")
+    st.markdown("---")
+
+    show_all_pb = st.checkbox("Include inactive / retired fighters", value=False, key="pb_all")
+    names_pb = all_fighter_names if show_all_pb else active_fighter_names
+
+    num_legs = st.radio("Number of legs", [2, 3], horizontal=True)
+    st.markdown("")
+
+    legs = []
+    cols = st.columns(num_legs)
+    for i, col in enumerate(cols):
+        with col:
+            color = "#e63946" if i == 0 else ("#4361ee" if i == 1 else "#2a9d8f")
+            label = ["Leg 1", "Leg 2", "Leg 3"][i]
+            st.markdown(
+                f'<div style="border:2px solid {color};border-radius:12px;padding:14px 16px;margin-bottom:10px;">'
+                f'<div style="color:{color};font-weight:700;font-size:0.9rem;letter-spacing:1px;">{label}</div></div>',
+                unsafe_allow_html=True,
+            )
+            f1_key, f2_key = f"pb_r{i}", f"pb_b{i}"
+            f1 = st.selectbox(f"Fighter A", ["— select —"] + names_pb, key=f1_key)
+            f2 = st.selectbox(f"Fighter B", ["— select —"] + names_pb, key=f2_key)
+            pick_key = f"pb_pick{i}"
+            pick = st.radio("Pick", ["Fighter A", "Fighter B"], key=pick_key, horizontal=True)
+            legs.append({"f1": f1, "f2": f2, "pick": pick, "color": color, "label": label})
+
+    st.markdown("")
+    build_btn = st.button("⚡ Build Parlay", type="primary", use_container_width=True)
+
+    if build_btn:
+        valid = all(
+            leg["f1"] != "— select —" and leg["f2"] != "— select —" and leg["f1"] != leg["f2"]
+            for leg in legs
+        )
+        if not valid:
+            st.error("Please select two different fighters for each leg.")
+        else:
+            st.markdown("---")
+            st.markdown("### Parlay Breakdown")
+            combined_prob = 1.0
+            leg_results = []
+
+            for leg in legs:
+                r_row = fighters_df[fighters_df["name"] == leg["f1"]]
+                b_row = fighters_df[fighters_df["name"] == leg["f2"]]
+                if r_row.empty or b_row.empty:
+                    st.warning(f"Could not find stats for {leg['f1']} or {leg['f2']}.")
+                    leg_results.append(None)
+                    continue
+
+                r_stats = r_row.iloc[0].to_dict()
+                b_stats = b_row.iloc[0].to_dict()
+                prob_r, prob_b = predict_matchup(r_stats, b_stats)
+
+                picked_fighter = leg["f1"] if leg["pick"] == "Fighter A" else leg["f2"]
+                picked_prob    = prob_r if leg["pick"] == "Fighter A" else prob_b
+                combined_prob *= picked_prob
+
+                leg_results.append({
+                    "label": leg["label"],
+                    "color": leg["color"],
+                    "f1": leg["f1"], "f2": leg["f2"],
+                    "prob_r": prob_r, "prob_b": prob_b,
+                    "picked": picked_fighter,
+                    "picked_prob": picked_prob,
+                })
+
+            # Display each leg
+            for res in leg_results:
+                if res is None:
+                    continue
+                st.markdown(
+                    f'<div class="fight-card">'
+                    f'<div style="color:{res["color"]};font-weight:700;font-size:0.82rem;margin-bottom:6px;">'
+                    f'{res["label"]}</div>'
+                    + prob_bar_html(res["prob_r"], res["f1"], res["f2"]) +
+                    f'<div style="font-size:0.82rem;margin-top:6px;color:#aaa;">'
+                    f'Your pick: <strong style="color:{res["color"]};">{res["picked"]}</strong> '
+                    f'· Model probability: <strong style="color:white;">{res["picked_prob"]:.1%}</strong>'
+                    f'</div></div>',
+                    unsafe_allow_html=True,
+                )
+
+            # Combined parlay result
+            if all(r is not None for r in leg_results):
+                st.markdown("---")
+                implied_odds = 1 / combined_prob if combined_prob > 0 else 0
+                american_odds = int((implied_odds - 1) * 100) if implied_odds >= 2 else int(-100 / (implied_odds - 1))
+
+                conf_color = "#2dc653" if combined_prob > 0.45 else ("#f4a261" if combined_prob > 0.25 else "#e63946")
+                st.markdown(
+                    f'<div style="background:{conf_color}18;border:2px solid {conf_color};'
+                    f'border-radius:14px;padding:24px;text-align:center;">'
+                    f'<div style="font-size:0.85rem;color:#aaa;margin-bottom:4px;">'
+                    f'{num_legs}-LEG PARLAY PROBABILITY</div>'
+                    f'<div style="font-size:3.5rem;font-weight:900;color:{conf_color};">'
+                    f'{combined_prob:.1%}</div>'
+                    f'<div style="font-size:1rem;color:#ccc;margin-top:8px;">'
+                    f'Implied odds: <strong>{implied_odds:.2f}x</strong>'
+                    f'{"  ·  American: +" + str(american_odds) if american_odds > 0 else "  ·  American: " + str(american_odds)}'
+                    f'</div>'
+                    f'<div style="font-size:0.78rem;color:#666;margin-top:10px;">'
+                    f'Based on AI win probabilities — not financial advice.'
+                    f'</div></div>',
+                    unsafe_allow_html=True,
+                )
+
+                # Leg summary table
+                summary = pd.DataFrame([{
+                    "Leg": r["label"],
+                    "Your Pick": r["picked"],
+                    "vs": r["f2"] if r["picked"] == r["f1"] else r["f1"],
+                    "Win Prob": f"{r['picked_prob']:.1%}",
+                } for r in leg_results if r])
+                st.markdown("")
+                st.dataframe(summary, hide_index=True, use_container_width=True)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PAGE 3 — FIGHTER LOOKUP
+# ═══════════════════════════════════════════════════════════════════════════════
+elif page == "Fighter Lookup":
+    st.title("🔍 Fighter Lookup")
+    st.markdown("Search one or two fighters to see their record, win methods, and recent form.")
+
+    show_all_lu = st.checkbox("Include inactive / retired fighters", value=False, key="lu_all")
+    names_lu = all_fighter_names if show_all_lu else active_fighter_names
+
+    col_f1, col_f2 = st.columns(2)
+    with col_f1:
+        f1 = st.selectbox("Fighter 1", ["— select —"] + names_lu, key="lu_f1")
+    with col_f2:
+        f2 = st.selectbox("Fighter 2 (optional)", ["— none —"] + names_lu, key="lu_f2")
+
+    def render_fighter_card(name, color, side_label):
+        if clean_df.empty:
+            st.warning("Fight history not available.")
+            return
+        row = fighters_df[fighters_df["name"] == name]
+        if row.empty:
+            st.warning(f"{name} not found in database.")
+            return
+        row = row.iloc[0]
+        hist = get_fighter_history(name, clean_df)
+
+        wins   = int(hist["won"].sum())
+        losses = int((~hist["won"]).sum())
+        total  = wins + losses
+
+        # Recent form dots (last 8)
+        recent8 = hist.head(8)
+        dots = "".join(
+            f'<span class="form-dot-w">W</span>' if w else f'<span class="form-dot-l">L</span>'
+            for w in recent8["won"]
+        )
+        streak_label = ""
+        if not hist.empty:
+            streak_val = 1
+            first_res = hist.iloc[0]["won"]
+            for _, r in hist.iloc[1:].iterrows():
+                if r["won"] == first_res:
+                    streak_val += 1
+                else:
+                    break
+            streak_label = f'{"🔥 " + str(streak_val) + "-fight WIN streak" if first_res else "❄️ " + str(streak_val) + "-fight loss streak"}'
+
+        st.markdown(
+            f'<div style="background:{"#1f0507" if color=="#e63946" else "#05051f"};'
+            f'border:2px solid {color};border-radius:16px;padding:20px;margin-bottom:16px;">'
+            f'<div style="font-size:0.8rem;color:#888;font-weight:600;letter-spacing:1px;">{side_label}</div>'
+            f'<div style="font-size:1.4rem;font-weight:800;color:{color};margin:4px 0;">{name}</div>'
+            f'<div style="font-size:2rem;font-weight:900;color:white;">{wins}-{losses}</div>'
+            f'<div style="font-size:0.82rem;color:#aaa;">W – L  ({total} fights in dataset)</div>'
+            f'{"<div style=margin-top:8px;font-size:0.82rem;color:#f4a261;>" + streak_label + "</div>" if streak_label else ""}'
+            f'<div style="margin-top:10px;">{dots}</div>'
+            f'<div style="font-size:0.72rem;color:#666;margin-top:4px;">← most recent</div>'
+            f'</div>', unsafe_allow_html=True,
+        )
+
+        # Win method donut
+        fig_donut = method_donut(hist, name)
+        if fig_donut:
+            st.plotly_chart(fig_donut, use_container_width=True)
+
+        # Recent fights table
+        st.markdown(f"**Last {min(10, len(hist))} fights**")
+        recent_display = hist.head(10)[["event_date","opponent","won","method","weight_class"]].copy()
+        recent_display["event_date"] = recent_display["event_date"].dt.strftime("%b %Y")
+        recent_display["Result"] = recent_display["won"].map({True: "✅ Win", False: "❌ Loss"})
+        recent_display = recent_display.rename(columns={
+            "event_date": "Date", "opponent": "Opponent",
+            "method": "Method", "weight_class": "Class",
+        })[["Date","Opponent","Result","Method","Class"]]
+        st.dataframe(recent_display, hide_index=True, use_container_width=True)
+
+    if f1 != "— select —" and f2 != "— none —" and f1 != f2:
+        col_l, col_r = st.columns(2)
+        with col_l:
+            render_fighter_card(f1, "#e63946", "FIGHTER 1")
+        with col_r:
+            render_fighter_card(f2, "#4361ee", "FIGHTER 2")
+
+        # Quick predict button
+        st.markdown("---")
+        if st.button(f"⚡ Predict {f1} vs {f2}", type="primary", use_container_width=True):
+            r_stats = fighters_df[fighters_df["name"]==f1].iloc[0].to_dict() if not fighters_df[fighters_df["name"]==f1].empty else {}
+            b_stats = fighters_df[fighters_df["name"]==f2].iloc[0].to_dict() if not fighters_df[fighters_df["name"]==f2].empty else {}
+            if r_stats and b_stats:
+                pr, pb = predict_matchup(r_stats, b_stats)
+                st.markdown(prob_bar_html(pr, f1, f2), unsafe_allow_html=True)
+                winner = f1 if pr > 0.5 else f2
+                wc = "#e63946" if pr > 0.5 else "#4361ee"
+                st.markdown(
+                    f'<div class="win-banner" style="background:{wc}22;border:2px solid {wc};">'
+                    f'🏆 {winner.upper()} WINS · {conf_badge(max(pr,pb))}</div>',
+                    unsafe_allow_html=True,
+                )
+
+    elif f1 != "— select —":
+        render_fighter_card(f1, "#e63946", "FIGHTER")
+
+    else:
+        st.info("Select a fighter above to see their profile.")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PAGE 3 — MODEL DASHBOARD
 # ═══════════════════════════════════════════════════════════════════════════════
 elif page == "Model Dashboard":
     st.title("📊 Model Dashboard")
@@ -766,68 +975,47 @@ elif page == "Model Dashboard":
     st.markdown("---")
 
     c1, c2, c3, c4 = st.columns(4)
-    kpis = [
-        ("Test Accuracy",    f"{accuracy:.1%}"),
-        ("ROC-AUC",          f"{roc_auc:.3f}"),
-        ("vs Vegas Odds",    f"+{vs_vegas:.1%}"),
-        ("Fights Trained",   f"{len(df):,}"),
-    ]
-    for col, (label, val) in zip([c1, c2, c3, c4], kpis):
+    for col, (label, val) in zip([c1,c2,c3,c4], [
+        ("Test Accuracy", f"{accuracy:.1%}"),
+        ("ROC-AUC",       f"{roc_auc:.3f}"),
+        ("vs Vegas Odds", f"+{vs_vegas:.1%}"),
+        ("Fights Trained",f"{len(df):,}"),
+    ]):
         with col:
             st.markdown(
                 f'<div class="metric-card">'
                 f'<div class="metric-value">{val}</div>'
-                f'<div class="metric-label">{label}</div>'
-                f'</div>',
+                f'<div class="metric-label">{label}</div></div>',
                 unsafe_allow_html=True,
             )
 
     st.markdown("")
-
     col_imp, col_cm = st.columns([3, 2])
 
     with col_imp:
         st.markdown("### Feature Importance")
         fig_imp = go.Figure(go.Bar(
-            x=importances["importance"],
-            y=importances["feature"],
-            orientation="h",
-            marker=dict(
-                color=importances["importance"],
-                colorscale=[[0, "#16213e"], [1, "#e63946"]],
-                showscale=False,
-            ),
-            text=[f"{v:.1%}" for v in importances["importance"]],
-            textposition="outside",
+            x=importances["importance"], y=importances["feature"], orientation="h",
+            marker=dict(color=importances["importance"],
+                        colorscale=[[0,"#16213e"],[1,"#e63946"]], showscale=False),
+            text=[f"{v:.1%}" for v in importances["importance"]], textposition="outside",
         ))
-        fig_imp.update_layout(
-            paper_bgcolor="#0e1117", plot_bgcolor="#0e1117",
-            font_color="white", height=480,
-            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            yaxis=dict(showgrid=False),
-            margin=dict(l=10, r=60, t=20, b=20),
-        )
+        fig_imp.update_layout(paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+            height=480, xaxis=dict(showgrid=False,zeroline=False,showticklabels=False),
+            yaxis=dict(showgrid=False), margin=dict(l=10,r=60,t=20,b=20))
         st.plotly_chart(fig_imp, use_container_width=True)
 
     with col_cm:
         st.markdown("### Confusion Matrix")
-        labels = ["Blue Wins", "Red Wins"]
-        fig_cm = px.imshow(
-            cm,
-            labels=dict(x="Predicted", y="Actual", color="Count"),
+        labels = ["Blue Wins","Red Wins"]
+        fig_cm = px.imshow(cm, labels=dict(x="Predicted",y="Actual",color="Count"),
             x=labels, y=labels,
-            color_continuous_scale=[[0, "#0e1117"], [1, "#e63946"]],
-            text_auto=True,
-        )
-        fig_cm.update_layout(
-            paper_bgcolor="#0e1117", plot_bgcolor="#0e1117",
-            font_color="white", height=320,
-            margin=dict(l=10, r=10, t=20, b=20),
-            coloraxis_showscale=False,
-        )
+            color_continuous_scale=[[0,"#0e1117"],[1,"#e63946"]], text_auto=True)
+        fig_cm.update_layout(paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+            height=320, margin=dict(l=10,r=10,t=20,b=20), coloraxis_showscale=False)
         st.plotly_chart(fig_cm, use_container_width=True)
 
-        st.markdown("### Model Info")
+        st.markdown("### Model Params")
         st.markdown("""
 | Param | Value |
 |-------|-------|
@@ -837,58 +1025,43 @@ elif page == "Model Dashboard":
 | l2_regularization | 1.74 |
 | min_samples_leaf | 20 |
 | max_leaf_nodes | 45 |
-| CV method | TimeSeriesSplit |
+| CV | TimeSeriesSplit |
 """)
 
     st.markdown("### Win Rate by Weight Class")
-    wc_stats = (
-        df.groupby("weight_class")["target"]
-        .agg(["mean", "count"])
-        .reset_index()
-        .rename(columns={"mean": "Red Win Rate", "count": "Fights"})
-        .query("Fights >= 20")
-        .sort_values("Red Win Rate", ascending=False)
-    )
-    fig_wc = px.bar(
-        wc_stats, x="weight_class", y="Red Win Rate",
-        color="Red Win Rate",
-        color_continuous_scale=[[0, "#4361ee"], [0.5, "#888"], [1, "#e63946"]],
+    wc_stats = (df.groupby("weight_class")["target"].agg(["mean","count"]).reset_index()
+        .rename(columns={"mean":"Red Win Rate","count":"Fights"}).query("Fights >= 20")
+        .sort_values("Red Win Rate", ascending=False))
+    fig_wc = px.bar(wc_stats, x="weight_class", y="Red Win Rate", color="Red Win Rate",
+        color_continuous_scale=[[0,"#4361ee"],[0.5,"#888"],[1,"#e63946"]],
         text=[f"{v:.0%}" for v in wc_stats["Red Win Rate"]],
-        labels={"weight_class": "Weight Class", "Red Win Rate": "Red Win Rate"},
-    )
+        labels={"weight_class":"Weight Class","Red Win Rate":"Red Win Rate"})
     fig_wc.update_traces(textposition="outside")
     fig_wc.add_hline(y=0.5, line_dash="dash", line_color="gray", annotation_text="50%")
-    fig_wc.update_layout(
-        paper_bgcolor="#0e1117", plot_bgcolor="#0e1117",
-        font_color="white", height=360, showlegend=False,
-        coloraxis_showscale=False,
-        xaxis=dict(tickangle=-35),
-        margin=dict(l=10, r=10, t=30, b=10),
-    )
+    fig_wc.update_layout(paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+        height=360, showlegend=False, coloraxis_showscale=False,
+        xaxis=dict(tickangle=-35), margin=dict(l=10,r=10,t=30,b=10))
     st.plotly_chart(fig_wc, use_container_width=True)
 
     st.markdown("### Finish Methods")
-    method_counts = df["method"].value_counts().reset_index()
-    method_counts.columns = ["Method", "Count"]
-    fig_method = px.pie(
-        method_counts, values="Count", names="Method",
-        color_discrete_sequence=["#e63946", "#4361ee", "#f4a261", "#2a9d8f", "#e9c46a"],
-        hole=0.45,
-    )
-    fig_method.update_layout(
-        paper_bgcolor="#0e1117", font_color="white",
-        height=340, margin=dict(l=10, r=10, t=20, b=20),
-        legend=dict(bgcolor="#0e1117"),
-    )
-    st.plotly_chart(fig_method, use_container_width=True)
+    mc = df["method"].value_counts().reset_index()
+    mc.columns = ["Method","Count"]
+    fig_m = px.pie(mc, values="Count", names="Method", hole=0.45,
+        color_discrete_sequence=["#e63946","#4361ee","#f4a261","#2a9d8f","#e9c46a"])
+    fig_m.update_layout(paper_bgcolor="#0e1117", font_color="white",
+        height=340, margin=dict(l=10,r=10,t=20,b=20), legend=dict(bgcolor="#0e1117"))
+    st.plotly_chart(fig_m, use_container_width=True)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PAGE 3 — FIGHTER DATABASE
+# PAGE 4 — FIGHTER DATABASE
 # ═══════════════════════════════════════════════════════════════════════════════
 elif page == "Fighter Database":
     st.title("🏟️ Fighter Database")
-    st.markdown("Browse and compare fighters in the dataset.")
+    st.markdown("Browse, filter, and profile all fighters in the dataset.")
+
+    show_all_db = st.checkbox("Show inactive / retired fighters", value=False, key="db_all")
+    base_pool = fighters_df if show_all_db else fighters_df[fighters_df["name"].isin(active_fighters)]
 
     col_s, col_st = st.columns([3, 1])
     with col_s:
@@ -896,7 +1069,7 @@ elif page == "Fighter Database":
     with col_st:
         stance_filter = st.selectbox("Stance", ["All"] + sorted(fighters_df["stance"].dropna().unique().tolist()))
 
-    filtered = fighters_df.copy()
+    filtered = base_pool.copy()
     if search:
         filtered = filtered[filtered["name"].str.contains(search, case=False, na=False)]
     if stance_filter != "All":
@@ -905,35 +1078,25 @@ elif page == "Fighter Database":
     display_cols = ["name","wins","losses","height","weight","reach",
                     "stance","age","SLpM","sig_str_acc","str_def","td_acc","td_def","sub_avg"]
     display_cols = [c for c in display_cols if c in filtered.columns]
-
     st.markdown(f"**{len(filtered):,} fighters**")
-    st.dataframe(
-        filtered[display_cols].sort_values("wins", ascending=False),
-        hide_index=True, use_container_width=True, height=420,
-    )
+    st.dataframe(filtered[display_cols].sort_values("wins", ascending=False),
+                 hide_index=True, use_container_width=True, height=420)
 
     st.markdown("---")
     st.markdown("### Fighter Profile")
 
-    profile_name = st.selectbox("Select a fighter for detailed stats", fighter_names)
+    pool_names = sorted(base_pool["name"].dropna().unique().tolist())
+    profile_name = st.selectbox("Select a fighter", pool_names)
     if profile_name:
         p = fighters_df[fighters_df["name"] == profile_name].iloc[0]
 
-        def gp(col):
-            try:
-                v = p.get(col, 0)
-                return float(v) if v is not None and str(v) not in ("nan","") else 0.0
-            except Exception:
-                return 0.0
-
         pc1, pc2, pc3, pc4 = st.columns(4)
-        stats_top = [
-            ("Record",  f"{int(gp('wins'))}W – {int(gp('losses'))}L"),
-            ("Reach",   f"{gp('reach'):.0f} cm"),
-            ("Age",     f"{int(gp('age'))}"),
-            ("Stance",  str(p.get("stance", "N/A"))),
-        ]
-        for col, (lbl, val) in zip([pc1, pc2, pc3, pc4], stats_top):
+        for col, (lbl, val) in zip([pc1,pc2,pc3,pc4], [
+            ("Record",  f"{int(g(p,'wins'))}W – {int(g(p,'losses'))}L"),
+            ("Reach",   f"{g(p,'reach'):.0f} cm"),
+            ("Age",     f"{int(g(p,'age'))}"),
+            ("Stance",  str(p.get("stance","N/A"))),
+        ]):
             with col:
                 st.markdown(
                     f'<div class="metric-card">'
@@ -943,49 +1106,34 @@ elif page == "Fighter Database":
                 )
 
         st.markdown("")
-
-        radar_cats = ["Str Acc", "Str Def", "TD Acc", "TD Def", "Sub Avg", "SLpM"]
-        max_vals = [1, 1, 1, 1,
-                    max(fighters_df["sub_avg"].max(), 0.01),
-                    max(fighters_df["SLpM"].max(), 0.01)]
-        raw_vals = [gp("sig_str_acc"), gp("str_def"), gp("td_acc"),
-                    gp("td_def"), gp("sub_avg"), gp("SLpM")]
-        norm_vals = [min(v/m, 1) if m > 0 else 0 for v, m in zip(raw_vals, max_vals)]
-        cats_c    = radar_cats + [radar_cats[0]]
-        norm_c    = norm_vals  + [norm_vals[0]]
-
-        fig_radar = go.Figure(go.Scatterpolar(
-            r=norm_c, theta=cats_c,
-            fill="toself", fillcolor="rgba(230,57,70,0.25)",
-            line=dict(color="#e63946", width=2),
-            name=profile_name,
-        ))
-        fig_radar.update_layout(
-            polar=dict(
-                bgcolor="#16213e",
-                radialaxis=dict(visible=True, range=[0,1], showticklabels=False, gridcolor="#333"),
-                angularaxis=dict(gridcolor="#333"),
-            ),
+        radar_cats = ["Str Acc","Str Def","TD Acc","TD Def","Sub Avg","SLpM"]
+        max_v = [1,1,1,1,max(fighters_df["sub_avg"].max(),0.01),max(fighters_df["SLpM"].max(),0.01)]
+        raw_v = [g(p,"sig_str_acc"),g(p,"str_def"),g(p,"td_acc"),g(p,"td_def"),g(p,"sub_avg"),g(p,"SLpM")]
+        norm_v = [min(v/m,1) if m>0 else 0 for v,m in zip(raw_v,max_v)]
+        cats_c = radar_cats+[radar_cats[0]]; norm_c = norm_v+[norm_v[0]]
+        fig_r = go.Figure(go.Scatterpolar(r=norm_c, theta=cats_c, fill="toself",
+            fillcolor="rgba(230,57,70,0.25)", line=dict(color="#e63946",width=2), name=profile_name))
+        fig_r.update_layout(polar=dict(bgcolor="#16213e",
+            radialaxis=dict(visible=True,range=[0,1],showticklabels=False,gridcolor="#333"),
+            angularaxis=dict(gridcolor="#333")),
             paper_bgcolor="#0e1117", font_color="white",
-            height=360, margin=dict(l=30, r=30, t=30, b=30),
-            showlegend=False,
-        )
-        st.plotly_chart(fig_radar, use_container_width=True)
+            height=360, margin=dict(l=30,r=30,t=30,b=30), showlegend=False)
+        st.plotly_chart(fig_r, use_container_width=True)
 
-        fight_history = df[(df["r_fighter"] == profile_name) | (df["b_fighter"] == profile_name)].copy()
-        if not fight_history.empty:
-            fight_history["Result"] = fight_history.apply(
-                lambda row: "Win" if row["winner"] == (
-                    "Red" if row["r_fighter"] == profile_name else "Blue") else "Loss",
-                axis=1,
-            )
-            fight_history["Opponent"] = fight_history.apply(
-                lambda row: row["b_fighter"] if row["r_fighter"] == profile_name else row["r_fighter"],
-                axis=1,
-            )
-            st.markdown(f"### Fight History ({len(fight_history)} fights in dataset)")
-            st.dataframe(
-                fight_history[["event_name","Opponent","Result","method","weight_class"]]
-                .rename(columns={"event_name":"Event","method":"Method","weight_class":"Weight Class"}),
-                hide_index=True, use_container_width=True,
-            )
+        if not clean_df.empty:
+            hist = get_fighter_history(profile_name, clean_df)
+            if not hist.empty:
+                col_donut, col_hist = st.columns([1, 2])
+                with col_donut:
+                    fig_d = method_donut(hist, profile_name)
+                    if fig_d:
+                        st.plotly_chart(fig_d, use_container_width=True)
+                with col_hist:
+                    st.markdown(f"**Fight History ({len(hist)} fights)**")
+                    disp = hist[["event_date","opponent","won","method","weight_class"]].copy()
+                    disp["event_date"] = disp["event_date"].dt.strftime("%b %Y")
+                    disp["Result"] = disp["won"].map({True:"✅ Win",False:"❌ Loss"})
+                    disp = disp.rename(columns={"event_date":"Date","opponent":"Opponent",
+                                                "method":"Method","weight_class":"Class"})
+                    st.dataframe(disp[["Date","Opponent","Result","Method","Class"]],
+                                 hide_index=True, use_container_width=True)
