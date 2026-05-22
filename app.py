@@ -5,6 +5,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import accuracy_score, roc_auc_score, confusion_matrix
+from streamlit_autorefresh import st_autorefresh
+from datetime import datetime
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 import scraper
@@ -400,8 +402,24 @@ with st.sidebar:
 # PAGE 0 — UPCOMING EVENTS
 # ═══════════════════════════════════════════════════════════════════════════════
 if page == "Upcoming Events":
+    # Auto-refresh every 30 minutes (1_800_000 ms)
+    st_autorefresh(interval=1_800_000, key="live_refresh")
+
     st.title("📅 Upcoming UFC Events")
-    st.markdown("Live fight cards from **ufcstats.com** with AI win predictions.")
+
+    col_title, col_refresh = st.columns([5, 1])
+    with col_title:
+        st.markdown("Live fight cards from **ufcstats.com** with AI win predictions.")
+    with col_refresh:
+        if st.button("🔄 Refresh", use_container_width=True):
+            fetch_upcoming_events.clear()
+            fetch_recent_events.clear()
+            fetch_event_fights.clear()
+            fetch_completed_results.clear()
+            fetch_live_fighter.clear()
+            st.rerun()
+
+    st.caption(f"Last updated: {datetime.now().strftime('%b %d, %Y · %I:%M %p')} · auto-refreshes every 30 min")
 
     tab_upcoming, tab_recent = st.tabs(["🔜 Upcoming Cards", "🏁 Recent Results"])
 
