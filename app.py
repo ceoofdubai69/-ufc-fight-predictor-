@@ -421,7 +421,7 @@ with st.sidebar:
     st.markdown("---")
     page = st.radio(
         "Navigate",
-        ["Upcoming Events", "Fight Predictor", "Parlay Builder", "Fighter Lookup", "Model Dashboard", "Fighter Database"],
+        ["Upcoming Events", "Fight Predictor", "Fighter Lookup", "Model Dashboard", "Fighter Database"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -457,7 +457,7 @@ if page == "Upcoming Events":
             st.rerun()
     st.caption(f"Last updated: {datetime.now().strftime('%b %d, %Y · %I:%M %p')} · auto-refreshes every 30 min")
 
-    tab_upcoming, tab_recent = st.tabs(["🔜 Upcoming Cards", "🏁 Recent Results"])
+    tab_upcoming, tab_parlay, tab_recent = st.tabs(["🔜 Upcoming Cards", "🎰 Parlay Builder", "🏁 Recent Results"])
 
     with tab_upcoming:
         with st.spinner("Fetching from ufcstats.com..."):
@@ -530,6 +530,106 @@ if page == "Upcoming Events":
                             f'Pick: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
                             f'{r["pick"]}</strong> · {conf_badge(r["confidence"])}'
                             f'</div></div>',
+                            unsafe_allow_html=True,
+                        )
+
+    with tab_parlay:
+        st.markdown("### 🎰 Parlay Builder")
+        st.markdown("Pick 2 or 3 fights from the current card and we'll calculate your combined parlay probability.")
+
+        with st.spinner("Loading fight card..."):
+            try:
+                parlay_events = fetch_upcoming_events()
+            except Exception:
+                parlay_events = []
+
+        if not parlay_events:
+            st.info("No upcoming events found. Check back closer to fight week.")
+        else:
+            p_event_names = [e["name"] for e in parlay_events]
+            p_selected = st.selectbox("Select Event", p_event_names, key="parlay_event")
+            p_ev = next(e for e in parlay_events if e["name"] == p_selected)
+
+            with st.spinner("Loading fight card..."):
+                p_fights = fetch_event_fights(p_ev["url"])
+
+            if not p_fights:
+                st.warning("Could not load fight card.")
+            else:
+                fight_labels = [f"{f['r_fighter']} vs {f['b_fighter']} ({f['weight_class']})" for f in p_fights]
+                num_legs = st.radio("Legs", [2, 3], horizontal=True, key="parlay_legs")
+
+                leg_selections = []
+                colors = ["#e63946", "#4361ee", "#2a9d8f"]
+                cols = st.columns(num_legs)
+                for i, col in enumerate(cols):
+                    with col:
+                        color = colors[i]
+                        st.markdown(
+                            f'<div style="border:2px solid {color};border-radius:10px;padding:10px 14px;margin-bottom:8px;">'
+                            f'<div style="color:{color};font-weight:700;font-size:0.85rem;">LEG {i+1}</div></div>',
+                            unsafe_allow_html=True,
+                        )
+                        fight_pick = st.selectbox("Fight", ["— select —"] + fight_labels, key=f"pleg_fight{i}")
+                        if fight_pick != "— select —":
+                            idx = fight_labels.index(fight_pick)
+                            fight = p_fights[idx]
+                            winner_pick = st.radio(
+                                "Pick", [fight["r_fighter"], fight["b_fighter"]],
+                                key=f"pleg_pick{i}", horizontal=True,
+                            )
+                            leg_selections.append({"fight": fight, "pick": winner_pick, "color": color, "idx": i+1})
+                        else:
+                            leg_selections.append(None)
+
+                st.markdown("")
+                if st.button("⚡ Calculate Parlay", type="primary", use_container_width=True):
+                    valid_legs = [l for l in leg_selections if l is not None]
+                    if len(valid_legs) < 2:
+                        st.error("Select at least 2 fights.")
+                    else:
+                        combined_prob = 1.0
+                        leg_results = []
+                        for leg in valid_legs:
+                            fight = leg["fight"]
+                            r_stats = fetch_live_fighter(fight["r_fighter"], fight.get("r_url",""))
+                            b_stats = fetch_live_fighter(fight["b_fighter"], fight.get("b_url",""))
+                            prob_r, prob_b = predict_matchup(r_stats, b_stats)
+                            picked_prob = prob_r if leg["pick"] == fight["r_fighter"] else prob_b
+                            combined_prob *= picked_prob
+                            leg_results.append({
+                                "idx": leg["idx"], "color": leg["color"],
+                                "r": fight["r_fighter"], "b": fight["b_fighter"],
+                                "prob_r": prob_r, "prob_b": prob_b,
+                                "pick": leg["pick"], "picked_prob": picked_prob,
+                            })
+
+                        st.markdown("---")
+                        for res in leg_results:
+                            st.markdown(
+                                f'<div class="fight-card">'
+                                f'<div style="color:{res["color"]};font-weight:700;font-size:0.8rem;margin-bottom:6px;">LEG {res["idx"]}</div>'
+                                + prob_bar_html(res["prob_r"], res["r"], res["b"]) +
+                                f'<div style="font-size:0.8rem;color:#aaa;margin-top:6px;">'
+                                f'Your pick: <strong style="color:{res["color"]};">{res["pick"]}</strong>'
+                                f' · Probability: <strong style="color:white;">{res["picked_prob"]:.1%}</strong>'
+                                f'</div></div>',
+                                unsafe_allow_html=True,
+                            )
+
+                        implied = 1 / combined_prob if combined_prob > 0 else 0
+                        amer = int((implied - 1) * 100) if implied >= 2 else int(-100 / max(implied - 1, 0.01))
+                        conf_color = "#2dc653" if combined_prob > 0.40 else ("#f4a261" if combined_prob > 0.22 else "#e63946")
+                        st.markdown(
+                            f'<div style="background:{conf_color}18;border:2px solid {conf_color};'
+                            f'border-radius:14px;padding:24px;text-align:center;margin-top:10px;">'
+                            f'<div style="font-size:0.82rem;color:#aaa;margin-bottom:4px;">{len(valid_legs)}-LEG PARLAY PROBABILITY</div>'
+                            f'<div style="font-size:3.5rem;font-weight:900;color:{conf_color};">{combined_prob:.1%}</div>'
+                            f'<div style="font-size:0.95rem;color:#ccc;margin-top:8px;">'
+                            f'Implied: <strong>{implied:.2f}x</strong> &nbsp;·&nbsp; '
+                            f'American: <strong>{"+" if amer > 0 else ""}{amer}</strong></div>'
+                            f'<div style="font-size:0.75rem;color:#555;margin-top:10px;">AI probabilities only — not financial advice.</div>'
+                            f'</div>',
                             unsafe_allow_html=True,
                         )
 
@@ -736,131 +836,7 @@ elif page == "Fight Predictor":
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PAGE 2 — PARLAY BUILDER
-# ═══════════════════════════════════════════════════════════════════════════════
-elif page == "Parlay Builder":
-    st.title("🎰 Parlay Builder")
-    st.markdown("Build a 2 or 3-leg parlay. The model calculates each fighter's win probability and your combined parlay odds.")
-    st.markdown("---")
-
-    show_all_pb = st.checkbox("Include inactive / retired fighters", value=False, key="pb_all")
-    names_pb = all_fighter_names if show_all_pb else active_fighter_names
-
-    num_legs = st.radio("Number of legs", [2, 3], horizontal=True)
-    st.markdown("")
-
-    legs = []
-    cols = st.columns(num_legs)
-    for i, col in enumerate(cols):
-        with col:
-            color = "#e63946" if i == 0 else ("#4361ee" if i == 1 else "#2a9d8f")
-            label = ["Leg 1", "Leg 2", "Leg 3"][i]
-            st.markdown(
-                f'<div style="border:2px solid {color};border-radius:12px;padding:14px 16px;margin-bottom:10px;">'
-                f'<div style="color:{color};font-weight:700;font-size:0.9rem;letter-spacing:1px;">{label}</div></div>',
-                unsafe_allow_html=True,
-            )
-            f1_key, f2_key = f"pb_r{i}", f"pb_b{i}"
-            f1 = st.selectbox(f"Fighter A", ["— select —"] + names_pb, key=f1_key)
-            f2 = st.selectbox(f"Fighter B", ["— select —"] + names_pb, key=f2_key)
-            pick_key = f"pb_pick{i}"
-            pick = st.radio("Pick", ["Fighter A", "Fighter B"], key=pick_key, horizontal=True)
-            legs.append({"f1": f1, "f2": f2, "pick": pick, "color": color, "label": label})
-
-    st.markdown("")
-    build_btn = st.button("⚡ Build Parlay", type="primary", use_container_width=True)
-
-    if build_btn:
-        valid = all(
-            leg["f1"] != "— select —" and leg["f2"] != "— select —" and leg["f1"] != leg["f2"]
-            for leg in legs
-        )
-        if not valid:
-            st.error("Please select two different fighters for each leg.")
-        else:
-            st.markdown("---")
-            st.markdown("### Parlay Breakdown")
-            combined_prob = 1.0
-            leg_results = []
-
-            for leg in legs:
-                r_row = fighters_df[fighters_df["name"] == leg["f1"]]
-                b_row = fighters_df[fighters_df["name"] == leg["f2"]]
-                if r_row.empty or b_row.empty:
-                    st.warning(f"Could not find stats for {leg['f1']} or {leg['f2']}.")
-                    leg_results.append(None)
-                    continue
-
-                r_stats = r_row.iloc[0].to_dict()
-                b_stats = b_row.iloc[0].to_dict()
-                prob_r, prob_b = predict_matchup(r_stats, b_stats)
-
-                picked_fighter = leg["f1"] if leg["pick"] == "Fighter A" else leg["f2"]
-                picked_prob    = prob_r if leg["pick"] == "Fighter A" else prob_b
-                combined_prob *= picked_prob
-
-                leg_results.append({
-                    "label": leg["label"],
-                    "color": leg["color"],
-                    "f1": leg["f1"], "f2": leg["f2"],
-                    "prob_r": prob_r, "prob_b": prob_b,
-                    "picked": picked_fighter,
-                    "picked_prob": picked_prob,
-                })
-
-            # Display each leg
-            for res in leg_results:
-                if res is None:
-                    continue
-                st.markdown(
-                    f'<div class="fight-card">'
-                    f'<div style="color:{res["color"]};font-weight:700;font-size:0.82rem;margin-bottom:6px;">'
-                    f'{res["label"]}</div>'
-                    + prob_bar_html(res["prob_r"], res["f1"], res["f2"]) +
-                    f'<div style="font-size:0.82rem;margin-top:6px;color:#aaa;">'
-                    f'Your pick: <strong style="color:{res["color"]};">{res["picked"]}</strong> '
-                    f'· Model probability: <strong style="color:white;">{res["picked_prob"]:.1%}</strong>'
-                    f'</div></div>',
-                    unsafe_allow_html=True,
-                )
-
-            # Combined parlay result
-            if all(r is not None for r in leg_results):
-                st.markdown("---")
-                implied_odds = 1 / combined_prob if combined_prob > 0 else 0
-                american_odds = int((implied_odds - 1) * 100) if implied_odds >= 2 else int(-100 / (implied_odds - 1))
-
-                conf_color = "#2dc653" if combined_prob > 0.45 else ("#f4a261" if combined_prob > 0.25 else "#e63946")
-                st.markdown(
-                    f'<div style="background:{conf_color}18;border:2px solid {conf_color};'
-                    f'border-radius:14px;padding:24px;text-align:center;">'
-                    f'<div style="font-size:0.85rem;color:#aaa;margin-bottom:4px;">'
-                    f'{num_legs}-LEG PARLAY PROBABILITY</div>'
-                    f'<div style="font-size:3.5rem;font-weight:900;color:{conf_color};">'
-                    f'{combined_prob:.1%}</div>'
-                    f'<div style="font-size:1rem;color:#ccc;margin-top:8px;">'
-                    f'Implied odds: <strong>{implied_odds:.2f}x</strong>'
-                    f'{"  ·  American: +" + str(american_odds) if american_odds > 0 else "  ·  American: " + str(american_odds)}'
-                    f'</div>'
-                    f'<div style="font-size:0.78rem;color:#666;margin-top:10px;">'
-                    f'Based on AI win probabilities — not financial advice.'
-                    f'</div></div>',
-                    unsafe_allow_html=True,
-                )
-
-                # Leg summary table
-                summary = pd.DataFrame([{
-                    "Leg": r["label"],
-                    "Your Pick": r["picked"],
-                    "vs": r["f2"] if r["picked"] == r["f1"] else r["f1"],
-                    "Win Prob": f"{r['picked_prob']:.1%}",
-                } for r in leg_results if r])
-                st.markdown("")
-                st.dataframe(summary, hide_index=True, use_container_width=True)
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# PAGE 3 — FIGHTER LOOKUP
+# PAGE 2 — FIGHTER LOOKUP
 # ═══════════════════════════════════════════════════════════════════════════════
 elif page == "Fighter Lookup":
     st.title("🔍 Fighter Lookup")
