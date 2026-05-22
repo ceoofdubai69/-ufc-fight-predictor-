@@ -1,6 +1,8 @@
 streamlit
 pandas
+numpy
 scikit-learn
 plotly
 beautifulsoup4
 lxml
+requests
