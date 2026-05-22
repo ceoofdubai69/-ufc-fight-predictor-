@@ -396,6 +396,8 @@ with st.sidebar:
     )
     st.markdown("---")
     st.caption("Model: HistGradientBoosting · Optuna-tuned · Time-series CV")
+    st.markdown("---")
+    st.caption("Made by **Saransh Raina**")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
