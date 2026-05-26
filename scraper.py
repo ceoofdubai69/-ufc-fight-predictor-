@@ -2,12 +2,78 @@ import urllib.request
 import urllib.parse
 import json
 import re
+import os
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import difflib
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 ESPN_BASE = "http://site.api.espn.com/apis/site/v2/sports/mma/ufc"
+EVENTS_RECORD_PATH = os.path.join(os.path.dirname(__file__), "data", "events_record.json")
+
+
+def refresh_events_record():
+    """Fetch all events (6 months back → 6 months forward) and save to disk."""
+    start = (datetime.now() - timedelta(days=180)).strftime("%Y%m%d")
+    end   = (datetime.now() + timedelta(days=180)).strftime("%Y%m%d")
+    data  = _get_json(f"{ESPN_BASE}/scoreboard?dates={start}-{end}")
+
+    records = []
+    for ev in data.get("events", []):
+        comp      = ev.get("competitions", [{}])[0]
+        venue     = comp.get("venue", {})
+        completed = comp.get("status", {}).get("type", {}).get("completed", False)
+        status    = comp.get("status", {}).get("type", {}).get("name", "")
+        city      = venue.get("address", {}).get("city", "")
+        country   = venue.get("address", {}).get("country", "")
+
+        bouts = []
+        for bout in ev.get("competitions", []):
+            fighters = bout.get("competitors", [])
+            if len(fighters) < 2:
+                continue
+            winner = ""
+            for f in fighters:
+                if f.get("winner"):
+                    winner = f["athlete"]["displayName"]
+            bouts.append({
+                "r_fighter":    fighters[0]["athlete"]["displayName"],
+                "b_fighter":    fighters[1]["athlete"]["displayName"],
+                "r_record":     fighters[0].get("records", [{}])[0].get("summary", ""),
+                "b_record":     fighters[1].get("records", [{}])[0].get("summary", ""),
+                "weight_class": bout.get("type", {}).get("abbreviation", ""),
+                "is_title":     "title" in bout.get("type", {}).get("abbreviation", "").lower(),
+                "winner":       winner,
+                "method":       bout.get("status", {}).get("type", {}).get("shortDetail", ""),
+                "r_url": "", "b_url": "",
+            })
+
+        records.append({
+            "id":        ev.get("id", ""),
+            "name":      ev.get("name", ""),
+            "date":      ev.get("date", "")[:10],
+            "location":  f"{city}, {country}".strip(", "),
+            "status":    status,
+            "completed": completed,
+            "bouts":     bouts,
+        })
+
+    os.makedirs(os.path.dirname(EVENTS_RECORD_PATH), exist_ok=True)
+    with open(EVENTS_RECORD_PATH, "w") as f:
+        json.dump(records, f, indent=2)
+    return records
+
+
+def _load_events_record():
+    """Load from disk, refreshing if file is older than 6 hours."""
+    try:
+        age = (datetime.now().timestamp() - os.path.getmtime(EVENTS_RECORD_PATH)) / 3600
+        if age < 6:
+            with open(EVENTS_RECORD_PATH) as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return refresh_events_record()
 
 
 def _get(url):
@@ -80,61 +146,55 @@ def _parse_espn_bouts(ev):
     return fights
 
 
+def _record_to_event(r):
+    """Convert a stored record entry to the app's event dict format."""
+    try:
+        dt = datetime.strptime(r["date"], "%Y-%m-%d")
+        date_fmt = dt.strftime("%B %d, %Y")
+    except Exception:
+        date_fmt = r["date"]
+    return {
+        "name":      r["name"],
+        "date":      date_fmt,
+        "location":  r["location"],
+        "url":       r["id"],
+        "completed": r.get("completed", False),
+        "bouts":     r.get("bouts", []),
+    }
+
+
+def get_all_events():
+    """Return all events (past 6 months + future 6 months) from record."""
+    records = _load_events_record()
+    return [_record_to_event(r) for r in records]
+
+
 def get_upcoming_events():
-    """Return upcoming UFC events from ESPN."""
-    data = _get_json(f"{ESPN_BASE}/scoreboard")
-    events = []
-    for ev in data.get("events", []):
-        comp = ev.get("competitions", [{}])[0]
-        status = comp.get("status", {}).get("type", {}).get("state", "")
-        if status in ("pre", "in"):
-            events.append(_parse_espn_event(ev))
-    return events
+    """Return upcoming (not yet completed) events."""
+    return [e for e in get_all_events() if not e["completed"]]
 
 
 def get_recent_completed_events(n=3):
-    """Return last n completed UFC events from ESPN."""
-    results = []
-    # Search backwards week by week
-    today = datetime.now()
-    for weeks_back in range(1, 12):
-        start = today - timedelta(weeks=weeks_back * 2)
-        end   = today - timedelta(weeks=(weeks_back - 1) * 2)
-        date_range = f"{start.strftime('%Y%m%d')}-{end.strftime('%Y%m%d')}"
-        try:
-            data = _get_json(f"{ESPN_BASE}/scoreboard?dates={date_range}")
-        except Exception:
-            continue
-        for ev in reversed(data.get("events", [])):
-            comp = ev.get("competitions", [{}])[0]
-            if comp.get("status", {}).get("type", {}).get("completed"):
-                results.append(_parse_espn_event(ev))
-                if len(results) >= n:
-                    return results
-    return results
+    """Return last n completed events, newest first."""
+    completed = [e for e in get_all_events() if e["completed"]]
+    completed.sort(key=lambda e: e["date"], reverse=True)
+    return completed[:n]
 
 
 def get_event_fights(event_id_or_ev):
-    """
-    Return fights for an event.
-    Accepts either an ESPN event ID (str) or a pre-parsed event dict.
-    """
-    if isinstance(event_id_or_ev, dict) and "_espn" in event_id_or_ev:
-        return _parse_espn_bouts(event_id_or_ev["_espn"])
-
-    # Fetch from scoreboard and find by ID
-    try:
-        data = _get_json(f"{ESPN_BASE}/scoreboard")
-        for ev in data.get("events", []):
-            if str(ev.get("id")) == str(event_id_or_ev):
-                return _parse_espn_bouts(ev)
-    except Exception:
-        pass
+    """Return fights for an event (accepts event dict or ESPN event ID)."""
+    if isinstance(event_id_or_ev, dict):
+        return event_id_or_ev.get("bouts", [])
+    # Fallback: look up by ID in record
+    records = _load_events_record()
+    for r in records:
+        if str(r["id"]) == str(event_id_or_ev):
+            return r.get("bouts", [])
     return []
 
 
 def get_completed_event_results(event_id_or_ev):
-    """Return fight results for a completed event."""
+    """Return results for a completed event."""
     return get_event_fights(event_id_or_ev)
 
 

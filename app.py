@@ -315,16 +315,19 @@ def load_fight_history():
     return clean, active
 
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=21600)
+def fetch_all_events():        return scraper.get_all_events()
+
+@st.cache_data(ttl=21600)
 def fetch_upcoming_events():   return scraper.get_upcoming_events()
 
-@st.cache_data(ttl=3600)
-def fetch_recent_events():     return scraper.get_recent_completed_events(n=3)
+@st.cache_data(ttl=21600)
+def fetch_recent_events():     return scraper.get_recent_completed_events(n=20)
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=21600)
 def fetch_event_fights(url):   return scraper.get_event_fights(url)
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=21600)
 def fetch_completed_results(url): return scraper.get_completed_event_results(url)
 
 @st.cache_data(ttl=86400)
@@ -457,7 +460,7 @@ if page == "Upcoming Events":
             st.rerun()
     st.caption(f"Last updated: {datetime.now().strftime('%b %d, %Y · %I:%M %p')} · auto-refreshes every 30 min")
 
-    tab_upcoming, tab_parlay, tab_recent = st.tabs(["🔜 Upcoming Cards", "🎰 Parlay Builder", "🏁 Recent Results"])
+    tab_upcoming, tab_parlay, tab_recent, tab_calendar = st.tabs(["🔜 Upcoming Cards", "🎰 Parlay Builder", "🏁 Recent Results", "📋 Full Calendar"])
 
     with tab_upcoming:
         with st.spinner("Fetching from ufcstats.com..."):
@@ -632,6 +635,65 @@ if page == "Upcoming Events":
                             f'</div>',
                             unsafe_allow_html=True,
                         )
+
+    with tab_calendar:
+        st.markdown("### 📋 UFC Event Calendar — Last 6 Months & Next 6 Months")
+        with st.spinner("Loading event record..."):
+            try:
+                all_evs = fetch_all_events()
+            except Exception as e:
+                st.error(f"Could not load events: {e}")
+                all_evs = []
+
+        if not all_evs:
+            st.info("No events found.")
+        else:
+            upcoming_evs  = [e for e in all_evs if not e["completed"]]
+            completed_evs = [e for e in all_evs if e["completed"]]
+            completed_evs.sort(key=lambda e: e["date"], reverse=True)
+
+            if upcoming_evs:
+                st.markdown("#### Upcoming")
+                for ev in upcoming_evs:
+                    bouts = ev.get("bouts", [])
+                    main  = bouts[-1] if bouts else None
+                    main_str = f"{main['r_fighter']} vs {main['b_fighter']}" if main else ""
+                    st.markdown(
+                        f'<div class="fight-card" style="margin-bottom:8px;">'
+                        f'<div style="display:flex;justify-content:space-between;align-items:center;">'
+                        f'<div>'
+                        f'<span style="color:white;font-weight:700;">{ev["name"]}</span><br>'
+                        f'<span style="color:#aaa;font-size:0.8rem;">{ev["date"]} · {ev["location"]}</span><br>'
+                        f'<span style="color:#888;font-size:0.78rem;">{main_str} · {len(bouts)} bouts</span>'
+                        f'</div>'
+                        f'<span style="background:#2dc65322;color:#2dc653;border:1px solid #2dc653;'
+                        f'border-radius:20px;padding:3px 12px;font-size:0.75rem;font-weight:700;">UPCOMING</span>'
+                        f'</div></div>',
+                        unsafe_allow_html=True,
+                    )
+
+            st.markdown("#### Past Results (last 6 months)")
+            for ev in completed_evs:
+                bouts   = ev.get("bouts", [])
+                main    = bouts[-1] if bouts else None
+                winner  = main.get("winner","") if main else ""
+                loser   = main.get("b_fighter","") if main and winner == main.get("r_fighter") else (main.get("r_fighter","") if main else "")
+                result_str = f"{winner} def. {loser} · {main.get('method','')}" if winner else ""
+                with st.expander(f"{ev['name']} — {ev['date']}"):
+                    st.markdown(f"**Location:** {ev['location']}")
+                    if result_str:
+                        st.markdown(f"**Main event:** {result_str}")
+                    if bouts:
+                        rows = []
+                        for b in bouts:
+                            rows.append({
+                                "Fighter A": b["r_fighter"],
+                                "Fighter B": b["b_fighter"],
+                                "Winner": b.get("winner","—") or "—",
+                                "Method": b.get("method","—") or "—",
+                                "Class": b.get("weight_class",""),
+                            })
+                        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
 
     with tab_recent:
         with st.spinner("Fetching recent results..."):

@@ -1,0 +1,3362 @@
+[
+  {
+    "id": "600056375",
+    "name": "UFC 323: Dvalishvili vs. Yan 2",
+    "date": "2025-12-06",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Muhammad Naimov",
+        "b_fighter": "Mairon Santos",
+        "r_record": "13-4-0",
+        "b_record": "18-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Mairon Santos",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Antonio Trocoli",
+        "b_fighter": "Mansur Abdul-Malik",
+        "r_record": "12-7-0",
+        "b_record": "9-1-1",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Mansur Abdul-Malik",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ibo Aslan",
+        "b_fighter": "Iwo Baraniewski",
+        "r_record": "14-4-0",
+        "b_record": "8-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Iwo Baraniewski",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Edson Barboza",
+        "b_fighter": "Jalin Turner",
+        "r_record": "24-14-0",
+        "b_record": "15-9-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Jalin Turner",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Marvin Vettori",
+        "b_fighter": "Brunno Ferreira",
+        "r_record": "19-10-1",
+        "b_record": "15-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Brunno Ferreira",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Far\u00e9s Ziam",
+        "b_fighter": "Nazim Sadykhov",
+        "r_record": "18-4-0",
+        "b_record": "11-2-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Far\u00e9s Ziam",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Karine Silva",
+        "b_fighter": "Maycee Barber",
+        "r_record": "19-7-0",
+        "b_record": "15-3-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Maycee Barber",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Terrance McKinney",
+        "b_fighter": "Chris Duncan",
+        "r_record": "18-8-0",
+        "b_record": "15-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Chris Duncan",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Grant Dawson",
+        "b_fighter": "Manuel Torres",
+        "r_record": "24-3-1",
+        "b_record": "17-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Manuel Torres",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jan Blachowicz",
+        "b_fighter": "Bogdan Guskov",
+        "r_record": "29-11-2",
+        "b_record": "18-3-1",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Henry Cejudo",
+        "b_fighter": "Payton Talbott",
+        "r_record": "16-6-0",
+        "b_record": "11-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Payton Talbott",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Brandon Moreno",
+        "b_fighter": "Tatsuro Taira",
+        "r_record": "23-10-2",
+        "b_record": "18-2-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Tatsuro Taira",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alexandre Pantoja",
+        "b_fighter": "Joshua Van",
+        "r_record": "30-6-0",
+        "b_record": "17-2-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Joshua Van",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Merab Dvalishvili",
+        "b_fighter": "Petr Yan",
+        "r_record": "21-5-0",
+        "b_record": "20-5-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Petr Yan",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600056266",
+    "name": "UFC Fight Night: Royval vs. Kape",
+    "date": "2025-12-14",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Jamey-Lyn Horth",
+        "b_fighter": "Tereza Bleda",
+        "r_record": "9-3-0",
+        "b_record": "7-2-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Jamey-Lyn Horth",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Guilherme Pat",
+        "b_fighter": "Allen Frye Jr.",
+        "r_record": "6-1-0",
+        "b_record": "6-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Guilherme Pat",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Melissa Croden",
+        "b_fighter": "Luana Santos",
+        "r_record": "8-3-0",
+        "b_record": "10-2-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Luana Santos",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Steven Asplund",
+        "b_fighter": "Sean Sharaf",
+        "r_record": "7-2-0",
+        "b_record": "4-2-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Steven Asplund",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Joanderson Brito",
+        "b_fighter": "Isaac Thomson",
+        "r_record": "18-5-1",
+        "b_record": "9-3-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Joanderson Brito",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Neil Magny",
+        "b_fighter": "Yaroslav Amosov",
+        "r_record": "31-15-0",
+        "b_record": "30-1-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Yaroslav Amosov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "King Green",
+        "b_fighter": "Lance Gibson Jr.",
+        "r_record": "35-17-1",
+        "b_record": "10-2-0",
+        "weight_class": "Catch Weight",
+        "is_title": false,
+        "winner": "King Green",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kennedy Nzechukwu",
+        "b_fighter": "Marcus Buchecha",
+        "r_record": "14-6-1",
+        "b_record": "5-3-1",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Morgan Charri\u00e8re",
+        "b_fighter": "Melquizael Costa",
+        "r_record": "21-12-1",
+        "b_record": "26-8-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Melquizael Costa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cesar Almeida",
+        "b_fighter": "Cezary Oleksiejczuk",
+        "r_record": "7-2-0",
+        "b_record": "17-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Cezary Oleksiejczuk",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Giga Chikadze",
+        "b_fighter": "Kevin Vallejos",
+        "r_record": "15-6-0",
+        "b_record": "18-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Kevin Vallejos",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Manel Kape",
+        "b_fighter": "Brandon Royval",
+        "r_record": "22-7-0",
+        "b_record": "17-9-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Manel Kape",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057024",
+    "name": "UFC 324: Gaethje vs. Pimblett",
+    "date": "2026-01-24",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Adam Fugitt",
+        "b_fighter": "Ty Miller",
+        "r_record": "10-6-0",
+        "b_record": "7-0-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Ty Miller",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Josh Hokit",
+        "b_fighter": "Denzel Freeman",
+        "r_record": "9-0-0",
+        "b_record": "7-2-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Josh Hokit",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alex Perez",
+        "b_fighter": "Charles Johnson",
+        "r_record": "26-10-0",
+        "b_record": "19-8-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Alex Perez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Nikita Krylov",
+        "b_fighter": "Modestas Bukauskas",
+        "r_record": "31-11-0",
+        "b_record": "20-7-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Nikita Krylov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Andrey Pulyaev",
+        "b_fighter": "Ateba Gautier",
+        "r_record": "10-4-0",
+        "b_record": "11-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Ateba Gautier",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Deiveson Figueiredo",
+        "b_fighter": "Umar Nurmagomedov",
+        "r_record": "25-6-1",
+        "b_record": "20-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Umar Nurmagomedov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Arnold Allen",
+        "b_fighter": "Jean Silva",
+        "r_record": "21-4-0",
+        "b_record": "17-3-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Jean Silva",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Rose Namajunas",
+        "b_fighter": "Natalia Silva",
+        "r_record": "15-8-0",
+        "b_record": "20-5-1",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Natalia Silva",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Derrick Lewis",
+        "b_fighter": "Waldo Cortes Acosta",
+        "r_record": "29-13-0",
+        "b_record": "17-3-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Waldo Cortes Acosta",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Song Yadong",
+        "b_fighter": "Sean O'Malley",
+        "r_record": "22-9-1",
+        "b_record": "19-3-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Sean O'Malley",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Justin Gaethje",
+        "b_fighter": "Paddy Pimblett",
+        "r_record": "27-5-0",
+        "b_record": "23-4-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Justin Gaethje",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057025",
+    "name": "UFC 325: Volkanovski vs. Lopes 2",
+    "date": "2026-01-31",
+    "location": "Sydney, Australia",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Lawrence Lui",
+        "b_fighter": "Sulangrangbo",
+        "r_record": "8-1-0",
+        "b_record": "10-4-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Lawrence Lui",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Sebastian Szalay",
+        "b_fighter": "Keiichiro Nakamura",
+        "r_record": "10-2-0",
+        "b_record": "8-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Keiichiro Nakamura",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Sangwook Kim",
+        "b_fighter": "Dom Mar Fan",
+        "r_record": "13-4-0",
+        "b_record": "9-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Dom Mar Fan",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Yizha",
+        "b_fighter": "Kaan Ofli",
+        "r_record": "26-6-0",
+        "b_record": "14-4-1",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Kaan Ofli",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Oban Elliott",
+        "b_fighter": "Jonathan Micallef",
+        "r_record": "12-4-0",
+        "b_record": "10-1-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Jonathan Micallef",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Torrez Finney",
+        "b_fighter": "Jacob Malkoun",
+        "r_record": "11-1-0",
+        "b_record": "10-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Jacob Malkoun",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cody Brundage",
+        "b_fighter": "Cam Rowston",
+        "r_record": "12-9-1",
+        "b_record": "15-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Cam Rowston",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Billy Elekana",
+        "b_fighter": "Junior Tafa",
+        "r_record": "10-2-0",
+        "b_record": "7-5-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Billy Elekana",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jamie Mullarkey",
+        "b_fighter": "Quillan Salkilld",
+        "r_record": "18-9-0",
+        "b_record": "12-1-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Quillan Salkilld",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tai Tuivasa",
+        "b_fighter": "Tallison Teixeira",
+        "r_record": "15-10-0",
+        "b_record": "9-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Tallison Teixeira",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Rafael Fiziev",
+        "b_fighter": "Mauricio Ruffy",
+        "r_record": "13-5-0",
+        "b_record": "13-2-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Mauricio Ruffy",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Dan Hooker",
+        "b_fighter": "Beno\u00eet Saint Denis",
+        "r_record": "24-14-0",
+        "b_record": "17-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Beno\u00eet Saint Denis",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alexander Volkanovski",
+        "b_fighter": "Diego Lopes",
+        "r_record": "28-4-0",
+        "b_record": "27-8-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Alexander Volkanovski",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057328",
+    "name": "UFC Fight Night: Bautista vs. Oliveira",
+    "date": "2026-02-07",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Priscila Cachoeira",
+        "b_fighter": "Klaudia Sygu\u0142a",
+        "r_record": "13-8-0",
+        "b_record": "8-2-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Klaudia Sygu\u0142a",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Muin Gafurov",
+        "b_fighter": "Jakub Wik\u0142acz",
+        "r_record": "20-7-0",
+        "b_record": "18-3-2",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Jakub Wik\u0142acz",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Wang Cong",
+        "b_fighter": "Eduarda Moura",
+        "r_record": "9-1-0",
+        "b_record": "12-2-0",
+        "weight_class": "Catchweight",
+        "is_title": false,
+        "winner": "Wang Cong",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Javid Basharat",
+        "b_fighter": "Gianni Vazquez",
+        "r_record": "15-2-0",
+        "b_record": "13-5-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Javid Basharat",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Bruna Brasil",
+        "b_fighter": "Ketlen Souza",
+        "r_record": "11-7-1",
+        "b_record": "16-6-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Ketlen Souza",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Niko Price",
+        "b_fighter": "Nikolay Veretennikov",
+        "r_record": "16-11-0",
+        "b_record": "14-8-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Nikolay Veretennikov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alex Morono",
+        "b_fighter": "Daniil Donchenko",
+        "r_record": "24-13-0",
+        "b_record": "14-2-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Daniil Donchenko",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Dustin Jacoby",
+        "b_fighter": "Julius Walker",
+        "r_record": "22-9-1",
+        "b_record": "7-2-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Dustin Jacoby",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Farid Basharat",
+        "b_fighter": "Jean Matsumoto",
+        "r_record": "15-0-0",
+        "b_record": "17-2-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Farid Basharat",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Michal Oleksiejczuk",
+        "b_fighter": "Marc-Andre Barriault",
+        "r_record": "22-9-0",
+        "b_record": "17-11-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Michal Oleksiejczuk",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Rizvan Kuniev",
+        "b_fighter": "Jailton Almeida",
+        "r_record": "13-3-1",
+        "b_record": "22-5-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Rizvan Kuniev",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kyoji Horiguchi",
+        "b_fighter": "Amir Albazi",
+        "r_record": "36-5-0",
+        "b_record": "17-3-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Kyoji Horiguchi",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Mario Bautista",
+        "b_fighter": "Vinicius Oliveira",
+        "r_record": "17-3-0",
+        "b_record": "23-4-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Mario Bautista",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057329",
+    "name": "UFC Fight Night: Strickland vs. Hernandez",
+    "date": "2026-02-21",
+    "location": "Houston, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Juliana Miller",
+        "b_fighter": "Carli Judice",
+        "r_record": "5-4-0",
+        "b_record": "6-2-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Carli Judice",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jordan Leavitt",
+        "b_fighter": "Yadier del Valle",
+        "r_record": "13-3-0",
+        "b_record": "10-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Jordan Leavitt",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Phil Rowe",
+        "b_fighter": "Jean-Paul Lebosnoyani",
+        "r_record": "11-7-0",
+        "b_record": "10-2-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Jean-Paul Lebosnoyani",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ramiz Brahimaj",
+        "b_fighter": "Punahele Soriano",
+        "r_record": "13-6-0",
+        "b_record": "13-4-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Punahele Soriano",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Joselyne Edwards",
+        "b_fighter": "Nora Cornolle",
+        "r_record": "18-6-0",
+        "b_record": "9-4-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Joselyne Edwards",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alden Coria",
+        "b_fighter": "Luis Gurule",
+        "r_record": "12-3-0",
+        "b_record": "11-3-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Alden Coria",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ode' Osbourne",
+        "b_fighter": "Alibi Idiris",
+        "r_record": "13-10-0",
+        "b_record": "12-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Alibi Idiris",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Chidi Njokuani",
+        "b_fighter": "Carlos Leal",
+        "r_record": "25-12-0",
+        "b_record": "23-7-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Carlos Leal",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Michel Pereira",
+        "b_fighter": "Zachary Reese",
+        "r_record": "32-14-0",
+        "b_record": "10-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Michel Pereira",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Josiah Harrell",
+        "b_fighter": "Jacobe Smith",
+        "r_record": "11-1-0",
+        "b_record": "12-0-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Jacobe Smith",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ante Delija",
+        "b_fighter": "Serghei Spivac",
+        "r_record": "26-8-0",
+        "b_record": "18-6-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Serghei Spivac",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Dan Ige",
+        "b_fighter": "Melquizael Costa",
+        "r_record": "19-11-0",
+        "b_record": "26-8-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Melquizael Costa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Geoff Neal",
+        "b_fighter": "Uro\u0161 Medi\u0107",
+        "r_record": "16-8-0",
+        "b_record": "13-3-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Uro\u0161 Medi\u0107",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Sean Strickland",
+        "b_fighter": "Anthony Hernandez",
+        "r_record": "31-7-0",
+        "b_record": "15-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Sean Strickland",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057330",
+    "name": "UFC Fight Night: Moreno vs. Kavanagh",
+    "date": "2026-02-28",
+    "location": "Mexico City, Mexico",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Wes Schultz",
+        "b_fighter": "Damian Pinas",
+        "r_record": "9-3-0",
+        "b_record": "9-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Damian Pinas",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Francis Marshall",
+        "b_fighter": "Erik Silva",
+        "r_record": "10-3-0",
+        "b_record": "9-4-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Francis Marshall",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ernesta Kareckaite",
+        "b_fighter": "Regina Tarin",
+        "r_record": "6-2-1",
+        "b_record": "8-0-0",
+        "weight_class": "Catchweight",
+        "is_title": false,
+        "winner": "Regina Tarin",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Douglas Silva de Andrade",
+        "b_fighter": "Javier Reyes",
+        "r_record": "29-7-0",
+        "b_record": "23-5-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Javier Reyes",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kris Moutinho",
+        "b_fighter": "Cristian Qui\u00f1onez",
+        "r_record": "14-8-0",
+        "b_record": "19-5-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Cristian Qui\u00f1onez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Macy Chiasson",
+        "b_fighter": "Ailin Perez",
+        "r_record": "11-6-0",
+        "b_record": "13-2-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Ailin Perez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jose Daniel Medina",
+        "b_fighter": "Ryan Gandra",
+        "r_record": "11-7-0",
+        "b_record": "9-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Ryan Gandra",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Angel Pacheco",
+        "b_fighter": "Santiago Luna",
+        "r_record": "7-4-0",
+        "b_record": "8-0-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Santiago Luna",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kevin Borjas",
+        "b_fighter": "Imanol Rodriguez",
+        "r_record": "10-5-0",
+        "b_record": "7-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Imanol Rodriguez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Felipe Bunes",
+        "b_fighter": "\u00c9dgar Ch\u00e1irez",
+        "r_record": "14-9-0",
+        "b_record": "13-6-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "\u00c9dgar Ch\u00e1irez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "King Green",
+        "b_fighter": "Daniel Zellhuber",
+        "r_record": "35-17-1",
+        "b_record": "15-4-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "King Green",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Marlon Vera",
+        "b_fighter": "David Martinez",
+        "r_record": "23-12-1",
+        "b_record": "14-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "David Martinez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Brandon Moreno",
+        "b_fighter": "Lone'er Kavanagh",
+        "r_record": "23-10-2",
+        "b_record": "10-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Lone'er Kavanagh",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057326",
+    "name": "UFC 326: Holloway vs. Oliveira 2",
+    "date": "2026-03-07",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Rodolfo Bellato",
+        "b_fighter": "Luke Fernandez",
+        "r_record": "13-3-1",
+        "b_record": "6-1-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Rodolfo Bellato",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Diyar Nurgozhay",
+        "b_fighter": "Rafael Tobias",
+        "r_record": "11-2-0",
+        "b_record": "14-2-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Diyar Nurgozhay",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Sumudaerji",
+        "b_fighter": "Jesus Aguilar",
+        "r_record": "19-7-0",
+        "b_record": "12-4-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Sumudaerji",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cody Durden",
+        "b_fighter": "Nyamjargal Tumendemberel",
+        "r_record": "18-10-1",
+        "b_record": "10-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Nyamjargal Tumendemberel",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ricky Turcios",
+        "b_fighter": "Alberto Montes",
+        "r_record": "13-6-0",
+        "b_record": "12-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Alberto Montes",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cody Brundage",
+        "b_fighter": "Donte Johnson",
+        "r_record": "12-9-1",
+        "b_record": "8-0-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Donte Johnson",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cody Garbrandt",
+        "b_fighter": "Xiao Long",
+        "r_record": "15-7-0",
+        "b_record": "27-11-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Cody Garbrandt",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Gregory Rodrigues",
+        "b_fighter": "Brunno Ferreira",
+        "r_record": "19-6-0",
+        "b_record": "15-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Gregory Rodrigues",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Michael Johnson",
+        "b_fighter": "Drew Dober",
+        "r_record": "25-20-0",
+        "b_record": "29-15-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Drew Dober",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Rob Font",
+        "b_fighter": "Raul Rosas Jr.",
+        "r_record": "22-10-0",
+        "b_record": "12-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Raul Rosas Jr.",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Reinier de Ridder",
+        "b_fighter": "Caio Borralho",
+        "r_record": "21-4-0",
+        "b_record": "18-2-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Caio Borralho",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Charles Oliveira",
+        "b_fighter": "Max Holloway",
+        "r_record": "37-11-0",
+        "b_record": "27-9-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Charles Oliveira",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057364",
+    "name": "UFC Fight Night: Emmett vs. Vallejos",
+    "date": "2026-03-14",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Sam Hughes",
+        "b_fighter": "Piera Rodriguez",
+        "r_record": "11-7-0",
+        "b_record": "12-2-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Piera Rodriguez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Luan Lacerda",
+        "b_fighter": "Hecher Sosa",
+        "r_record": "13-4-0",
+        "b_record": "15-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Hecher Sosa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Montse Rendon",
+        "b_fighter": "Bia Mesquita",
+        "r_record": "7-2-0",
+        "b_record": "7-0-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Bia Mesquita",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Brad Tavares",
+        "b_fighter": "Eryk Anders",
+        "r_record": "21-13-0",
+        "b_record": "18-9-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Eryk Anders",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Manoel Sousa",
+        "b_fighter": "Bolaji Oki",
+        "r_record": "14-1-0",
+        "b_record": "10-4-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Manoel Sousa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "SuYoung You",
+        "b_fighter": "Elijah Smith",
+        "r_record": "16-4-0",
+        "b_record": "10-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Elijah Smith",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Vitor Petrino",
+        "b_fighter": "Steven Asplund",
+        "r_record": "14-2-0",
+        "b_record": "7-2-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Vitor Petrino",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Chris Curtis",
+        "b_fighter": "Myktybek Orolbai",
+        "r_record": "32-13-0",
+        "b_record": "16-2-1",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Myktybek Orolbai",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Bruno Silva",
+        "b_fighter": "Charles Johnson",
+        "r_record": "15-8-2",
+        "b_record": "19-8-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Charles Johnson",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ion Cutelaba",
+        "b_fighter": "Oumar Sy",
+        "r_record": "20-11-1",
+        "b_record": "12-2-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Ion Cutelaba",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Harry Hardwick",
+        "b_fighter": "Marwan Rahiki",
+        "r_record": "13-5-1",
+        "b_record": "9-0-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Marwan Rahiki",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Andre Fili",
+        "b_fighter": "Jose Miguel Delgado",
+        "r_record": "25-13-0",
+        "b_record": "11-2-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Jose Miguel Delgado",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Gillian Robertson",
+        "b_fighter": "Amanda Lemos",
+        "r_record": "17-8-0",
+        "b_record": "15-6-1",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Gillian Robertson",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Josh Emmett",
+        "b_fighter": "Kevin Vallejos",
+        "r_record": "19-7-0",
+        "b_record": "18-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Kevin Vallejos",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057365",
+    "name": "UFC Fight Night: Evloev vs. Murphy",
+    "date": "2026-03-21",
+    "location": "London, England",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Shanelle Dyer",
+        "b_fighter": "Ravena Oliveira",
+        "r_record": "7-1-0",
+        "b_record": "7-4-1",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Shanelle Dyer",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Abdul-Kareem Al-Selwady",
+        "b_fighter": "Shem Rock",
+        "r_record": "16-4-0",
+        "b_record": "12-3-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Abdul-Kareem Al-Selwady",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Louie Sutherland",
+        "b_fighter": "Brando Peri\u010di\u0107",
+        "r_record": "11-5-0",
+        "b_record": "7-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Brando Peri\u010di\u0107",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Antonio Trocoli",
+        "b_fighter": "Mantas Kondratavi\u010dius",
+        "r_record": "12-7-0",
+        "b_record": "9-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Mantas Kondratavi\u010dius",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Mario Pinto",
+        "b_fighter": "Felipe Franco",
+        "r_record": "12-0-0",
+        "b_record": "10-2-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Mario Pinto",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Nathaniel Wood",
+        "b_fighter": "Losene Keita",
+        "r_record": "23-6-0",
+        "b_record": "16-2-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Nathaniel Wood",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Mason Jones",
+        "b_fighter": "Axel Sola",
+        "r_record": "18-2-0",
+        "b_record": "11-1-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Mason Jones",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Danny Silva",
+        "b_fighter": "Kurtis Campbell",
+        "r_record": "11-2-0",
+        "b_record": "8-1-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Danny Silva",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Roman Dolidze",
+        "b_fighter": "Christian Leroy Duncan",
+        "r_record": "15-5-0",
+        "b_record": "14-2-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Christian Leroy Duncan",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Austen Lane",
+        "b_fighter": "Iwo Baraniewski",
+        "r_record": "13-8-0",
+        "b_record": "8-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Iwo Baraniewski",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Michael Page",
+        "b_fighter": "Sam Patterson",
+        "r_record": "25-3-0",
+        "b_record": "14-3-1",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Michael Page",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Luke Riley",
+        "b_fighter": "Michael Aswell",
+        "r_record": "13-0-0",
+        "b_record": "11-4-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Luke Riley",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Movsar Evloev",
+        "b_fighter": "Lerone Murphy",
+        "r_record": "20-0-0",
+        "b_record": "17-1-1",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Movsar Evloev",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600057366",
+    "name": "UFC Fight Night: Adesanya vs. Pyfer",
+    "date": "2026-03-28",
+    "location": "Seattle, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Bruna Brasil",
+        "b_fighter": "Alexia Thainara",
+        "r_record": "11-7-1",
+        "b_record": "14-1-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Alexia Thainara",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ricky Simon",
+        "b_fighter": "Adrian Yanez",
+        "r_record": "22-7-1",
+        "b_record": "17-6-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Bruno Lopes",
+        "b_fighter": "Navajo Stirling",
+        "r_record": "14-3-0",
+        "b_record": "9-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Navajo Stirling",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Casey O'Neill",
+        "b_fighter": "Gabriella Fernandes",
+        "r_record": "11-2-0",
+        "b_record": "11-4-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Casey O'Neill",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Marcin Tybura",
+        "b_fighter": "Tyrell Fortune",
+        "r_record": "27-11-0",
+        "b_record": "18-3-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Tyrell Fortune",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Chase Hooper",
+        "b_fighter": "Lance Gibson Jr.",
+        "r_record": "16-5-1",
+        "b_record": "10-2-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Lance Gibson Jr.",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ignacio Bahamondes",
+        "b_fighter": "Tofiq Musayev",
+        "r_record": "17-7-0",
+        "b_record": "23-6-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Tofiq Musayev",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kyle Nelson",
+        "b_fighter": "Terrance McKinney",
+        "r_record": "17-7-1",
+        "b_record": "18-8-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Terrance McKinney",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Yousri Belgaroui",
+        "b_fighter": "Mansur Abdul-Malik",
+        "r_record": "10-3-0",
+        "b_record": "9-1-1",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Yousri Belgaroui",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Julian Erosa",
+        "b_fighter": "Lerryan Douglas",
+        "r_record": "31-14-0",
+        "b_record": "14-5-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Lerryan Douglas",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Michael Chiesa",
+        "b_fighter": "Niko Price",
+        "r_record": "20-7-0",
+        "b_record": "16-11-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Michael Chiesa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alexa Grasso",
+        "b_fighter": "Maycee Barber",
+        "r_record": "17-5-1",
+        "b_record": "15-3-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Alexa Grasso",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Israel Adesanya",
+        "b_fighter": "Joe Pyfer",
+        "r_record": "24-6-0",
+        "b_record": "16-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Joe Pyfer",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058693",
+    "name": "UFC Fight Night: Moicano vs. Duncan",
+    "date": "2026-04-04",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Kai Kamaka III",
+        "b_fighter": "Dakota Hope",
+        "r_record": "18-7-1",
+        "b_record": "11-2-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Kai Kamaka III",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Melissa Gatto",
+        "b_fighter": "Dione Barbosa",
+        "r_record": "9-3-2",
+        "b_record": "9-4-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Dione Barbosa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tresean Gore",
+        "b_fighter": "Azamat Bekoev",
+        "r_record": "7-4-0",
+        "b_record": "20-5-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Tresean Gore",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Hailey Cowan",
+        "b_fighter": "Alice Pereira",
+        "r_record": "7-5-0",
+        "b_record": "7-1-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Alice Pereira",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Lando Vannata",
+        "b_fighter": "Darrius Flowers",
+        "r_record": "12-8-2",
+        "b_record": "13-8-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Darrius Flowers",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alessandro Costa",
+        "b_fighter": "Stewart Nicoll",
+        "r_record": "15-5-0",
+        "b_record": "8-3-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Alessandro Costa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Thomas Petersen",
+        "b_fighter": "Guilherme Pat",
+        "r_record": "11-4-0",
+        "b_record": "6-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Thomas Petersen",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jose Delano",
+        "b_fighter": "Robert Rucha\u0142a",
+        "r_record": "17-3-0",
+        "b_record": "11-3-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Jose Delano",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Manolo Zecchini",
+        "b_fighter": "Tommy McMillen",
+        "r_record": "11-5-0",
+        "b_record": "10-0-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Tommy McMillen",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ethyn Ewing",
+        "b_fighter": "Rafael Estevam",
+        "r_record": "10-2-0",
+        "b_record": "14-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Ethyn Ewing",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Brendson Ribeiro",
+        "b_fighter": "Abdul-Rakhman Yakhyaev",
+        "r_record": "17-10-0",
+        "b_record": "9-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Abdul-Rakhman Yakhyaev",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Virna Jandiroba",
+        "b_fighter": "Tabatha Ricci",
+        "r_record": "23-4-0",
+        "b_record": "12-4-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Virna Jandiroba",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Renato Moicano",
+        "b_fighter": "Chris Duncan",
+        "r_record": "21-7-1",
+        "b_record": "15-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Renato Moicano",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058745",
+    "name": "UFC 327: Proch\u00e1zka vs. Ulberg",
+    "date": "2026-04-11",
+    "location": "Miami, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Charles Radtke",
+        "b_fighter": "Francisco Prado",
+        "r_record": "12-5-0",
+        "b_record": "12-5-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Charles Radtke",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kelvin Gastelum",
+        "b_fighter": "Vicente Luque",
+        "r_record": "21-11-0",
+        "b_record": "24-12-1",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Vicente Luque",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Chris Padilla",
+        "b_fighter": "MarQuel Mederos",
+        "r_record": "17-6-1",
+        "b_record": "11-1-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tatiana Suarez",
+        "b_fighter": "Loopy God\u00ednez",
+        "r_record": "13-1-0",
+        "b_record": "14-6-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Tatiana Suarez",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Mateusz Gamrot",
+        "b_fighter": "Esteban Ribovics",
+        "r_record": "26-4-0",
+        "b_record": "15-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Mateusz Gamrot",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kevin Holland",
+        "b_fighter": "Randy Brown",
+        "r_record": "29-15-0",
+        "b_record": "20-8-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Kevin Holland",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Patricio Pitbull",
+        "b_fighter": "Aaron Pico",
+        "r_record": "37-9-0",
+        "b_record": "14-5-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Aaron Pico",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cub Swanson",
+        "b_fighter": "Nate Landwehr",
+        "r_record": "31-14-0",
+        "b_record": "18-8-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Cub Swanson",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Johnny Walker",
+        "b_fighter": "Dominick Reyes",
+        "r_record": "22-10-0",
+        "b_record": "16-5-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Dominick Reyes",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Curtis Blaydes",
+        "b_fighter": "Josh Hokit",
+        "r_record": "19-6-0",
+        "b_record": "9-0-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Josh Hokit",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Paulo Costa",
+        "b_fighter": "Azamat Murzakanov",
+        "r_record": "16-4-0",
+        "b_record": "16-1-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Paulo Costa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ji\u0159\u00ed Proch\u00e1zka",
+        "b_fighter": "Carlos Ulberg",
+        "r_record": "32-6-1",
+        "b_record": "15-1-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Carlos Ulberg",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058725",
+    "name": "UFC Fight Night: Burns vs. Malott",
+    "date": "2026-04-18",
+    "location": "Winnipeg, Canada",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Jamie Siraj",
+        "b_fighter": "John Yannis",
+        "r_record": "14-4-0",
+        "b_record": "10-4-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "John Yannis",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "John Castaneda",
+        "b_fighter": "Mark Vologdin",
+        "r_record": "21-8-1",
+        "b_record": "12-4-2",
+        "weight_class": "Catch Weight",
+        "is_title": false,
+        "winner": "",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "JJ Aldrich",
+        "b_fighter": "Jamey-Lyn Horth",
+        "r_record": "15-7-0",
+        "b_record": "9-3-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "JJ Aldrich",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Daria Zhelezniakova",
+        "b_fighter": "Melissa Croden",
+        "r_record": "10-3-0",
+        "b_record": "8-3-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Melissa Croden",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tanner Boser",
+        "b_fighter": "Gokhan Saricam",
+        "r_record": "22-11-1",
+        "b_record": "12-2-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Gokhan Saricam",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Robert Valentin",
+        "b_fighter": "Julien LeBlanc",
+        "r_record": "12-6-0",
+        "b_record": "10-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Robert Valentin",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Dennis Buzukja",
+        "b_fighter": "Marcio Barbosa",
+        "r_record": "12-6-0",
+        "b_record": "18-2-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Marcio Barbosa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Thiago Mois\u00e9s",
+        "b_fighter": "Gauge Young",
+        "r_record": "19-10-0",
+        "b_record": "11-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Gauge Young",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Karine Silva",
+        "b_fighter": "Jasmine Jasudavicius",
+        "r_record": "19-7-0",
+        "b_record": "15-4-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "Jasmine Jasudavicius",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Mandel Nallo",
+        "b_fighter": "Jai Herbert",
+        "r_record": "14-4-0",
+        "b_record": "14-6-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Jai Herbert",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Kyler Phillips",
+        "b_fighter": "Charles Jourdain",
+        "r_record": "12-5-0",
+        "b_record": "18-8-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Charles Jourdain",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Gilbert Burns",
+        "b_fighter": "Mike Malott",
+        "r_record": "22-10-0",
+        "b_record": "14-2-1",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Mike Malott",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058746",
+    "name": "UFC Fight Night: Sterling vs. Zalal",
+    "date": "2026-04-25",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Julia Polastri",
+        "b_fighter": "Talita Alencar",
+        "r_record": "14-6-0",
+        "b_record": "8-1-1",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Talita Alencar",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Max Griffin",
+        "b_fighter": "Victor Valenzuela",
+        "r_record": "20-13-0",
+        "b_record": "14-4-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Victor Valenzuela",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Lucas Brennan",
+        "b_fighter": "Francis Marshall",
+        "r_record": "11-3-0",
+        "b_record": "10-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Francis Marshall",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jafel Filho",
+        "b_fighter": "Cody Durden",
+        "r_record": "17-5-0",
+        "b_record": "18-10-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Cody Durden",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Mayra Bueno Silva",
+        "b_fighter": "Michelle Montague",
+        "r_record": "10-7-1",
+        "b_record": "8-0-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Michelle Montague",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Sedriques Dumas",
+        "b_fighter": "Jackson McVey",
+        "r_record": "10-5-0",
+        "b_record": "7-2-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Jackson McVey",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Eric McConico",
+        "b_fighter": "Rodolfo Vieira",
+        "r_record": "11-4-1",
+        "b_record": "11-5-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Eric McConico",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ryan Spann",
+        "b_fighter": "Marcus Buchecha",
+        "r_record": "24-11-0",
+        "b_record": "5-3-1",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Ryan Spann",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Raoni Barcelos",
+        "b_fighter": "Montel Jackson",
+        "r_record": "22-5-0",
+        "b_record": "15-4-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Raoni Barcelos",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Davey Grant",
+        "b_fighter": "Adrian Luna Martinetti",
+        "r_record": "18-8-0",
+        "b_record": "17-2-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Davey Grant",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alexander Hernandez",
+        "b_fighter": "Rafa Garcia",
+        "r_record": "18-9-0",
+        "b_record": "19-4-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Rafa Garcia",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Joselyne Edwards",
+        "b_fighter": "Norma Dumont",
+        "r_record": "18-6-0",
+        "b_record": "13-3-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Joselyne Edwards",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Aljamain Sterling",
+        "b_fighter": "Youssef Zalal",
+        "r_record": "26-5-0",
+        "b_record": "18-6-1",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Aljamain Sterling",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058807",
+    "name": "UFC Fight Night: Della Maddalena vs. Prates",
+    "date": "2026-05-02",
+    "location": "Perth, Australia",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Dom Mar Fan",
+        "b_fighter": "Kody Steele",
+        "r_record": "9-3-0",
+        "b_record": "8-1-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Kody Steele",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Themba Gorimbo",
+        "b_fighter": "Jonathan Micallef",
+        "r_record": "14-7-0",
+        "b_record": "10-1-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Jonathan Micallef",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Wes Schultz",
+        "b_fighter": "Ben Johnston",
+        "r_record": "9-3-0",
+        "b_record": "5-2-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Wes Schultz",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Vince Morales",
+        "b_fighter": "Colby Thicknesse",
+        "r_record": "16-11-0",
+        "b_record": "9-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Colby Thicknesse",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Gerald Meerschaert",
+        "b_fighter": "Jacob Malkoun",
+        "r_record": "37-22-0",
+        "b_record": "10-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Jacob Malkoun",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Junior Tafa",
+        "b_fighter": "Kevin Christian",
+        "r_record": "7-5-0",
+        "b_record": "9-4-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Junior Tafa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Robert Bryczek",
+        "b_fighter": "Cam Rowston",
+        "r_record": "18-7-0",
+        "b_record": "15-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Cam Rowston",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tai Tuivasa",
+        "b_fighter": "Louie Sutherland",
+        "r_record": "15-10-0",
+        "b_record": "11-5-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Louie Sutherland",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Shamil Gaziev",
+        "b_fighter": "Brando Peri\u010di\u0107",
+        "r_record": "14-3-0",
+        "b_record": "7-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Brando Peri\u010di\u0107",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Marwan Rahiki",
+        "b_fighter": "Ollie Schmid",
+        "r_record": "9-0-0",
+        "b_record": "4-3-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Marwan Rahiki",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tim Elliott",
+        "b_fighter": "Steve Erceg",
+        "r_record": "22-14-1",
+        "b_record": "14-4-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Steve Erceg",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Beneil Dariush",
+        "b_fighter": "Quillan Salkilld",
+        "r_record": "23-8-1",
+        "b_record": "12-1-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Quillan Salkilld",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Carlos Prates",
+        "b_fighter": "Jack Della Maddalena",
+        "r_record": "24-7-0",
+        "b_record": "18-4-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Carlos Prates",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058947",
+    "name": "UFC 328: Chimaev vs. Strickland",
+    "date": "2026-05-09",
+    "location": "Newark, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Clayton Carpenter",
+        "b_fighter": "Jose Ochoa",
+        "r_record": "8-3-0",
+        "b_record": "9-2-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Jose Ochoa",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Djorden Santos",
+        "b_fighter": "Baisangur Susurkaev",
+        "r_record": "11-3-0",
+        "b_record": "12-0-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Baisangur Susurkaev",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Pat Sabatini",
+        "b_fighter": "William Gomis",
+        "r_record": "22-5-0",
+        "b_record": "15-4-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Pat Sabatini",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Roman Kopylov",
+        "b_fighter": "Marco Tulio",
+        "r_record": "15-5-0",
+        "b_record": "14-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Roman Kopylov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jim Miller",
+        "b_fighter": "Jared Gordon",
+        "r_record": "39-19-0",
+        "b_record": "21-9-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Jim Miller",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Grant Dawson",
+        "b_fighter": "Mateusz R\u0119becki",
+        "r_record": "24-3-1",
+        "b_record": "20-5-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Grant Dawson",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Yaroslav Amosov",
+        "b_fighter": "Joel \u00c1lvarez",
+        "r_record": "30-1-0",
+        "b_record": "23-4-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Yaroslav Amosov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ozzy Diaz",
+        "b_fighter": "Ateba Gautier",
+        "r_record": "10-4-0",
+        "b_record": "11-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Ateba Gautier",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Jeremy Stephens",
+        "b_fighter": "King Green",
+        "r_record": "29-23-0",
+        "b_record": "35-17-1",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "King Green",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Joaquin Buckley",
+        "b_fighter": "Sean Brady",
+        "r_record": "21-8-0",
+        "b_record": "19-2-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Sean Brady",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alexander Volkov",
+        "b_fighter": "Waldo Cortes Acosta",
+        "r_record": "40-11-0",
+        "b_record": "17-3-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "Alexander Volkov",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tatsuro Taira",
+        "b_fighter": "Joshua Van",
+        "r_record": "18-2-0",
+        "b_record": "17-2-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Joshua Van",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Sean Strickland",
+        "b_fighter": "Khamzat Chimaev",
+        "r_record": "31-7-0",
+        "b_record": "15-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Sean Strickland",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058948",
+    "name": "UFC Fight Night: Allen vs. Costa",
+    "date": "2026-05-16",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_FINAL",
+    "completed": true,
+    "bouts": [
+      {
+        "r_fighter": "Nicolle Caliari",
+        "b_fighter": "Shauna Bannon",
+        "r_record": "9-4-0",
+        "b_record": "7-3-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Nicolle Caliari",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Daniel Barez",
+        "b_fighter": "Luis Gurule",
+        "r_record": "17-8-0",
+        "b_record": "11-3-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "Luis Gurule",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Alice Ardelean",
+        "b_fighter": "Polyana Viana",
+        "r_record": "12-7-0",
+        "b_record": "13-9-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "Alice Ardelean",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Cody Brundage",
+        "b_fighter": "Andre Petroski",
+        "r_record": "12-9-1",
+        "b_record": "13-7-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "Cody Brundage",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Ketlen Vieira",
+        "b_fighter": "Jacqueline Cavalcanti",
+        "r_record": "16-5-0",
+        "b_record": "10-2-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "Ketlen Vieira",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tommy Gantt",
+        "b_fighter": "Artur Minev",
+        "r_record": "12-0-0",
+        "b_record": "7-1-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "Tommy Gantt",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Tuco Tokkos",
+        "b_fighter": "Ivan Erslan",
+        "r_record": "11-6-0",
+        "b_record": "15-6-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "Ivan Erslan",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Khaos Williams",
+        "b_fighter": "Nikolay Veretennikov",
+        "r_record": "16-5-0",
+        "b_record": "14-8-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "Khaos Williams",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Bernardo Sopaj",
+        "b_fighter": "Timmy Cuamba",
+        "r_record": "13-3-0",
+        "b_record": "10-4-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Bernardo Sopaj",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Modestas Bukauskas",
+        "b_fighter": "Christian Edwards",
+        "r_record": "20-7-0",
+        "b_record": "8-5-0",
+        "weight_class": "Catch Weight",
+        "is_title": false,
+        "winner": "Modestas Bukauskas",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Malcolm Wellmaker",
+        "b_fighter": "Juan Diaz",
+        "r_record": "10-2-0",
+        "b_record": "16-1-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "Juan Diaz",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Dooho Choi",
+        "b_fighter": "Daniel Santos",
+        "r_record": "17-4-1",
+        "b_record": "14-3-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Dooho Choi",
+        "method": "Final"
+      },
+      {
+        "r_fighter": "Arnold Allen",
+        "b_fighter": "Melquizael Costa",
+        "r_record": "21-4-0",
+        "b_record": "26-8-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "Arnold Allen",
+        "method": "Final"
+      }
+    ]
+  },
+  {
+    "id": "600058517",
+    "name": "UFC Fight Night: Song vs. Figueiredo",
+    "date": "2026-05-30",
+    "location": "Cotai, Macau",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Loma Lookboonmee",
+        "b_fighter": "Jaqueline Amorim",
+        "r_record": "10-4-0",
+        "b_record": "10-2-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Zhu Kangjie",
+        "b_fighter": "Ramon Taveras",
+        "r_record": "21-4-0",
+        "b_record": "10-4-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Angela Hill",
+        "b_fighter": "Jingnan Xiong",
+        "r_record": "18-16-0",
+        "b_record": "19-2-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Jesus Aguilar",
+        "b_fighter": "Rei Tsuruya",
+        "r_record": "12-4-0",
+        "b_record": "10-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Aoriqileng",
+        "b_fighter": "Cody Haddon",
+        "r_record": "26-12-0",
+        "b_record": "8-1-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Ding Meng",
+        "b_fighter": "Jose Henrique",
+        "r_record": "35-9-0",
+        "b_record": "8-1-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Luis Felipe Dias",
+        "b_fighter": "Yi Sak Lee",
+        "r_record": "17-5-0",
+        "b_record": "8-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 4:00 AM EDT"
+      },
+      {
+        "r_fighter": "Alex Perez",
+        "b_fighter": "Sumudaerji",
+        "r_record": "26-10-0",
+        "b_record": "19-7-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 7:00 AM EDT"
+      },
+      {
+        "r_fighter": "Jake Matthews",
+        "b_fighter": "Muslim Salikhov",
+        "r_record": "22-8-0",
+        "b_record": "22-6-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 7:00 AM EDT"
+      },
+      {
+        "r_fighter": "Kai Asakura",
+        "b_fighter": "Cameron Smotherman",
+        "r_record": "21-6-0",
+        "b_record": "12-6-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 7:00 AM EDT"
+      },
+      {
+        "r_fighter": "Sergei Pavlovich",
+        "b_fighter": "Tallison Teixeira",
+        "r_record": "20-3-0",
+        "b_record": "9-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 7:00 AM EDT"
+      },
+      {
+        "r_fighter": "Alonzo Menifield",
+        "b_fighter": "Zhang Mingyang",
+        "r_record": "17-6-1",
+        "b_record": "19-7-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 7:00 AM EDT"
+      },
+      {
+        "r_fighter": "Song Yadong",
+        "b_fighter": "Deiveson Figueiredo",
+        "r_record": "22-9-1",
+        "b_record": "25-6-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "5/30 - 7:00 AM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600058949",
+    "name": "UFC Fight Night: Muhammad vs. Bonfim",
+    "date": "2026-06-06",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Priscila Cachoeira",
+        "b_fighter": "Chelsea Chandler",
+        "r_record": "13-8-0",
+        "b_record": "6-4-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Joanderson Brito",
+        "b_fighter": "Jordan Leavitt",
+        "r_record": "18-5-1",
+        "b_record": "13-3-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Ariane Carnelossi",
+        "b_fighter": "Ketlen Souza",
+        "r_record": "15-4-0",
+        "b_record": "16-6-0",
+        "weight_class": "W Strawweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Far\u00e9s Ziam",
+        "b_fighter": "Tom Nolan",
+        "r_record": "18-4-0",
+        "b_record": "10-1-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Yuneisy Duben",
+        "b_fighter": "Jeisla Chaves",
+        "r_record": "6-1-0",
+        "b_record": "7-0-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Bruno Silva",
+        "b_fighter": "\u00c9dgar Ch\u00e1irez",
+        "r_record": "15-8-2",
+        "b_record": "13-6-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Jakub Wik\u0142acz",
+        "b_fighter": "Marcus McGhee",
+        "r_record": "18-3-2",
+        "b_record": "10-2-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Matt Schnell",
+        "b_fighter": "Imanol Rodriguez",
+        "r_record": "17-10-0",
+        "b_record": "7-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Billy Elekana",
+        "b_fighter": "Iwo Baraniewski",
+        "r_record": "10-2-0",
+        "b_record": "8-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Victor Henry",
+        "b_fighter": "Bryce Mitchell",
+        "r_record": "25-7-0",
+        "b_record": "18-4-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Brendan Allen",
+        "b_fighter": "Edmen Shahbazyan",
+        "r_record": "26-7-0",
+        "b_record": "16-5-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Belal Muhammad",
+        "b_fighter": "Gabriel Bonfim",
+        "r_record": "24-5-0",
+        "b_record": "19-1-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/6 - 8:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600058854",
+    "name": "UFC Freedom 250: Topuria vs. Gaethje",
+    "date": "2026-06-15",
+    "location": "Washington, USA",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Steve Garcia",
+        "b_fighter": "Diego Lopes",
+        "r_record": "19-5-0",
+        "b_record": "27-8-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Kyle Daukaus",
+        "b_fighter": "Bo Nickal",
+        "r_record": "17-4-0",
+        "b_record": "8-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Michael Chandler",
+        "b_fighter": "Mauricio Ruffy",
+        "r_record": "23-10-0",
+        "b_record": "13-2-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Derrick Lewis",
+        "b_fighter": "Josh Hokit",
+        "r_record": "29-13-0",
+        "b_record": "9-0-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Aiemann Zahabi",
+        "b_fighter": "Sean O'Malley",
+        "r_record": "14-2-0",
+        "b_record": "19-3-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Ciryl Gane",
+        "b_fighter": "Alex Pereira",
+        "r_record": "13-2-0",
+        "b_record": "13-3-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      },
+      {
+        "r_fighter": "Justin Gaethje",
+        "b_fighter": "Ilia Topuria",
+        "r_record": "27-5-0",
+        "b_record": "17-0-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/14 - 8:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059467",
+    "name": "UFC Fight Night: Kape vs. Horiguchi",
+    "date": "2026-06-20",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Ethyn Ewing",
+        "b_fighter": "Farid Basharat",
+        "r_record": "10-2-0",
+        "b_record": "15-0-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Melsik Baghdasaryan",
+        "b_fighter": "Murtazali Magomedov",
+        "r_record": "8-3-0",
+        "b_record": "10-0-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Gaston Bola\u00f1os",
+        "b_fighter": "Michael Aswell",
+        "r_record": "8-5-0",
+        "b_record": "11-4-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Karol Rosa",
+        "b_fighter": "Luana Santos",
+        "r_record": "19-7-0",
+        "b_record": "10-2-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Jhonata Diniz",
+        "b_fighter": "Jos\u00e9 Luiz",
+        "r_record": "9-2-0",
+        "b_record": "6-1-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Melissa Mullins",
+        "b_fighter": "Bia Mesquita",
+        "r_record": "7-2-0",
+        "b_record": "7-0-0",
+        "weight_class": "W Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Christian Rodriguez",
+        "b_fighter": "Hyder Amil",
+        "r_record": "12-4-0",
+        "b_record": "11-2-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Kevin Borjas",
+        "b_fighter": "Andre Lima",
+        "r_record": "10-5-0",
+        "b_record": "11-0-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Ion Cutelaba",
+        "b_fighter": "Navajo Stirling",
+        "r_record": "20-11-1",
+        "b_record": "9-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Allan Nascimento",
+        "b_fighter": "Mitch Raposo",
+        "r_record": "22-6-0",
+        "b_record": "10-3-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Kyoji Horiguchi",
+        "b_fighter": "Manel Kape",
+        "r_record": "36-5-0",
+        "b_record": "22-7-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/20 - 8:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059254",
+    "name": "UFC Fight Night: Fiziev vs. Torres",
+    "date": "2026-06-27",
+    "location": "Baku, Azerbaijan",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Jean Matsumoto",
+        "b_fighter": "Bekzat Almakhan",
+        "r_record": "17-2-0",
+        "b_record": "12-3-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Andreas Gustafsson",
+        "b_fighter": "Daniil Donchenko",
+        "r_record": "12-3-0",
+        "b_record": "14-2-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Nursulton Ruziboev",
+        "b_fighter": "Andrey Pulyaev",
+        "r_record": "36-9-2",
+        "b_record": "10-4-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 12:00 PM EDT"
+      },
+      {
+        "r_fighter": "Marvin Vettori",
+        "b_fighter": "Ismail Naurdiev",
+        "r_record": "19-10-1",
+        "b_record": "25-8-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 12:00 PM EDT"
+      },
+      {
+        "r_fighter": "Julius Walker",
+        "b_fighter": "Abdul-Rakhman Yakhyaev",
+        "r_record": "7-2-0",
+        "b_record": "9-0-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Eric Nolan",
+        "b_fighter": "Farman Hasanov",
+        "r_record": "8-4-0",
+        "b_record": "5-0-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Abus Magomedov",
+        "b_fighter": "Michal Oleksiejczuk",
+        "r_record": "28-7-1",
+        "b_record": "22-9-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Ikram Aliskerov",
+        "b_fighter": "Brunno Ferreira",
+        "r_record": "17-2-0",
+        "b_record": "15-3-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 12:00 PM EDT"
+      },
+      {
+        "r_fighter": "Asu Almabayev",
+        "b_fighter": "Charles Johnson",
+        "r_record": "23-3-0",
+        "b_record": "19-8-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Nazim Sadykhov",
+        "b_fighter": "Matheus Camilo",
+        "r_record": "11-2-1",
+        "b_record": "10-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 9:00 AM EDT"
+      },
+      {
+        "r_fighter": "Michel Pereira",
+        "b_fighter": "Shara Magomedov",
+        "r_record": "32-14-0",
+        "b_record": "16-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 12:00 PM EDT"
+      },
+      {
+        "r_fighter": "Rafael Fiziev",
+        "b_fighter": "Manuel Torres",
+        "r_record": "13-5-0",
+        "b_record": "17-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "6/27 - 12:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059148",
+    "name": "UFC 329: McGregor vs. Holloway 2",
+    "date": "2026-07-11",
+    "location": "Las Vegas, USA",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Ode' Osbourne",
+        "b_fighter": "Cody Durden",
+        "r_record": "13-10-0",
+        "b_record": "18-10-1",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Wang Cong",
+        "b_fighter": "Tracy Cortez",
+        "r_record": "9-1-0",
+        "b_record": "12-3-0",
+        "weight_class": "W Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "Cody Garbrandt",
+        "b_fighter": "Adrian Yanez",
+        "r_record": "15-7-0",
+        "b_record": "17-6-1",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 7:00 PM EDT"
+      },
+      {
+        "r_fighter": "Cesar Almeida",
+        "b_fighter": "Damian Pinas",
+        "r_record": "7-2-0",
+        "b_record": "9-1-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 7:00 PM EDT"
+      },
+      {
+        "r_fighter": "Kai Kamaka III",
+        "b_fighter": "Luke Riley",
+        "r_record": "18-7-1",
+        "b_record": "13-0-0",
+        "weight_class": "Featherweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 7:00 PM EDT"
+      },
+      {
+        "r_fighter": "Robert Whittaker",
+        "b_fighter": "Nikita Krylov",
+        "r_record": "27-9-0",
+        "b_record": "31-11-0",
+        "weight_class": "Light Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 7:00 PM EDT"
+      },
+      {
+        "r_fighter": "Gable Steveson",
+        "b_fighter": "Elisha Ellison",
+        "r_record": "3-0-0",
+        "b_record": "5-2-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 9:00 PM EDT"
+      },
+      {
+        "r_fighter": "Brandon Royval",
+        "b_fighter": "Lone'er Kavanagh",
+        "r_record": "17-9-0",
+        "b_record": "10-1-0",
+        "weight_class": "Flyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 9:00 PM EDT"
+      },
+      {
+        "r_fighter": "Cory Sandhagen",
+        "b_fighter": "Mario Bautista",
+        "r_record": "18-6-0",
+        "b_record": "17-3-0",
+        "weight_class": "Bantamweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 9:00 PM EDT"
+      },
+      {
+        "r_fighter": "Paddy Pimblett",
+        "b_fighter": "Beno\u00eet Saint Denis",
+        "r_record": "23-4-0",
+        "b_record": "17-3-0",
+        "weight_class": "Lightweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 9:00 PM EDT"
+      },
+      {
+        "r_fighter": "Max Holloway",
+        "b_fighter": "Conor McGregor",
+        "r_record": "27-9-0",
+        "b_record": "22-6-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/11 - 9:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059599",
+    "name": "UFC Fight Night: Oklahoma City",
+    "date": "2026-07-18",
+    "location": "Oklahoma City, USA",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Brad Tavares",
+        "b_fighter": "Marc-Andre Barriault",
+        "r_record": "21-13-0",
+        "b_record": "17-11-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "7/18 - 6:00 PM EDT"
+      },
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "7/18 - 9:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059667",
+    "name": "UFC Fight Night: Abu Dhabi",
+    "date": "2026-07-25",
+    "location": "Abu Dhabi, United Arab Emirates",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "7/25 - 6:00 PM EDT"
+      },
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "7/25 - 9:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059339",
+    "name": "UFC Fight Night: Medi\u0107 vs. Rodriguez",
+    "date": "2026-08-01",
+    "location": "Belgrade, Serbia",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "Du\u0161ko Todorovi\u0107",
+        "b_fighter": "Robert Valentin",
+        "r_record": "13-6-0",
+        "b_record": "12-6-0",
+        "weight_class": "Middleweight",
+        "is_title": false,
+        "winner": "",
+        "method": "8/1 - 2:00 PM EDT"
+      },
+      {
+        "r_fighter": "Marcin Tybura",
+        "b_fighter": "Aleksandar Rakic",
+        "r_record": "27-11-0",
+        "b_record": "14-6-0",
+        "weight_class": "Heavyweight",
+        "is_title": false,
+        "winner": "",
+        "method": "8/1 - 2:00 PM EDT"
+      },
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "8/1 - 11:00 AM EDT"
+      },
+      {
+        "r_fighter": "Daniel Rodriguez",
+        "b_fighter": "Uro\u0161 Medi\u0107",
+        "r_record": "20-5-0",
+        "b_record": "13-3-0",
+        "weight_class": "Welterweight",
+        "is_title": false,
+        "winner": "",
+        "method": "8/1 - 2:00 PM EDT"
+      }
+    ]
+  },
+  {
+    "id": "600059185",
+    "name": "UFC 330",
+    "date": "2026-08-15",
+    "location": "Philadelphia, USA",
+    "status": "STATUS_SCHEDULED",
+    "completed": false,
+    "bouts": [
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "8/15 - 5:00 PM EDT"
+      },
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "8/15 - 7:00 PM EDT"
+      },
+      {
+        "r_fighter": "TBA",
+        "b_fighter": "Opponent TBA",
+        "r_record": "",
+        "b_record": "",
+        "weight_class": "",
+        "is_title": false,
+        "winner": "",
+        "method": "8/15 - 9:00 PM EDT"
+      }
+    ]
+  }
+]
