@@ -36,11 +36,19 @@ def refresh_events_record():
             for f in fighters:
                 if f.get("winner"):
                     winner = f["athlete"]["displayName"]
+            r_ath = fighters[0]["athlete"]
+            b_ath = fighters[1]["athlete"]
+            r_id  = fighters[0].get("id", "")
+            b_id  = fighters[1].get("id", "")
             bouts.append({
-                "r_fighter":    fighters[0]["athlete"]["displayName"],
-                "b_fighter":    fighters[1]["athlete"]["displayName"],
+                "r_fighter":    r_ath.get("displayName", ""),
+                "b_fighter":    b_ath.get("displayName", ""),
                 "r_record":     fighters[0].get("records", [{}])[0].get("summary", ""),
                 "b_record":     fighters[1].get("records", [{}])[0].get("summary", ""),
+                "r_flag":       r_ath.get("flag", {}).get("href", ""),
+                "b_flag":       b_ath.get("flag", {}).get("href", ""),
+                "r_img":        f"https://a.espncdn.com/i/headshots/mma/players/full/{r_id}.png" if r_id else "",
+                "b_img":        f"https://a.espncdn.com/i/headshots/mma/players/full/{b_id}.png" if b_id else "",
                 "weight_class": bout.get("type", {}).get("abbreviation", ""),
                 "is_title":     "title" in bout.get("type", {}).get("abbreviation", "").lower(),
                 "winner":       winner,

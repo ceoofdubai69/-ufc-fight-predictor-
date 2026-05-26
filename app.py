@@ -188,13 +188,41 @@ st.markdown("""
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-def prob_bar_html(prob_red, name_red, name_blue):
+def prob_bar_html(prob_red, name_red, name_blue, r_record="", b_record="", r_img="", b_img=""):
     wr, wb = int(prob_red * 100), int((1 - prob_red) * 100)
+    def avatar(img, name, color):
+        if img:
+            return (f'<img src="{img}" style="width:52px;height:52px;border-radius:50%;'
+                    f'object-fit:cover;border:2px solid {color};background:#1a1a2e;" '
+                    f'onerror="this.style.display=\'none\'">')
+        initials = "".join(p[0] for p in name.split()[:2]).upper()
+        return (f'<div style="width:52px;height:52px;border-radius:50%;background:{color}22;'
+                f'border:2px solid {color};display:flex;align-items:center;justify-content:center;'
+                f'font-weight:800;font-size:0.9rem;color:{color};">{initials}</div>')
+
+    r_av = avatar(r_img, name_red,  "#e63946")
+    b_av = avatar(b_img, name_blue, "#4361ee")
+    r_rec = f'<div style="font-size:0.72rem;color:#888;margin-top:2px;">{r_record}</div>' if r_record else ""
+    b_rec = f'<div style="font-size:0.72rem;color:#888;margin-top:2px;">{b_record}</div>' if b_record else ""
+
     return f"""
-    <div style="margin:4px 0 2px 0;">
-      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:5px;">
-        <span style="color:#e63946;font-weight:700">🔴 {name_red}</span>
-        <span style="color:#4361ee;font-weight:700">{name_blue} 🔵</span>
+    <div style="margin:6px 0 4px 0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          {r_av}
+          <div>
+            <div style="color:#e63946;font-weight:700;font-size:0.95rem;">{name_red}</div>
+            {r_rec}
+          </div>
+        </div>
+        <div style="color:#555;font-weight:900;font-size:1.1rem;">VS</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-direction:row-reverse;">
+          {b_av}
+          <div style="text-align:right;">
+            <div style="color:#4361ee;font-weight:700;font-size:0.95rem;">{name_blue}</div>
+            {b_rec}
+          </div>
+        </div>
       </div>
       <div class="prob-bar-wrap">
         <div class="prob-bar-red"  style="flex:{wr}">{wr}%</div>
@@ -495,7 +523,8 @@ if page == "Upcoming Events":
                 else:
                     results = []
                     prog = st.progress(0)
-                    for i, fight in enumerate(fights):
+                    fights_ordered = list(reversed(fights))  # main event first
+                    for i, fight in enumerate(fights_ordered):
                         r_stats = fetch_live_fighter(fight["r_fighter"], fight.get("r_url",""))
                         b_stats = fetch_live_fighter(fight["b_fighter"], fight.get("b_url",""))
                         prob_r, prob_b = predict_matchup(r_stats, b_stats)
@@ -505,7 +534,7 @@ if page == "Upcoming Events":
                             "confidence": confidence,
                             "pick": fight["r_fighter"] if prob_r > 0.5 else fight["b_fighter"],
                         })
-                        prog.progress((i + 1) / len(fights))
+                        prog.progress((i + 1) / len(fights_ordered))
                     prog.empty()
 
                     hot = [r for r in results if r["confidence"] >= 0.70]
@@ -524,17 +553,21 @@ if page == "Upcoming Events":
                                     f'</div>', unsafe_allow_html=True,
                                 )
 
-                    st.markdown(f"### {selected_event} — {len(fights)} Fights")
+                    st.markdown(f"### {selected_event} — {len(fights_ordered)} Fights")
                     for r in results:
                         fight = r["fight"]
-                        is_hot   = r["confidence"] >= 0.70
-                        title_tag = " 🥇" if fight["is_title"] else ""
+                        is_hot    = r["confidence"] >= 0.70
+                        title_tag = " 🥇" if fight.get("is_title") else ""
                         hot_tag   = '<span class="hot-pick-badge">HOT PICK</span>' if is_hot else ""
                         st.markdown(
                             f'<div class="fight-card">'
-                            f'<div style="font-size:0.78rem;color:#888;margin-bottom:6px;">'
+                            f'<div style="font-size:0.78rem;color:#888;margin-bottom:4px;">'
                             f'{fight["weight_class"]}{title_tag}{hot_tag}</div>'
-                            + prob_bar_html(r["prob_r"], fight["r_fighter"], fight["b_fighter"]) +
+                            + prob_bar_html(
+                                r["prob_r"], fight["r_fighter"], fight["b_fighter"],
+                                r_record=fight.get("r_record",""), b_record=fight.get("b_record",""),
+                                r_img=fight.get("r_img",""),        b_img=fight.get("b_img",""),
+                            ) +
                             f'<div style="font-size:0.78rem;color:#aaa;margin-top:6px;">'
                             f'Pick: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
                             f'{r["pick"]}</strong> · {conf_badge(r["confidence"])}'
@@ -719,18 +752,19 @@ if page == "Upcoming Events":
                     fights = fetch_completed_results(ev["url"])
                 if fights:
                     rows = []
-                    for f in fights:
+                    for f in reversed(fights):  # main event first
                         r_stats = fetch_live_fighter(f["r_fighter"], "")
                         b_stats = fetch_live_fighter(f["b_fighter"], "")
                         prob_r, prob_b = predict_matchup(r_stats, b_stats)
-                        model_pick   = f["r_fighter"] if prob_r > 0.5 else f["b_fighter"]
-                        actual_winner = f.get("winner","")
+                        model_pick    = f["r_fighter"] if prob_r > 0.5 else f["b_fighter"]
+                        actual_winner = f.get("winner", "")
                         correct = "✅" if actual_winner and model_pick == actual_winner else ("❌" if actual_winner else "—")
                         rows.append({
                             "🔴 Red": f["r_fighter"], "🔵 Blue": f["b_fighter"],
                             "Actual Winner": actual_winner or "—", "Model Pick": model_pick,
                             "✓": correct, "Red %": f"{prob_r:.0%}", "Blue %": f"{prob_b:.0%}",
-                            "Method": f["method"], "Rd": f["round"], "Class": f["weight_class"],
+                            "Method": f.get("method", "—") or "—",
+                            "Class": f.get("weight_class", "—"),
                         })
                     st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
                 st.markdown("---")
