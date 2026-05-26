@@ -188,16 +188,42 @@ st.markdown("""
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
+def _avatar(img, name, color):
+    initials = "".join(p[0] for p in name.split()[:2]).upper()
+    bg_img = f"url('{img}')" if img else "none"
+    return (
+        f'<div style="'
+        f'background-image:{bg_img};background-size:cover;background-position:center top;'
+        f'background-color:{color}22;width:56px;height:56px;border-radius:50%;flex-shrink:0;'
+        f'border:2px solid {color};display:flex;align-items:center;justify-content:center;'
+        f'font-weight:800;font-size:0.85rem;color:{color};">'
+        f'{"" if img else initials}</div>'
+    )
+
+
 def prob_bar_html(prob_red, name_red, name_blue, r_record="", b_record="", r_img="", b_img=""):
     wr, wb = int(prob_red * 100), int((1 - prob_red) * 100)
-    r_rec = f'<span style="font-size:0.72rem;color:#888;margin-left:6px;">{r_record}</span>' if r_record else ""
-    b_rec = f'<span style="font-size:0.72rem;color:#888;margin-right:6px;">{b_record}</span>' if b_record else ""
+    r_av  = _avatar(r_img, name_red,  "#e63946")
+    b_av  = _avatar(b_img, name_blue, "#4361ee")
+    r_rec = f'<div style="font-size:0.72rem;color:#888;">{r_record}</div>' if r_record else ""
+    b_rec = f'<div style="font-size:0.72rem;color:#888;">{b_record}</div>' if b_record else ""
     return (
         f'<div style="margin:6px 0 4px 0;">'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;">'
-        f'<div style="color:#e63946;font-weight:700;">{name_red}{r_rec}</div>'
-        f'<div style="color:#4361ee;font-weight:700;">{b_rec}{name_blue}</div>'
+        f'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'
+        # Red corner
+        f'<div style="display:flex;align-items:center;gap:10px;">'
+        f'{r_av}'
+        f'<div><div style="color:#e63946;font-weight:700;font-size:0.95rem;">{name_red}</div>{r_rec}</div>'
         f'</div>'
+        # VS
+        f'<div style="color:#444;font-weight:900;font-size:1rem;flex-shrink:0;">VS</div>'
+        # Blue corner
+        f'<div style="display:flex;align-items:center;gap:10px;flex-direction:row-reverse;">'
+        f'{b_av}'
+        f'<div style="text-align:right;"><div style="color:#4361ee;font-weight:700;font-size:0.95rem;">{name_blue}</div>{b_rec}</div>'
+        f'</div>'
+        f'</div>'
+        # Probability bar
         f'<div class="prob-bar-wrap">'
         f'<div class="prob-bar-red" style="flex:{wr}">{wr}%</div>'
         f'<div class="prob-bar-blue" style="flex:{wb}">{wb}%</div>'
@@ -571,7 +597,8 @@ if page == "Upcoming Events":
                             f'<div style="font-size:0.78rem;color:#888;margin-bottom:4px;">'
                             f'{fight["weight_class"]}{title_tag}{hot_tag}</div>'
                             + prob_bar_html(r["prob_r"], fight["r_fighter"], fight["b_fighter"],
-                                           r_record=fight.get("r_record",""), b_record=fight.get("b_record","")) +
+                                           r_record=fight.get("r_record",""), b_record=fight.get("b_record",""),
+                                           r_img=fight.get("r_img",""),        b_img=fight.get("b_img","")) +
                             f'<div style="font-size:0.78rem;color:#aaa;margin-top:6px;">{pick_line}</div>'
                             f'</div>',
                             unsafe_allow_html=True,
