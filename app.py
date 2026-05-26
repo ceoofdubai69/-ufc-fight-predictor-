@@ -444,7 +444,10 @@ with st.sidebar:
 # PAGE 0 — UPCOMING EVENTS
 # ═══════════════════════════════════════════════════════════════════════════════
 if page == "Upcoming Events":
-    st_autorefresh(interval=1_800_000, key="live_refresh")
+    count = st_autorefresh(interval=1_800_000, key="live_refresh")
+    if count and count % 12 == 0:  # every 6 hours (12 x 30min)
+        scraper.refresh_events_record()
+        fetch_all_events.clear()
 
     st.title("📅 Upcoming UFC Events")
     col_title, col_refresh = st.columns([5, 1])
@@ -452,6 +455,8 @@ if page == "Upcoming Events":
         st.markdown("Live fight cards from **ufcstats.com** with AI win predictions.")
     with col_refresh:
         if st.button("🔄 Refresh", use_container_width=True):
+            scraper.refresh_events_record()
+            fetch_all_events.clear()
             fetch_upcoming_events.clear()
             fetch_recent_events.clear()
             fetch_event_fights.clear()
