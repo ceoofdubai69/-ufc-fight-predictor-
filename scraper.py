@@ -238,6 +238,42 @@ def _parse_age(dob_str):
         return None
 
 
+def fetch_fighter_from_espn(espn_id, record_str=""):
+    """
+    Fetch physical stats from ESPN athlete API.
+    Returns partial stats dict with league-average striking stats as fallback.
+    """
+    import re
+    AVERAGES = {
+        "SLpM": 2.9326, "SApM": 3.3886, "sig_str_acc": 0.406,
+        "str_def": 0.4889, "td_acc": 0.3226, "td_def": 0.495,
+        "sub_avg": 0.6022, "td_avg": 1.3935,
+    }
+    try:
+        data = _get_json(f"https://sports.core.api.espn.com/v2/sports/mma/leagues/ufc/athletes/{espn_id}")
+        h_in = data.get("height", 0) or 0
+        w_lb = data.get("weight", 0) or 0
+        r_in = data.get("reach", 0) or 0
+        age  = data.get("age", 0) or 0
+        stance = data.get("stance", {}).get("text", "") if isinstance(data.get("stance"), dict) else ""
+        wins, losses = 0, 0
+        if record_str:
+            m = re.match(r"(\d+)-(\d+)", record_str)
+            if m:
+                wins, losses = int(m.group(1)), int(m.group(2))
+        return {
+            "wins": wins, "losses": losses,
+            "height": round(h_in * 2.54, 2) if h_in else None,
+            "weight": round(w_lb * 0.453592, 2) if w_lb else None,
+            "reach":  round(r_in * 2.54, 2) if r_in else None,
+            "age": age or None, "stance": stance,
+            "_limited_data": True,
+            **AVERAGES,
+        }
+    except Exception:
+        return {"_limited_data": True, **AVERAGES}
+
+
 def scrape_fighter_stats(fighter_url):
     """Scrape live stats from a fighter's ufcstats page (fallback only)."""
     if not fighter_url:

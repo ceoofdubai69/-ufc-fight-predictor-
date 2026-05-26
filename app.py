@@ -334,18 +334,23 @@ def fetch_event_fights(url):   return scraper.get_event_fights(url)
 def fetch_completed_results(url): return scraper.get_completed_event_results(url)
 
 @st.cache_data(ttl=86400)
-def fetch_live_fighter(name, url):
+def fetch_live_fighter(name, url, espn_id="", record_str=""):
+    # 1. Local CSV (most accurate)
     local = fighters_df[fighters_df["name"].str.lower() == name.lower()]
     if not local.empty:
         return local.iloc[0].to_dict()
+    # 2. ESPN athlete API (physical stats + league-avg striking)
+    if espn_id:
+        stats = scraper.fetch_fighter_from_espn(espn_id, record_str)
+        if stats:
+            return stats
+    # 3. ufcstats scrape (now blocked, kept as last resort)
     if url:
         live = scraper.scrape_fighter_stats(url)
         if live:
             return live
-    found_url = scraper.find_fighter_url(name)
-    if found_url:
-        return scraper.scrape_fighter_stats(found_url)
-    return {}
+    # 4. Nothing found
+    return {"_no_data": True}
 
 
 def predict_matchup(red_stats, blue_stats):
@@ -499,15 +504,31 @@ if page == "Upcoming Events":
                     prog = st.progress(0)
                     fights_ordered = list(reversed(fights))  # main event first
                     for i, fight in enumerate(fights_ordered):
-                        r_stats = fetch_live_fighter(fight["r_fighter"], fight.get("r_url",""))
-                        b_stats = fetch_live_fighter(fight["b_fighter"], fight.get("b_url",""))
-                        prob_r, prob_b = predict_matchup(r_stats, b_stats)
-                        confidence = max(prob_r, prob_b)
-                        results.append({
-                            "fight": fight, "prob_r": prob_r, "prob_b": prob_b,
-                            "confidence": confidence,
-                            "pick": fight["r_fighter"] if prob_r > 0.5 else fight["b_fighter"],
-                        })
+                        r_id = fight.get("r_img","").split("full/")[-1].replace(".png","") if fight.get("r_img") else ""
+                        b_id = fight.get("b_img","").split("full/")[-1].replace(".png","") if fight.get("b_img") else ""
+                        r_stats = fetch_live_fighter(fight["r_fighter"], fight.get("r_url",""), r_id, fight.get("r_record",""))
+                        b_stats = fetch_live_fighter(fight["b_fighter"], fight.get("b_url",""), b_id, fight.get("b_record",""))
+                        no_data_r = r_stats.get("_no_data", False)
+                        no_data_b = b_stats.get("_no_data", False)
+                        limited_r = r_stats.get("_limited_data", False)
+                        limited_b = b_stats.get("_limited_data", False)
+
+                        if no_data_r and no_data_b:
+                            results.append({
+                                "fight": fight, "prob_r": 0.5, "prob_b": 0.5,
+                                "confidence": 0.5, "pick": "—",
+                                "no_data": True, "limited_data": False,
+                            })
+                        else:
+                            prob_r, prob_b = predict_matchup(r_stats, b_stats)
+                            confidence = max(prob_r, prob_b)
+                            results.append({
+                                "fight": fight, "prob_r": prob_r, "prob_b": prob_b,
+                                "confidence": confidence,
+                                "pick": fight["r_fighter"] if prob_r > 0.5 else fight["b_fighter"],
+                                "no_data": False,
+                                "limited_data": no_data_r or no_data_b or limited_r or limited_b,
+                            })
                         prog.progress((i + 1) / len(fights_ordered))
                     prog.empty()
 
@@ -529,23 +550,30 @@ if page == "Upcoming Events":
 
                     st.markdown(f"### {selected_event} — {len(fights_ordered)} Fights")
                     for r in results:
-                        fight = r["fight"]
-                        is_hot    = r["confidence"] >= 0.70
+                        fight     = r["fight"]
+                        is_hot    = r["confidence"] >= 0.70 and not r["no_data"]
                         title_tag = " 🥇" if fight.get("is_title") else ""
                         hot_tag   = '<span class="hot-pick-badge">HOT PICK</span>' if is_hot else ""
+
+                        if r["no_data"]:
+                            data_note = '<span style="font-size:0.75rem;color:#f4a261;">⚠️ Data unavailable — stats being added soon</span>'
+                            pick_line = data_note
+                        elif r["limited_data"]:
+                            data_note = '<span style="font-size:0.72rem;color:#888;">⚡ Partial data — striking stats estimated from league averages</span>'
+                            pick_line = (f'Pick: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
+                                        f'{r["pick"]}</strong> · {conf_badge(r["confidence"])} · {data_note}')
+                        else:
+                            pick_line = (f'Pick: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
+                                        f'{r["pick"]}</strong> · {conf_badge(r["confidence"])}')
+
                         st.markdown(
                             f'<div class="fight-card">'
                             f'<div style="font-size:0.78rem;color:#888;margin-bottom:4px;">'
                             f'{fight["weight_class"]}{title_tag}{hot_tag}</div>'
-                            + prob_bar_html(
-                                r["prob_r"], fight["r_fighter"], fight["b_fighter"],
-                                r_record=fight.get("r_record",""), b_record=fight.get("b_record",""),
-                                r_img=fight.get("r_img",""),        b_img=fight.get("b_img",""),
-                            ) +
-                            f'<div style="font-size:0.78rem;color:#aaa;margin-top:6px;">'
-                            f'Pick: <strong style="color:{"#e63946" if r["prob_r"]>0.5 else "#4361ee"};">'
-                            f'{r["pick"]}</strong> · {conf_badge(r["confidence"])}'
-                            f'</div></div>',
+                            + prob_bar_html(r["prob_r"], fight["r_fighter"], fight["b_fighter"],
+                                           r_record=fight.get("r_record",""), b_record=fight.get("b_record","")) +
+                            f'<div style="font-size:0.78rem;color:#aaa;margin-top:6px;">{pick_line}</div>'
+                            f'</div>',
                             unsafe_allow_html=True,
                         )
 
