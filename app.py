@@ -190,45 +190,19 @@ st.markdown("""
 
 def prob_bar_html(prob_red, name_red, name_blue, r_record="", b_record="", r_img="", b_img=""):
     wr, wb = int(prob_red * 100), int((1 - prob_red) * 100)
-    def avatar(img, name, color):
-        if img:
-            return (f'<img src="{img}" style="width:52px;height:52px;border-radius:50%;'
-                    f'object-fit:cover;border:2px solid {color};background:#1a1a2e;" '
-                    f'onerror="this.style.display=\'none\'">')
-        initials = "".join(p[0] for p in name.split()[:2]).upper()
-        return (f'<div style="width:52px;height:52px;border-radius:50%;background:{color}22;'
-                f'border:2px solid {color};display:flex;align-items:center;justify-content:center;'
-                f'font-weight:800;font-size:0.9rem;color:{color};">{initials}</div>')
-
-    r_av = avatar(r_img, name_red,  "#e63946")
-    b_av = avatar(b_img, name_blue, "#4361ee")
-    r_rec = f'<div style="font-size:0.72rem;color:#888;margin-top:2px;">{r_record}</div>' if r_record else ""
-    b_rec = f'<div style="font-size:0.72rem;color:#888;margin-top:2px;">{b_record}</div>' if b_record else ""
-
-    return f"""
-    <div style="margin:6px 0 4px 0;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          {r_av}
-          <div>
-            <div style="color:#e63946;font-weight:700;font-size:0.95rem;">{name_red}</div>
-            {r_rec}
-          </div>
-        </div>
-        <div style="color:#555;font-weight:900;font-size:1.1rem;">VS</div>
-        <div style="display:flex;align-items:center;gap:10px;flex-direction:row-reverse;">
-          {b_av}
-          <div style="text-align:right;">
-            <div style="color:#4361ee;font-weight:700;font-size:0.95rem;">{name_blue}</div>
-            {b_rec}
-          </div>
-        </div>
-      </div>
-      <div class="prob-bar-wrap">
-        <div class="prob-bar-red"  style="flex:{wr}">{wr}%</div>
-        <div class="prob-bar-blue" style="flex:{wb}">{wb}%</div>
-      </div>
-    </div>"""
+    r_rec = f'<span style="font-size:0.72rem;color:#888;margin-left:6px;">{r_record}</span>' if r_record else ""
+    b_rec = f'<span style="font-size:0.72rem;color:#888;margin-right:6px;">{b_record}</span>' if b_record else ""
+    return (
+        f'<div style="margin:6px 0 4px 0;">'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;">'
+        f'<div style="color:#e63946;font-weight:700;">{name_red}{r_rec}</div>'
+        f'<div style="color:#4361ee;font-weight:700;">{b_rec}{name_blue}</div>'
+        f'</div>'
+        f'<div class="prob-bar-wrap">'
+        f'<div class="prob-bar-red" style="flex:{wr}">{wr}%</div>'
+        f'<div class="prob-bar-blue" style="flex:{wb}">{wb}%</div>'
+        f'</div></div>'
+    )
 
 
 def stat_comparison_html(stats_list):
@@ -645,35 +619,44 @@ if page == "Upcoming Events":
                                 "prob_r": prob_r, "prob_b": prob_b,
                                 "pick": leg["pick"], "picked_prob": picked_prob,
                             })
-
-                        st.markdown("---")
-                        for res in leg_results:
-                            st.markdown(
-                                f'<div class="fight-card">'
-                                f'<div style="color:{res["color"]};font-weight:700;font-size:0.8rem;margin-bottom:6px;">LEG {res["idx"]}</div>'
-                                + prob_bar_html(res["prob_r"], res["r"], res["b"]) +
-                                f'<div style="font-size:0.8rem;color:#aaa;margin-top:6px;">'
-                                f'Your pick: <strong style="color:{res["color"]};">{res["pick"]}</strong>'
-                                f' · Probability: <strong style="color:white;">{res["picked_prob"]:.1%}</strong>'
-                                f'</div></div>',
-                                unsafe_allow_html=True,
-                            )
-
                         implied = 1 / combined_prob if combined_prob > 0 else 0
                         amer = int((implied - 1) * 100) if implied >= 2 else int(-100 / max(implied - 1, 0.01))
-                        conf_color = "#2dc653" if combined_prob > 0.40 else ("#f4a261" if combined_prob > 0.22 else "#e63946")
+                        st.session_state["parlay_result"] = {
+                            "legs": leg_results,
+                            "combined_prob": combined_prob,
+                            "implied": implied,
+                            "amer": amer,
+                        }
+
+                # Display result — always from session state so it replaces, never stacks
+                if "parlay_result" in st.session_state:
+                    pr = st.session_state["parlay_result"]
+                    st.markdown("---")
+                    for res in pr["legs"]:
                         st.markdown(
-                            f'<div style="background:{conf_color}18;border:2px solid {conf_color};'
-                            f'border-radius:14px;padding:24px;text-align:center;margin-top:10px;">'
-                            f'<div style="font-size:0.82rem;color:#aaa;margin-bottom:4px;">{len(valid_legs)}-LEG PARLAY PROBABILITY</div>'
-                            f'<div style="font-size:3.5rem;font-weight:900;color:{conf_color};">{combined_prob:.1%}</div>'
-                            f'<div style="font-size:0.95rem;color:#ccc;margin-top:8px;">'
-                            f'Implied: <strong>{implied:.2f}x</strong> &nbsp;·&nbsp; '
-                            f'American: <strong>{"+" if amer > 0 else ""}{amer}</strong></div>'
-                            f'<div style="font-size:0.75rem;color:#555;margin-top:10px;">AI probabilities only — not financial advice.</div>'
-                            f'</div>',
+                            f'<div class="fight-card">'
+                            f'<div style="color:{res["color"]};font-weight:700;font-size:0.8rem;margin-bottom:6px;">LEG {res["idx"]}</div>'
+                            + prob_bar_html(res["prob_r"], res["r"], res["b"]) +
+                            f'<div style="font-size:0.8rem;color:#aaa;margin-top:6px;">'
+                            f'Your pick: <strong style="color:{res["color"]};">{res["pick"]}</strong>'
+                            f' · Probability: <strong style="color:white;">{res["picked_prob"]:.1%}</strong>'
+                            f'</div></div>',
                             unsafe_allow_html=True,
                         )
+                    cp = pr["combined_prob"]
+                    conf_color = "#2dc653" if cp > 0.40 else ("#f4a261" if cp > 0.22 else "#e63946")
+                    st.markdown(
+                        f'<div style="background:{conf_color}18;border:2px solid {conf_color};'
+                        f'border-radius:14px;padding:24px;text-align:center;margin-top:10px;">'
+                        f'<div style="font-size:0.82rem;color:#aaa;margin-bottom:4px;">{len(pr["legs"])}-LEG PARLAY PROBABILITY</div>'
+                        f'<div style="font-size:3.5rem;font-weight:900;color:{conf_color};">{cp:.1%}</div>'
+                        f'<div style="font-size:0.95rem;color:#ccc;margin-top:8px;">'
+                        f'Implied: <strong>{pr["implied"]:.2f}x</strong> &nbsp;·&nbsp; '
+                        f'American: <strong>{"+" if pr["amer"] > 0 else ""}{pr["amer"]}</strong></div>'
+                        f'<div style="font-size:0.75rem;color:#555;margin-top:10px;">AI probabilities only — not financial advice.</div>'
+                        f'</div>',
+                        unsafe_allow_html=True,
+                    )
 
     with tab_calendar:
         st.markdown("### 📋 UFC Event Calendar — Last 6 Months & Next 6 Months")
@@ -964,8 +947,9 @@ elif page == "Fighter Lookup":
         row = row.iloc[0]
         hist = get_fighter_history(name, clean_df)
 
-        wins   = int(hist["won"].sum())
-        losses = int((~hist["won"]).sum())
+        # Use fighter_stats.csv for official career record (more accurate than dataset count)
+        wins   = int(g(row, "wins"))   if g(row, "wins")   else int(hist["won"].sum())
+        losses = int(g(row, "losses")) if g(row, "losses") else int((~hist["won"]).sum())
         total  = wins + losses
 
         # Recent form dots (last 8)
@@ -991,7 +975,7 @@ elif page == "Fighter Lookup":
             f'<div style="font-size:0.8rem;color:#888;font-weight:600;letter-spacing:1px;">{side_label}</div>'
             f'<div style="font-size:1.4rem;font-weight:800;color:{color};margin:4px 0;">{name}</div>'
             f'<div style="font-size:2rem;font-weight:900;color:white;">{wins}-{losses}</div>'
-            f'<div style="font-size:0.82rem;color:#aaa;">W – L  ({total} fights in dataset)</div>'
+            f'<div style="font-size:0.82rem;color:#aaa;">Career W – L · {len(hist)} fights in history</div>'
             f'{"<div style=margin-top:8px;font-size:0.82rem;color:#f4a261;>" + streak_label + "</div>" if streak_label else ""}'
             f'<div style="margin-top:10px;">{dots}</div>'
             f'<div style="font-size:0.72rem;color:#666;margin-top:4px;">← most recent</div>'
