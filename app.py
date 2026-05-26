@@ -7,6 +7,7 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import accuracy_score, roc_auc_score, confusion_matrix
 from streamlit_autorefresh import st_autorefresh
 from datetime import datetime
+import json
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 import scraper
@@ -1085,6 +1086,140 @@ elif page == "Model Dashboard":
         height=360, showlegend=False, coloraxis_showscale=False,
         xaxis=dict(tickangle=-35), margin=dict(l=10,r=10,t=30,b=10))
     st.plotly_chart(fig_wc, use_container_width=True)
+
+    # ── Backtesting ──────────────────────────────────────────────────────────
+    st.markdown("---")
+    st.markdown("## 🔬 Backtest Results")
+    st.markdown("Performance on the **held-out test set** (most recent 1,279 fights, 2021–2024) — the model never saw these during training.")
+
+    try:
+        with open("data/backtest_summary.json") as f:
+            bt = json.load(f)
+
+        # Record cards
+        bc1, bc2, bc3 = st.columns(3)
+        with bc1:
+            st.markdown(
+                f'<div class="metric-card">'
+                f'<div class="metric-value">{bt["overall"]["accuracy"]:.1%}</div>'
+                f'<div class="metric-label">Overall Accuracy<br><span style="font-size:0.75rem;color:#666;">{bt["overall"]["fights"]:,} fights</span></div>'
+                f'</div>', unsafe_allow_html=True,
+            )
+        with bc2:
+            hc = bt["high_conf_record"]
+            st.markdown(
+                f'<div class="metric-card">'
+                f'<div class="metric-value" style="color:#f4a261;">{hc["wins"]}-{hc["losses"]}</div>'
+                f'<div class="metric-label">Record at 70%+ Confidence<br>'
+                f'<span style="font-size:0.75rem;color:#666;">{hc["accuracy"]:.1%} accuracy · {hc["wins"]+hc["losses"]} picks</span></div>'
+                f'</div>', unsafe_allow_html=True,
+            )
+        with bc3:
+            vh = bt["very_high_conf_record"]
+            st.markdown(
+                f'<div class="metric-card">'
+                f'<div class="metric-value" style="color:#2dc653;">{vh["wins"]}-{vh["losses"]}</div>'
+                f'<div class="metric-label">Record at 75%+ Confidence<br>'
+                f'<span style="font-size:0.75rem;color:#666;">{vh["accuracy"]:.1%} accuracy · {vh["wins"]+vh["losses"]} picks</span></div>'
+                f'</div>', unsafe_allow_html=True,
+            )
+
+        st.markdown("")
+        bt_col1, bt_col2 = st.columns(2)
+
+        with bt_col1:
+            # Accuracy by confidence bucket
+            st.markdown("### Accuracy by Confidence Level")
+            conf_data = bt["by_confidence"]
+            fig_conf = go.Figure(go.Bar(
+                x=[c["bucket"] for c in conf_data],
+                y=[c["accuracy"] for c in conf_data],
+                text=[f'{c["accuracy"]:.1%}<br>({c["fights"]} fights)' for c in conf_data],
+                textposition="outside",
+                marker=dict(
+                    color=[c["accuracy"] for c in conf_data],
+                    colorscale=[[0, "#4361ee"], [0.5, "#f4a261"], [1, "#2dc653"]],
+                    showscale=False,
+                ),
+            ))
+            fig_conf.add_hline(y=0.685, line_dash="dash", line_color="#e63946",
+                               annotation_text="Vegas ~68.5%", annotation_position="top left")
+            fig_conf.update_layout(
+                paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+                height=380, yaxis=dict(tickformat=".0%", range=[0.5, 1.0], gridcolor="#222"),
+                xaxis=dict(showgrid=False), margin=dict(l=10, r=10, t=40, b=10),
+            )
+            st.plotly_chart(fig_conf, use_container_width=True)
+
+        with bt_col2:
+            # Accuracy by year
+            st.markdown("### Accuracy by Year")
+            yr_data = bt["by_year"]
+            fig_yr = go.Figure(go.Scatter(
+                x=[y["year"] for y in yr_data],
+                y=[y["accuracy"] for y in yr_data],
+                mode="lines+markers+text",
+                text=[f'{y["accuracy"]:.1%}' for y in yr_data],
+                textposition="top center",
+                line=dict(color="#e63946", width=3),
+                marker=dict(color="#e63946", size=10),
+            ))
+            fig_yr.add_hline(y=0.685, line_dash="dash", line_color="#555",
+                             annotation_text="Vegas", annotation_position="bottom right")
+            fig_yr.update_layout(
+                paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+                height=380, yaxis=dict(tickformat=".0%", range=[0.65, 0.80], gridcolor="#222"),
+                xaxis=dict(showgrid=False, dtick=1), margin=dict(l=10, r=10, t=40, b=10),
+            )
+            st.plotly_chart(fig_yr, use_container_width=True)
+
+        # Accuracy by weight class
+        st.markdown("### Accuracy by Weight Class")
+        wc_data = bt["by_weight_class"]
+        fig_wc2 = go.Figure(go.Bar(
+            x=[w["accuracy"] for w in wc_data],
+            y=[w["class"] for w in wc_data],
+            orientation="h",
+            text=[f'{w["accuracy"]:.1%} ({w["fights"]} fights)' for w in wc_data],
+            textposition="outside",
+            marker=dict(
+                color=[w["accuracy"] for w in wc_data],
+                colorscale=[[0, "#4361ee"], [0.5, "#f4a261"], [1, "#e63946"]],
+                showscale=False,
+            ),
+        ))
+        fig_wc2.add_vline(x=0.685, line_dash="dash", line_color="#555",
+                          annotation_text="Vegas ~68.5%")
+        fig_wc2.update_layout(
+            paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+            height=420, xaxis=dict(tickformat=".0%", range=[0.55, 0.85], gridcolor="#222"),
+            yaxis=dict(showgrid=False), margin=dict(l=10, r=120, t=20, b=10),
+        )
+        st.plotly_chart(fig_wc2, use_container_width=True)
+
+        # Cumulative accuracy chart
+        st.markdown("### Cumulative Accuracy Over Time (Test Set)")
+        cum_data = bt["cumulative"]
+        fig_cum = go.Figure()
+        fig_cum.add_trace(go.Scatter(
+            x=[c["date"] for c in cum_data],
+            y=[c["accuracy"] for c in cum_data],
+            fill="tozeroy", fillcolor="rgba(230,57,70,0.1)",
+            line=dict(color="#e63946", width=2),
+            name="Model accuracy",
+        ))
+        fig_cum.add_hline(y=0.685, line_dash="dash", line_color="#555",
+                          annotation_text="Vegas ~68.5%")
+        fig_cum.update_layout(
+            paper_bgcolor="#0e1117", plot_bgcolor="#0e1117", font_color="white",
+            height=300, yaxis=dict(tickformat=".0%", range=[0.60, 0.80], gridcolor="#222"),
+            xaxis=dict(showgrid=False), margin=dict(l=10, r=10, t=20, b=10),
+            showlegend=False,
+        )
+        st.plotly_chart(fig_cum, use_container_width=True)
+
+    except Exception as e:
+        st.warning(f"Backtest data not available: {e}")
 
     st.markdown("### Finish Methods")
     mc = df["method"].value_counts().reset_index()

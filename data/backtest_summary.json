@@ -1,0 +1,397 @@
+{
+  "overall": {
+    "accuracy": 0.7279,
+    "fights": 1279
+  },
+  "by_confidence": [
+    {
+      "bucket": "50\u201355%",
+      "accuracy": 0.5825,
+      "fights": 194
+    },
+    {
+      "bucket": "55\u201360%",
+      "accuracy": 0.5829,
+      "fights": 199
+    },
+    {
+      "bucket": "60\u201365%",
+      "accuracy": 0.6538,
+      "fights": 182
+    },
+    {
+      "bucket": "65\u201370%",
+      "accuracy": 0.7619,
+      "fights": 168
+    },
+    {
+      "bucket": "70\u201375%",
+      "accuracy": 0.7379,
+      "fights": 145
+    },
+    {
+      "bucket": "75\u201380%",
+      "accuracy": 0.8288,
+      "fights": 146
+    },
+    {
+      "bucket": "80%+",
+      "accuracy": 0.9265,
+      "fights": 245
+    }
+  ],
+  "by_year": [
+    {
+      "year": 2021,
+      "accuracy": 0.7075,
+      "fights": 147
+    },
+    {
+      "year": 2022,
+      "accuracy": 0.7174,
+      "fights": 506
+    },
+    {
+      "year": 2023,
+      "accuracy": 0.7401,
+      "fights": 504
+    },
+    {
+      "year": 2024,
+      "accuracy": 0.7459,
+      "fights": 122
+    }
+  ],
+  "by_weight_class": [
+    {
+      "class": "Welterweight",
+      "accuracy": 0.7808,
+      "fights": 146
+    },
+    {
+      "class": "Women's Flyweight",
+      "accuracy": 0.7805,
+      "fights": 82
+    },
+    {
+      "class": "Bantamweight",
+      "accuracy": 0.7626,
+      "fights": 139
+    },
+    {
+      "class": "Heavyweight",
+      "accuracy": 0.7442,
+      "fights": 86
+    },
+    {
+      "class": "Lightweight",
+      "accuracy": 0.7267,
+      "fights": 172
+    },
+    {
+      "class": "Flyweight",
+      "accuracy": 0.7262,
+      "fights": 84
+    },
+    {
+      "class": "Featherweight",
+      "accuracy": 0.7194,
+      "fights": 139
+    },
+    {
+      "class": "Light Heavyweight",
+      "accuracy": 0.716,
+      "fights": 81
+    },
+    {
+      "class": "Middleweight",
+      "accuracy": 0.7014,
+      "fights": 144
+    },
+    {
+      "class": "Women's Strawweight",
+      "accuracy": 0.6951,
+      "fights": 82
+    },
+    {
+      "class": "Catch Weight",
+      "accuracy": 0.6667,
+      "fights": 24
+    },
+    {
+      "class": "Women's Bantamweight",
+      "accuracy": 0.6154,
+      "fights": 39
+    }
+  ],
+  "high_conf_record": {
+    "threshold": "70%+",
+    "wins": 455,
+    "losses": 81,
+    "accuracy": 0.8489
+  },
+  "very_high_conf_record": {
+    "threshold": "75%+",
+    "wins": 348,
+    "losses": 43,
+    "accuracy": 0.89
+  },
+  "cumulative": [
+    {
+      "date": "2021-09-18",
+      "accuracy": 1.0
+    },
+    {
+      "date": "2021-10-02",
+      "accuracy": 0.619
+    },
+    {
+      "date": "2021-10-16",
+      "accuracy": 0.6341
+    },
+    {
+      "date": "2021-10-30",
+      "accuracy": 0.6721
+    },
+    {
+      "date": "2021-11-06",
+      "accuracy": 0.679
+    },
+    {
+      "date": "2021-11-20",
+      "accuracy": 0.6931
+    },
+    {
+      "date": "2021-12-11",
+      "accuracy": 0.719
+    },
+    {
+      "date": "2021-12-18",
+      "accuracy": 0.7163
+    },
+    {
+      "date": "2022-01-22",
+      "accuracy": 0.7081
+    },
+    {
+      "date": "2022-02-05",
+      "accuracy": 0.7182
+    },
+    {
+      "date": "2022-02-19",
+      "accuracy": 0.7214
+    },
+    {
+      "date": "2022-03-05",
+      "accuracy": 0.7059
+    },
+    {
+      "date": "2022-03-12",
+      "accuracy": 0.7137
+    },
+    {
+      "date": "2022-03-26",
+      "accuracy": 0.705
+    },
+    {
+      "date": "2022-04-09",
+      "accuracy": 0.7189
+    },
+    {
+      "date": "2022-04-23",
+      "accuracy": 0.7176
+    },
+    {
+      "date": "2022-05-07",
+      "accuracy": 0.7103
+    },
+    {
+      "date": "2022-05-14",
+      "accuracy": 0.7185
+    },
+    {
+      "date": "2022-06-04",
+      "accuracy": 0.7313
+    },
+    {
+      "date": "2022-06-18",
+      "accuracy": 0.7349
+    },
+    {
+      "date": "2022-06-25",
+      "accuracy": 0.7357
+    },
+    {
+      "date": "2022-07-09",
+      "accuracy": 0.7363
+    },
+    {
+      "date": "2022-07-23",
+      "accuracy": 0.7302
+    },
+    {
+      "date": "2022-07-30",
+      "accuracy": 0.731
+    },
+    {
+      "date": "2022-08-13",
+      "accuracy": 0.7277
+    },
+    {
+      "date": "2022-09-03",
+      "accuracy": 0.7265
+    },
+    {
+      "date": "2022-09-10",
+      "accuracy": 0.7198
+    },
+    {
+      "date": "2022-10-01",
+      "accuracy": 0.7209
+    },
+    {
+      "date": "2022-10-22",
+      "accuracy": 0.7166
+    },
+    {
+      "date": "2022-11-05",
+      "accuracy": 0.7126
+    },
+    {
+      "date": "2022-11-12",
+      "accuracy": 0.7155
+    },
+    {
+      "date": "2022-12-03",
+      "accuracy": 0.7198
+    },
+    {
+      "date": "2022-12-17",
+      "accuracy": 0.7192
+    },
+    {
+      "date": "2023-01-14",
+      "accuracy": 0.7171
+    },
+    {
+      "date": "2023-02-04",
+      "accuracy": 0.7166
+    },
+    {
+      "date": "2023-02-11",
+      "accuracy": 0.7161
+    },
+    {
+      "date": "2023-02-25",
+      "accuracy": 0.7198
+    },
+    {
+      "date": "2023-03-11",
+      "accuracy": 0.722
+    },
+    {
+      "date": "2023-03-18",
+      "accuracy": 0.724
+    },
+    {
+      "date": "2023-04-08",
+      "accuracy": 0.7183
+    },
+    {
+      "date": "2023-04-22",
+      "accuracy": 0.7179
+    },
+    {
+      "date": "2023-05-06",
+      "accuracy": 0.7186
+    },
+    {
+      "date": "2023-05-13",
+      "accuracy": 0.7182
+    },
+    {
+      "date": "2023-06-03",
+      "accuracy": 0.7178
+    },
+    {
+      "date": "2023-06-17",
+      "accuracy": 0.7162
+    },
+    {
+      "date": "2023-06-24",
+      "accuracy": 0.7159
+    },
+    {
+      "date": "2023-07-08",
+      "accuracy": 0.7177
+    },
+    {
+      "date": "2023-07-22",
+      "accuracy": 0.7152
+    },
+    {
+      "date": "2023-07-29",
+      "accuracy": 0.717
+    },
+    {
+      "date": "2023-08-12",
+      "accuracy": 0.7207
+    },
+    {
+      "date": "2023-08-19",
+      "accuracy": 0.7253
+    },
+    {
+      "date": "2023-09-02",
+      "accuracy": 0.7258
+    },
+    {
+      "date": "2023-09-16",
+      "accuracy": 0.7281
+    },
+    {
+      "date": "2023-10-07",
+      "accuracy": 0.7276
+    },
+    {
+      "date": "2023-10-21",
+      "accuracy": 0.728
+    },
+    {
+      "date": "2023-11-11",
+      "accuracy": 0.7257
+    },
+    {
+      "date": "2023-11-18",
+      "accuracy": 0.727
+    },
+    {
+      "date": "2023-12-09",
+      "accuracy": 0.7257
+    },
+    {
+      "date": "2024-01-13",
+      "accuracy": 0.7261
+    },
+    {
+      "date": "2024-02-03",
+      "accuracy": 0.7257
+    },
+    {
+      "date": "2024-02-10",
+      "accuracy": 0.7277
+    },
+    {
+      "date": "2024-02-24",
+      "accuracy": 0.7281
+    },
+    {
+      "date": "2024-03-09",
+      "accuracy": 0.7276
+    },
+    {
+      "date": "2024-03-16",
+      "accuracy": 0.7288
+    }
+  ]
+}
