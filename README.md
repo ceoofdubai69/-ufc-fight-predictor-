@@ -4,8 +4,7 @@
 
 An interactive machine learning dashboard that predicts UFC fight outcomes with **72.8% accuracy** — beating professional Vegas oddsmakers by ~4.2 percentage points.
 
-Live at → https://ufcfightpredictor.streamlit.app/
-
+Live at → https://ufcfightpredictorr.streamlit.app/
 ---
 
 ## Features
