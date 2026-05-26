@@ -1,128 +1,146 @@
 import urllib.request
 import urllib.parse
-from bs4 import BeautifulSoup
+import json
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
 import difflib
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+ESPN_BASE = "http://site.api.espn.com/apis/site/v2/sports/mma/ufc"
+
 
 def _get(url):
     req = urllib.request.Request(url, headers=HEADERS)
     return urllib.request.urlopen(req, timeout=10).read().decode("utf-8")
 
 
-def get_upcoming_events():
-    """Return list of upcoming UFC events: [{name, date, location, url}]"""
-    html = _get("http://ufcstats.com/statistics/events/upcoming")
-    soup = BeautifulSoup(html, "lxml")
-    events = []
-    rows = soup.select("tr.b-statistics__table-row")
-    for row in rows:
-        link = row.select_one("a.b-link")
-        if not link:
+def _get_json(url):
+    req = urllib.request.Request(url, headers=HEADERS)
+    return json.loads(urllib.request.urlopen(req, timeout=10).read())
+
+
+def _parse_espn_event(ev):
+    """Parse an ESPN event dict into our standard format."""
+    comp = ev.get("competitions", [{}])[0]
+    venue = comp.get("venue", {})
+    city    = venue.get("address", {}).get("city", "")
+    country = venue.get("address", {}).get("country", "")
+    location = f"{city}, {country}".strip(", ")
+
+    date_str = ev.get("date", "")
+    try:
+        dt = datetime.strptime(date_str[:10], "%Y-%m-%d")
+        date_fmt = dt.strftime("%B %d, %Y")
+    except Exception:
+        date_fmt = date_str[:10]
+
+    return {
+        "name":     ev.get("name", ""),
+        "date":     date_fmt,
+        "location": location,
+        "url":      ev.get("id", ""),   # ESPN event ID used as key
+        "_espn":    ev,                 # full data cached for get_event_fights
+    }
+
+
+def _parse_espn_bouts(ev):
+    """Extract list of fights from an ESPN event dict."""
+    fights = []
+    for bout in ev.get("competitions", []):
+        fighters = bout.get("competitors", [])
+        if len(fighters) < 2:
             continue
-        cols = row.select("td")
-        name = link.get_text(strip=True)
-        url = link.get("href", "")
-        date = cols[1].get_text(strip=True) if len(cols) > 1 else ""
-        loc = cols[2].get_text(strip=True) if len(cols) > 2 else ""
-        if name and url:
-            events.append({"name": name, "date": date, "location": loc, "url": url})
+        r = fighters[0]["athlete"]
+        b = fighters[1]["athlete"]
+        wc  = bout.get("type", {}).get("abbreviation", "")
+        is_title = "title" in wc.lower() or "championship" in wc.lower()
+
+        # winner (for completed bouts)
+        winner = ""
+        for f in fighters:
+            if f.get("winner"):
+                winner = f["athlete"]["displayName"]
+
+        # method/round from status notes if available
+        method = bout.get("status", {}).get("type", {}).get("shortDetail", "")
+        round_num = ""
+
+        fights.append({
+            "r_fighter":   r.get("displayName", ""),
+            "b_fighter":   b.get("displayName", ""),
+            "weight_class": wc,
+            "is_title":    is_title,
+            "winner":      winner,
+            "method":      method,
+            "round":       round_num,
+            "r_url":       "",
+            "b_url":       "",
+        })
+    return fights
+
+
+def get_upcoming_events():
+    """Return upcoming UFC events from ESPN."""
+    data = _get_json(f"{ESPN_BASE}/scoreboard")
+    events = []
+    for ev in data.get("events", []):
+        comp = ev.get("competitions", [{}])[0]
+        status = comp.get("status", {}).get("type", {}).get("state", "")
+        if status in ("pre", "in"):
+            events.append(_parse_espn_event(ev))
     return events
 
 
 def get_recent_completed_events(n=3):
-    """Return last n completed events."""
-    html = _get("http://ufcstats.com/statistics/events/completed")
-    soup = BeautifulSoup(html, "lxml")
-    events = []
-    rows = soup.select("tr.b-statistics__table-row")
-    for row in rows:
-        link = row.select_one("a.b-link")
-        if not link:
+    """Return last n completed UFC events from ESPN."""
+    results = []
+    # Search backwards week by week
+    today = datetime.now()
+    for weeks_back in range(1, 12):
+        start = today - timedelta(weeks=weeks_back * 2)
+        end   = today - timedelta(weeks=(weeks_back - 1) * 2)
+        date_range = f"{start.strftime('%Y%m%d')}-{end.strftime('%Y%m%d')}"
+        try:
+            data = _get_json(f"{ESPN_BASE}/scoreboard?dates={date_range}")
+        except Exception:
             continue
-        cols = row.select("td")
-        name = link.get_text(strip=True)
-        url = link.get("href", "")
-        date = cols[1].get_text(strip=True) if len(cols) > 1 else ""
-        loc = cols[2].get_text(strip=True) if len(cols) > 2 else ""
-        if name and url:
-            events.append({"name": name, "date": date, "location": loc, "url": url})
-        if len(events) >= n:
-            break
-    return events
+        for ev in reversed(data.get("events", [])):
+            comp = ev.get("competitions", [{}])[0]
+            if comp.get("status", {}).get("type", {}).get("completed"):
+                results.append(_parse_espn_event(ev))
+                if len(results) >= n:
+                    return results
+    return results
 
 
-def get_event_fights(event_url):
-    """Return list of fights for an event: [{r_fighter, b_fighter, weight_class, is_title, r_url, b_url}]"""
-    html = _get(event_url)
-    soup = BeautifulSoup(html, "lxml")
-    fights = []
-    rows = soup.select("tr.b-fight-details__table-row")
-    for row in rows:
-        fighter_links = row.select("a.b-link")
-        if len(fighter_links) < 2:
-            continue
-        r_name = fighter_links[0].get_text(strip=True)
-        b_name = fighter_links[1].get_text(strip=True)
-        r_url = fighter_links[0].get("href", "")
-        b_url = fighter_links[1].get("href", "")
-        cols = row.select("td")
-        weight_class = cols[6].get_text(strip=True) if len(cols) > 6 else ""
-        is_title = "title" in weight_class.lower() or "championship" in weight_class.lower()
-        if r_name and b_name:
-            fights.append({
-                "r_fighter": r_name,
-                "b_fighter": b_name,
-                "weight_class": weight_class,
-                "is_title": is_title,
-                "r_url": r_url,
-                "b_url": b_url,
-            })
-    return fights
+def get_event_fights(event_id_or_ev):
+    """
+    Return fights for an event.
+    Accepts either an ESPN event ID (str) or a pre-parsed event dict.
+    """
+    if isinstance(event_id_or_ev, dict) and "_espn" in event_id_or_ev:
+        return _parse_espn_bouts(event_id_or_ev["_espn"])
+
+    # Fetch from scoreboard and find by ID
+    try:
+        data = _get_json(f"{ESPN_BASE}/scoreboard")
+        for ev in data.get("events", []):
+            if str(ev.get("id")) == str(event_id_or_ev):
+                return _parse_espn_bouts(ev)
+    except Exception:
+        pass
+    return []
 
 
-def get_completed_event_results(event_url):
+def get_completed_event_results(event_id_or_ev):
     """Return fight results for a completed event."""
-    html = _get(event_url)
-    soup = BeautifulSoup(html, "lxml")
-    fights = []
-    rows = soup.select("tr.b-fight-details__table-row")
-    for row in rows:
-        fighter_links = row.select("a.b-link")
-        if len(fighter_links) < 2:
-            continue
-        r_name = fighter_links[0].get_text(strip=True)
-        b_name = fighter_links[1].get_text(strip=True)
-        cols = row.select("td")
-        winner_col = cols[0].get_text(strip=True) if cols else ""
-        method = cols[7].get_text(strip=True) if len(cols) > 7 else ""
-        round_num = cols[8].get_text(strip=True) if len(cols) > 8 else ""
-        weight_class = cols[6].get_text(strip=True) if len(cols) > 6 else ""
+    return get_event_fights(event_id_or_ev)
 
-        # Determine winner from win indicator
-        win_spans = row.select("i.b-flag__text")
-        winner = ""
-        if win_spans:
-            txt = win_spans[0].get_text(strip=True).lower()
-            if "win" in txt:
-                winner = r_name
 
-        if r_name and b_name:
-            fights.append({
-                "r_fighter": r_name,
-                "b_fighter": b_name,
-                "winner": winner,
-                "method": method,
-                "round": round_num,
-                "weight_class": weight_class,
-            })
-    return fights
-
+# ── Fighter stats (ufcstats scraping kept as fallback) ────────────────────────
 
 def _parse_height_cm(ht_str):
-    """Convert '6' 2\"' to cm float."""
     m = re.match(r"(\d+)'\s*(\d+)", ht_str)
     if m:
         return int(m.group(1)) * 30.48 + int(m.group(2)) * 2.54
@@ -130,7 +148,6 @@ def _parse_height_cm(ht_str):
 
 
 def _parse_reach_cm(reach_str):
-    """Convert '75\"' to cm float."""
     m = re.match(r"([\d.]+)", reach_str)
     if m:
         return float(m.group(1)) * 2.54
@@ -138,7 +155,6 @@ def _parse_reach_cm(reach_str):
 
 
 def _parse_weight_kg(wt_str):
-    """Convert '185 lbs.' to kg float."""
     m = re.match(r"([\d.]+)", wt_str)
     if m:
         return float(m.group(1)) * 0.453592
@@ -146,9 +162,8 @@ def _parse_weight_kg(wt_str):
 
 
 def _parse_age(dob_str):
-    """Convert 'May 01, 1994' to age int."""
     try:
-        dob = datetime.strptime(dob_str.strip(), "%b %d, %Y")
+        dob   = datetime.strptime(dob_str.strip(), "%b %d, %Y")
         today = datetime.today()
         return today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
     except Exception:
@@ -156,53 +171,38 @@ def _parse_age(dob_str):
 
 
 def scrape_fighter_stats(fighter_url):
-    """Scrape live stats from a fighter's ufcstats page."""
+    """Scrape live stats from a fighter's ufcstats page (fallback only)."""
     if not fighter_url:
         return {}
     try:
-        html = _get(fighter_url)
-        soup = BeautifulSoup(html, "lxml")
-
+        html  = _get(fighter_url)
+        soup  = BeautifulSoup(html, "lxml")
         stats = {}
+
         for item in soup.select("li.b-list__box-list-item"):
-            text = item.get_text(separator=":", strip=True)
+            text  = item.get_text(separator=":", strip=True)
             parts = [p.strip() for p in text.split(":") if p.strip()]
             if len(parts) >= 2:
                 key, val = parts[0].lower(), parts[1]
-                if "height" in key:
-                    stats["height"] = _parse_height_cm(val)
-                elif "weight" in key:
-                    stats["weight"] = _parse_weight_kg(val)
-                elif "reach" in key:
-                    stats["reach"] = _parse_reach_cm(val)
-                elif "stance" in key:
-                    stats["stance"] = val
-                elif "dob" in key:
-                    stats["age"] = _parse_age(val)
-                elif "slpm" in key:
-                    stats["SLpM"] = float(val) if val.replace(".", "").isdigit() else None
-                elif "str. acc" in key:
-                    stats["sig_str_acc"] = float(val.strip("%")) / 100 if "%" in val else None
-                elif "sapm" in key:
-                    stats["SApM"] = float(val) if val.replace(".", "").isdigit() else None
-                elif "str. def" in key:
-                    stats["str_def"] = float(val.strip("%")) / 100 if "%" in val else None
-                elif "td avg" in key:
-                    stats["td_avg"] = float(val) if val.replace(".", "").isdigit() else None
-                elif "td acc" in key:
-                    stats["td_acc"] = float(val.strip("%")) / 100 if "%" in val else None
-                elif "td def" in key:
-                    stats["td_def"] = float(val.strip("%")) / 100 if "%" in val else None
-                elif "sub. avg" in key:
-                    stats["sub_avg"] = float(val) if val.replace(".", "").isdigit() else None
+                if "height"   in key: stats["height"]      = _parse_height_cm(val)
+                elif "weight" in key: stats["weight"]      = _parse_weight_kg(val)
+                elif "reach"  in key: stats["reach"]       = _parse_reach_cm(val)
+                elif "stance" in key: stats["stance"]      = val
+                elif "dob"    in key: stats["age"]         = _parse_age(val)
+                elif "slpm"   in key: stats["SLpM"]        = float(val) if val.replace(".", "").isdigit() else None
+                elif "str. acc" in key: stats["sig_str_acc"] = float(val.strip("%")) / 100 if "%" in val else None
+                elif "sapm"   in key: stats["SApM"]        = float(val) if val.replace(".", "").isdigit() else None
+                elif "str. def" in key: stats["str_def"]   = float(val.strip("%")) / 100 if "%" in val else None
+                elif "td avg" in key: stats["td_avg"]      = float(val) if val.replace(".", "").isdigit() else None
+                elif "td acc" in key: stats["td_acc"]      = float(val.strip("%")) / 100 if "%" in val else None
+                elif "td def" in key: stats["td_def"]      = float(val.strip("%")) / 100 if "%" in val else None
+                elif "sub. avg" in key: stats["sub_avg"]   = float(val) if val.replace(".", "").isdigit() else None
 
-        # W-L record
         record_el = soup.select_one("span.b-content__title-record")
         if record_el:
-            record_text = record_el.get_text(strip=True)
-            m = re.search(r"(\d+)-(\d+)", record_text)
+            m = re.search(r"(\d+)-(\d+)", record_el.get_text(strip=True))
             if m:
-                stats["wins"] = int(m.group(1))
+                stats["wins"]   = int(m.group(1))
                 stats["losses"] = int(m.group(2))
 
         return stats
@@ -211,26 +211,25 @@ def scrape_fighter_stats(fighter_url):
 
 
 def find_fighter_url(fighter_name):
-    """Search ufcstats for a fighter by name, return their URL."""
+    """Search ufcstats for a fighter URL (fallback only)."""
     last_name = fighter_name.strip().split()[-1]
     char = last_name[0].lower()
     try:
-        html = _get(f"http://ufcstats.com/statistics/fighters?char={char}&page=all")
-        soup = BeautifulSoup(html, "lxml")
-        rows = soup.select("tr.b-statistics__table-row")
+        html  = _get(f"http://ufcstats.com/statistics/fighters?char={char}&page=all")
+        soup  = BeautifulSoup(html, "lxml")
+        rows  = soup.select("tr.b-statistics__table-row")
         candidates = []
         for row in rows:
             cols = row.select("td")
             if len(cols) < 2:
                 continue
             first = cols[0].get_text(strip=True)
-            last = cols[1].get_text(strip=True)
-            full = f"{first} {last}".strip()
-            link = row.select_one("a.b-link")
+            last  = cols[1].get_text(strip=True)
+            full  = f"{first} {last}".strip()
+            link  = row.select_one("a.b-link")
             if link:
                 candidates.append((full, link.get("href", "")))
-
-        names = [c[0] for c in candidates]
+        names   = [c[0] for c in candidates]
         matches = difflib.get_close_matches(fighter_name, names, n=1, cutoff=0.6)
         if matches:
             for full, url in candidates:
